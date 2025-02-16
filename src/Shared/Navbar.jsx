@@ -67,9 +67,9 @@ const Navbar = () => {
     <>
       <div className="navbar sm:w-11/12 mx-auto py-6 px-3">
         {/* start */}
-        <div className="navbar-start">
+        <div className="navbar-start sm:w-1/2 w-fit">
           <Link to={"/"}>
-            <h2 className="text-4xl font-bold flex gap-2 justify-center items-center"> <img src={icon} alt="" className="h-12 -mt-2.5" /> <img src={logo} alt=""  className="h-16" /> </h2>
+            <h2 className="text-4xl ml-10 font-bold flex gap-2 justify-center items-center"> <img src={icon} alt="" className="sm:h-12 h-10 -mt-2.5" /> <img src={logo} alt=""  className="sm:h-16 h-14" /> </h2>
           </Link>
         </div>
 
