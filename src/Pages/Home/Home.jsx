@@ -1,3 +1,4 @@
+import About from "./About";
 import Banner from "./Banner";
 import Intro from "./Intro";
 
@@ -16,7 +17,7 @@ const Home = () => {
 
       {/* about */}
       <div>
-        
+        <About></About>
       </div>
     </>
   );
