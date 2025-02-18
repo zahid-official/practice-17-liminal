@@ -5,11 +5,11 @@ import { FaArrowRight } from "react-icons/fa";
 const About = () => {
   return (
     <>
-      <div className="flex gap-32 w-10/12 mx-auto px-6 text-lg">
+      <div className="flex lg:flex-row flex-col xl:gap-32 gap-10 xl:w-10/12 w-11/12 mx-auto px-3 text-lg">
         <div>
           <img src={image1} alt="" />
         </div>
-        <div className="w-[70%] flex items-center justify-center">
+        <div className="lg:w-[70%] flex items-center justify-center">
           <div>
             <h2 className="custom-title text-4xl mb-3">About Us</h2>
             <p>
@@ -35,11 +35,11 @@ const About = () => {
       </div>
 
       {/* part-2 Services */}
-      <div className="flex flex-row-reverse gap-32 w-10/12 mx-auto px-6 text-lg mt-24">
+      <div className="flex lg:flex-row-reverse flex-col xl:gap-32 gap-10 xl:w-10/12 w-11/12 mx-auto px-3 text-lg mt-24">
         <div>
           <img src={image1} alt="" />
         </div>
-        <div className="w-[70%] flex items-center justify-center">
+        <div className="lg:w-[70%] flex items-center justify-center">
           <div>
             <h2 className="custom-title text-4xl mb-3">Services</h2>
             <p>

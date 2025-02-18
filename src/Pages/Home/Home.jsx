@@ -1,6 +1,7 @@
 import About from "./About";
 import Banner from "./Banner";
 import Intro from "./Intro";
+import Studio from "./Studio";
 
 const Home = () => {
   return (
@@ -18,6 +19,11 @@ const Home = () => {
       {/* about */}
       <div>
         <About></About>
+      </div>
+
+      {/* studio */}
+      <div>
+        <Studio></Studio>
       </div>
     </>
   );
