@@ -37,3 +37,7 @@ a.active{
     color: white !important;
     background-color: #13382b !important;
 }
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  display: none;
+}
