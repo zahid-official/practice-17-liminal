@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import image1 from "/assets/image1.jpeg";
 import { FaArrowRight } from "react-icons/fa";
 
+import { motion } from "motion/react"
+
 const About = () => {
   return (
     <>
@@ -9,6 +11,7 @@ const About = () => {
         <div>
           <img src={image1} alt="" />
         </div>
+
         <div className="lg:w-[70%] flex items-center justify-center">
           <div>
             <h2 className="custom-title text-4xl mb-3">About Us</h2>
