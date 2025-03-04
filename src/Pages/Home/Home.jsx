@@ -22,7 +22,7 @@ const Home = () => {
         translateY: 0,
         opacity: 1,
       }}
-      transition={{duration: .75, delay: .5}}
+      transition={{duration: .75, delay: 0.2}}
       className="my-44"
       >
         <Intro></Intro>

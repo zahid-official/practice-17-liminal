@@ -2,17 +2,26 @@ import { Link } from "react-router-dom";
 import image1 from "/assets/image1.jpeg";
 import { FaArrowRight } from "react-icons/fa";
 
-import { motion } from "motion/react"
+import { motion } from "motion/react";
 
 const About = () => {
   return (
     <>
-      <div className="flex lg:flex-row flex-col xl:gap-32 gap-10 xl:w-10/12 w-11/12 mx-auto px-3 text-lg">
-        <div>
+      <div className="overflow-hidden flex lg:flex-row flex-col xl:gap-32 gap-10 xl:w-10/12 w-11/12 mx-auto px-3 text-lg">
+        <motion.div
+          initial={{ translateX: -500, opacity: 0 }}
+          whileInView={{ translateX: 0, opacity: 1 }}
+          transition={{duration: 1.4, delay: 0.2}}
+        >
           <img src={image1} alt="" />
-        </div>
+        </motion.div>
 
-        <div className="lg:w-[70%] flex items-center justify-center">
+        <motion.div
+        initial={{ translateX: 500, opacity: 0 }}
+        whileInView={{ translateX: 0, opacity: 1 }}
+        transition={{duration: 1.4, delay: 0.2}}
+        
+        className="lg:w-[70%] flex items-center justify-center">
           <div>
             <h2 className="custom-title text-4xl mb-3">About Us</h2>
             <p>
@@ -34,15 +43,24 @@ const About = () => {
               </p>
             </Link>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* part-2 Services */}
-      <div className="flex lg:flex-row-reverse flex-col xl:gap-32 gap-10 xl:w-10/12 w-11/12 mx-auto px-3 text-lg mt-24">
-        <div>
+      <div className="overflow-hidden flex lg:flex-row-reverse flex-col xl:gap-32 gap-10 xl:w-10/12 w-11/12 mx-auto px-3 text-lg mt-48 mb-16">
+        <motion.div
+        initial={{ translateX: 500, opacity: 0 }}
+        whileInView={{ translateX: 0, opacity: 1 }}
+        transition={{duration: 1.4, delay: 0.2}}
+        >
           <img src={image1} alt="" />
-        </div>
-        <div className="lg:w-[70%] flex items-center justify-center">
+        </motion.div>
+
+        <motion.div 
+        initial={{ translateX: -500, opacity: 0 }}
+        whileInView={{ translateX: 0, opacity: 1 }}
+        transition={{duration: 1.4, delay: 0.2}}
+        className="lg:w-[70%] flex items-center justify-center">
           <div>
             <h2 className="custom-title text-4xl mb-3">Services</h2>
             <p>
@@ -65,7 +83,7 @@ const About = () => {
               </p>
             </Link>
           </div>
-        </div>
+        </motion.div>
       </div>
     </>
   );
