@@ -9,7 +9,7 @@ const About = () => {
     <>
       <div className="overflow-hidden flex lg:flex-row flex-col xl:gap-32 gap-10 xl:w-10/12 w-11/12 mx-auto px-3 text-lg">
         <motion.div
-          initial={{ translateX: -500, opacity: 0 }}
+          initial={{ translateX: -300, opacity: 0 }}
           whileInView={{ translateX: 0, opacity: 1 }}
           transition={{duration: 1.4, delay: 0.2}}
         >
@@ -17,7 +17,7 @@ const About = () => {
         </motion.div>
 
         <motion.div
-        initial={{ translateX: 500, opacity: 0 }}
+        initial={{ translateX: 300, opacity: 0 }}
         whileInView={{ translateX: 0, opacity: 1 }}
         transition={{duration: 1.4, delay: 0.2}}
         
@@ -49,7 +49,7 @@ const About = () => {
       {/* part-2 Services */}
       <div className="overflow-hidden flex lg:flex-row-reverse flex-col xl:gap-32 gap-10 xl:w-10/12 w-11/12 mx-auto px-3 text-lg mt-48 mb-16">
         <motion.div
-        initial={{ translateX: 500, opacity: 0 }}
+        initial={{ translateX: 300, opacity: 0 }}
         whileInView={{ translateX: 0, opacity: 1 }}
         transition={{duration: 1.4, delay: 0.2}}
         >
@@ -57,7 +57,7 @@ const About = () => {
         </motion.div>
 
         <motion.div 
-        initial={{ translateX: -500, opacity: 0 }}
+        initial={{ translateX: -300, opacity: 0 }}
         whileInView={{ translateX: 0, opacity: 1 }}
         transition={{duration: 1.4, delay: 0.2}}
         className="lg:w-[70%] flex items-center justify-center">
