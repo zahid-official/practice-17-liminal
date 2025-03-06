@@ -10,12 +10,28 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/bundle";
 import { Autoplay, FreeMode, Navigation } from "swiper/modules";
+import { useState } from "react";
 
 const Upcomming = () => {
+  // innerWidth state
+  const [screenWidth, setScreenWidth] = useState(3);
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth < 768) {
+      setScreenWidth(1);
+    } else if (window.innerWidth > 768 && window.innerWidth < 1200) {
+      setScreenWidth(2);
+    }
+    else{
+      setScreenWidth(3)
+    }
+  });
+
+
   return (
-    <div>
+    <div className="lg:w-11/12 mx-auto">
       {/* carousel */}
-      <div className="px-12 relative">
+      <div className="md:px-12 px-9 relative">
         <h2 className="text-3xl font-semibold custom-title mb-2.5">
           Upcomming
         </h2>
@@ -23,7 +39,7 @@ const Upcomming = () => {
         {/* banner */}
         <Swiper
           loop={true}
-          slidesPerView={3}
+          slidesPerView={screenWidth}
           spaceBetween={30}
           freeMode={true}
           navigation={{
