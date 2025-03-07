@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
 import { FaDiscord, FaFacebookSquare, FaLinkedin } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
+import logo from "/assets/logo.png"
 
 const Footer = () => {
 
   return (
     <>
-      <footer className="footer lg:justify-around py-20 text-base px-10 relative ">
+      <footer className="footer bg-white lg:justify-around py-20 text-base px-10 relative">
         <aside>
           <div className="flex items-center gap-2">
-            <h1 className="text-4xl font-bold">Logo</h1>
+            <h1 className="text-4xl font-bold"><img src={logo} alt=""  className="sm:h-16 h-14" /></h1>
           </div>
           <p>
             Logo Industries Ltd.
