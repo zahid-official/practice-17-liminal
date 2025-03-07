@@ -34,7 +34,7 @@ const Navbar = () => {
         <NavLink to={"/"} className={'dark:hover:bg-slate-800'}>Home</NavLink>
       </li>
       <li className="text-lg font-bold">
-        <NavLink to={"/route2"} className={'dark:hover:bg-slate-800'}>Route2</NavLink>
+        <NavLink to={"/about"} className={'dark:hover:bg-slate-800'}>About Us</NavLink>
       </li>
       <li className="text-lg font-bold">
         <NavLink to={"/route3"} className={'dark:hover:bg-slate-800'}>Route3</NavLink>
