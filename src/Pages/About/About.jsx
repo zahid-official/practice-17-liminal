@@ -1,10 +1,20 @@
-import right from "/assets/right.jpeg";import left from "/assets/left.jpeg";
+import right from "/assets/right.jpeg";
+import left from "/assets/left.jpeg";
+import studio from "/assets/studio.jpeg";
+import g1 from "/assets/g1.jpeg";
+import g2 from "/assets/g2.jpeg";
+import g3 from "/assets/g3.jpg";
+import g4 from "/assets/g4.jpg";
+import g5 from "/assets/g5.jpg";
+import g6 from "/assets/g6.jpg";
+import g7 from "/assets/g7.jpg";
+import g8 from "/assets/g8.jpg";
 
 const About = () => {
   return (
-    <>
+    <div className="max-w-screen-xl mx-auto px-6">
       {/* top */}
-      <div className="grid grid-cols-2 gap-20 max-w-screen-xl mx-auto px-6 pt-16">
+      <div className="grid grid-cols-2 gap-20 pt-16">
         {/* left */}
         <div>
           <h2 className="text-5xl mb-16">About Us</h2>
@@ -63,7 +73,7 @@ const About = () => {
       </div>
 
       {/* bottom */}
-      <div className="grid grid-cols-2 gap-20 max-w-screen-xl mx-auto px-6 pt-16">
+      <div className="grid grid-cols-2 gap-20 pt-28">
         {/* left */}
         <div>
           <img src={left} alt="img" />
@@ -81,7 +91,8 @@ const About = () => {
             </p>
           </div>
           <br />
-          <br /><br />
+          <br />
+          <br />
 
           <div className="space-y-9">
             {/* 1 */}
@@ -107,7 +118,7 @@ const About = () => {
               <h4 className="text-xl font-medium">Eleutheria Sidiropoulou</h4>
               <p>Interior Designer</p>
             </div>
-            
+
             {/* 5 */}
             <div>
               <h4 className="text-xl font-medium">Konstantinos Tharenos</h4>
@@ -150,13 +161,11 @@ const About = () => {
               <p>Interior Designer</p>
             </div>
 
-
             {/* 12 */}
             <div>
               <h4 className="text-xl font-medium">Stavros Tsiplakos</h4>
               <p>Interior Architect</p>
             </div>
-
 
             {/* 13 */}
             <div>
@@ -196,7 +205,79 @@ const About = () => {
           </div>
         </div>
       </div>
-    </>
+
+      {/* studio */}
+      <div className="grid grid-cols-2 gap-20 pt-28">
+        <div>
+          <img src={studio} alt="" />
+        </div>
+
+        <div className="flex items-end">
+          <div>
+            <h3 className="text-3xl mb-6">The Studio</h3>
+            <p>
+              Our workspace is not just a physical location.. it’s an integral
+              part of the creative process that can significantly impact the
+              outcome of design projects. A well-designed environment can
+              significantly influence the quality of work produced and the
+              collaboration among team members. <br />
+              <br />
+              The design studios workspace acts as a hub for inspiration,
+              encouraging teamwork and inventive thinking!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* gallery */}
+      <div>
+        {/* g-1 */}
+        <div className="grid grid-cols-2 mt-10 gap-10">
+          <div>
+            <img src={g1} alt="" />
+          </div>
+
+          <div className="mt-5">
+            <img src={g2} alt="" />
+          </div>
+        </div>
+
+        {/* g-2 */}
+        <div className="mt-16 space-y-6 gap-6 columns-3">
+          {/* 1 */}
+          <div className="">
+            <img src={g3} alt="" />
+          </div>
+
+          {/* 2 */}
+          <div className="">
+            <img src={g6} alt="" />
+          </div>
+
+          {/* 4 */}
+          <div className="">
+            <img src={g4} alt="" />
+          </div>
+          {/* 3 */}
+          <div className="">
+            <img src={g7} alt="" />
+          </div>
+
+          {/* 5 */}
+          <div className="">
+            <img src={g5} alt="" />
+          </div>
+
+          {/* 6 */}
+          <div className="">
+            <img src={g8} alt="" />
+          </div>
+        </div>
+
+        {/* g-3 */}
+        <div className=""></div>
+      </div>
+    </div>
   );
 };
 
