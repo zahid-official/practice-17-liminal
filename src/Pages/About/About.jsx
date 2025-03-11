@@ -8,7 +8,7 @@ const About = () => {
 
       {/* right */}
       <div>
-        <div><img src={right} alt="" /></div>
+        <div><img src={right} alt="img" /></div>
       </div>
     </div>
   );
