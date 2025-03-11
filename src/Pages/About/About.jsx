@@ -19,12 +19,12 @@ import g14 from "/assets/g14.jpg";
 const About = () => {
   return (
     <>
-      <div className="max-w-screen-xl mx-auto px-6">
+      <div className="max-w-[1100px] mx-auto px-6">
         {/* top */}
-        <div className="grid grid-cols-2 gap-20 pt-16">
+        <div className="grid grid-cols-2 gap-20 relative">
           {/* left */}
           <div>
-            <h2 className="text-5xl mb-16">About Us</h2>
+            <h2 className="text-5xl my-16">About Us</h2>
             <div>
               <h3 className="text-3xl">Our Philosophy</h3>
               <br />
@@ -51,10 +51,8 @@ const About = () => {
                 bring your vision to life. Welcome to Stones and Walls
               </p>
             </div>
-            <br />
-            <br />
 
-            <div>
+            <div className="mt-24">
               <h3 className="text-3xl">Why Choose Us?</h3>
               <div className="space-y-3 mt-3">
                 <li>
@@ -75,20 +73,20 @@ const About = () => {
           </div>
 
           {/* right */}
-          <div>
+          <div className="sticky top-0 pt-16 self-start">
             <img src={right} alt="img" />
           </div>
         </div>
 
         {/* bottom */}
-        <div className="grid grid-cols-2 gap-20 pt-28">
+        <div className="grid grid-cols-2 gap-20 mt-16 relative">
           {/* left */}
-          <div>
+          <div className="sticky top-0 pt-16 self-start">
             <img src={left} alt="img" />
           </div>
 
           {/* right */}
-          <div>
+          <div className="pt-16">
             <div>
               <h3 className="text-3xl">Our Team</h3>
               <br />
