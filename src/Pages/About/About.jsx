@@ -1,16 +1,202 @@
-import right from '/assets/right.jpeg';
+import right from "/assets/right.jpeg";import left from "/assets/left.jpeg";
 
 const About = () => {
   return (
-    <div className="grid grid-cols-2 container mx-auto px-6 pt-16">
-      {/* left */}
-      <div>About Us</div>
+    <>
+      {/* top */}
+      <div className="grid grid-cols-2 gap-20 max-w-screen-xl mx-auto px-6 pt-16">
+        {/* left */}
+        <div>
+          <h2 className="text-5xl mb-16">About Us</h2>
+          <div>
+            <h3 className="text-3xl">Our Philosophy</h3>
+            <br />
+            <p>
+              We believe that exceptional design is more than just
+              aesthetics—its about crafting experiences that resonate and
+              inspire. With over 15 years of industry expertise, our talented
+              team of designers, strategists, and storytellers is dedicated to
+              transforming ideas into impactful visual narratives. <br /> <br />
+              Our philosophy is rooted in collaboration and innovation. By
+              closely partnering with our clients, we delve deep into their
+              vision, understanding their unique challenges and aspirations.
+              This enables us to create tailored design solutions that not only
+              meet objectives but also engage audiences on a profound level.{" "}
+              <br />
+              <br />
+              Our diverse portfolio showcases a commitment to quality and
+              creativity. We stay ahead of industry trends, ensuring that our
+              work is not only relevant today but also future-ready. <br />
+              <br />
+              Join us on a journey where creativity knows no bounds and every
+              project is an opportunity to push the envelope. Together, lets
+              bring your vision to life. Welcome to Stones and Walls
+            </p>
+          </div>
+          <br />
+          <br />
 
-      {/* right */}
-      <div>
-        <div><img src={right} alt="img" /></div>
+          <div>
+            <h3 className="text-3xl">Why Choose Us?</h3>
+            <div className="space-y-3 mt-3">
+              <li>
+                ⁠Expertise: With over 15 years of experience in the industry, we
+                bring a wealth of knowledge and skills to every project.
+              </li>
+              <li>
+                ⁠Personalized Approach: We take the time to understand your
+                specific needs and goals, ensuring that our designs reflect your
+                brand’s unique personality.
+              </li>
+              <li>
+                ⁠Commitment to Quality: We strive for excellence in every aspect
+                of our work, from initial concepts to final execution.
+              </li>
+            </div>
+          </div>
+        </div>
+
+        {/* right */}
+        <div>
+          <img src={right} alt="img" />
+        </div>
       </div>
-    </div>
+
+      {/* bottom */}
+      <div className="grid grid-cols-2 gap-20 max-w-screen-xl mx-auto px-6 pt-16">
+        {/* left */}
+        <div>
+          <img src={left} alt="img" />
+        </div>
+
+        {/* right */}
+        <div>
+          <div>
+            <h3 className="text-3xl">Our Team</h3>
+            <br />
+            <p>
+              Our team of experienced architects and designers is dedicated to
+              pushing boundaries and exploring new ideas while ensuring that
+              each project aligns with your vision and brand identity.
+            </p>
+          </div>
+          <br />
+          <br /><br />
+
+          <div className="space-y-9">
+            {/* 1 */}
+            <div>
+              <h4 className="text-xl font-medium">Afroditi Bonatsou</h4>
+              <p>Design Director | Co Founder</p>
+            </div>
+
+            {/* 2 */}
+            <div>
+              <h4 className="text-xl font-medium">Konstantinos Kounelis</h4>
+              <p>Managing Director | Co Founder</p>
+            </div>
+
+            {/* 3 */}
+            <div>
+              <h4 className="text-xl font-medium">Villy Rapanta</h4>
+              <p>Architect Engineer</p>
+            </div>
+
+            {/* 4 */}
+            <div>
+              <h4 className="text-xl font-medium">Eleutheria Sidiropoulou</h4>
+              <p>Interior Designer</p>
+            </div>
+            
+            {/* 5 */}
+            <div>
+              <h4 className="text-xl font-medium">Konstantinos Tharenos</h4>
+              <p>Construction Engineer</p>
+            </div>
+
+            {/* 6 */}
+            <div>
+              <h4 className="text-xl font-medium">Maria Maridaki</h4>
+              <p>Architect Engineer</p>
+            </div>
+
+            {/* 7 */}
+            <div>
+              <h4 className="text-xl font-medium">Natassa Aslani</h4>
+              <p>Interior Architect</p>
+            </div>
+
+            {/* 8 */}
+            <div>
+              <h4 className="text-xl font-medium">Sotiria Fasoi</h4>
+              <p>Interior Architect</p>
+            </div>
+
+            {/* 9 */}
+            <div>
+              <h4 className="text-xl font-medium">Pavlos Karagiannis</h4>
+              <p>Interior Architectr</p>
+            </div>
+
+            {/* 10 */}
+            <div>
+              <h4 className="text-xl font-medium">Dimitra Antoniou</h4>
+              <p>Architect Engineer</p>
+            </div>
+
+            {/* 11 */}
+            <div>
+              <h4 className="text-xl font-medium">Myrsini Syrigou</h4>
+              <p>Interior Designer</p>
+            </div>
+
+
+            {/* 12 */}
+            <div>
+              <h4 className="text-xl font-medium">Stavros Tsiplakos</h4>
+              <p>Interior Architect</p>
+            </div>
+
+
+            {/* 13 */}
+            <div>
+              <h4 className="text-xl font-medium">Vasiliki Gkini</h4>
+              <p>Interior Architect</p>
+            </div>
+
+            {/* 14 */}
+            <div>
+              <h4 className="text-xl font-medium">Giannis Antwnopoulos</h4>
+              <p>Junior Architect</p>
+            </div>
+
+            {/* 15 */}
+            <div>
+              <h4 className="text-xl font-medium">Yanna Chasandra</h4>
+              <p>Procurement | Purchasing</p>
+            </div>
+
+            {/* 16 */}
+            <div>
+              <h4 className="text-xl font-medium">Fay Kontoria</h4>
+              <p>Administrative Assistant</p>
+            </div>
+
+            {/* 17 */}
+            <div>
+              <h4 className="text-xl font-medium">Efi Katri</h4>
+              <p>Accounting</p>
+            </div>
+
+            {/* 18 */}
+            <div>
+              <h4 className="text-xl font-medium">Penny Chatzopoulou</h4>
+              <p>Press | Social Media Associate</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
