@@ -21,12 +21,12 @@ const About = () => {
     <>
       <div className="max-w-[1100px] mx-auto px-6">
         {/* top */}
-        <div className="grid grid-cols-2 gap-20 relative">
+        <div className="grid md:grid-cols-2 gap-20 relative">
           {/* left */}
-          <div>
-            <h2 className="text-5xl my-16">About Us</h2>
+          <div className="order-1">
+            <h2 className="sm:text-5xl text-4xl md:my-16 mb-5">About Us</h2>
             <div>
-              <h3 className="text-3xl">Our Philosophy</h3>
+              <h3 className="sm:text-3xl text-2xl">Our Philosophy</h3>
               <br />
               <p>
                 We believe that exceptional design is more than just
@@ -52,7 +52,7 @@ const About = () => {
               </p>
             </div>
 
-            <div className="mt-24">
+            <div className="md:mt-24 mt-12">
               <h3 className="text-3xl">Why Choose Us?</h3>
               <div className="space-y-3 mt-3">
                 <li>
@@ -73,20 +73,20 @@ const About = () => {
           </div>
 
           {/* right */}
-          <div className="sticky top-0 pt-16 self-start">
+          <div className="md:sticky md:order-1 top-0 md:pt-16 pt-4 md:self-start">
             <img src={right} alt="img" />
           </div>
         </div>
 
         {/* bottom */}
-        <div className="grid grid-cols-2 gap-20 mt-16 relative">
+        <div className="grid md:grid-cols-2 gap-20 mt-16 relative">
           {/* left */}
-          <div className="sticky top-0 pt-16 self-start">
+          <div className="md:sticky md:order-1 top-0 md:pt-16 pt-4 md:self-start">
             <img src={left} alt="img" />
           </div>
 
           {/* right */}
-          <div className="pt-16">
+          <div className="order-1 md:pt-16">
             <div>
               <h3 className="text-3xl">Our Team</h3>
               <br />
@@ -213,12 +213,12 @@ const About = () => {
         </div>
 
         {/* studio */}
-        <div className="grid grid-cols-2 gap-20 pt-28">
+        <div className="grid md:grid-cols-2 gap-20 md:pt-28 pt-20">
           <div>
             <img src={studio} alt="" />
           </div>
 
-          <div className="flex items-end">
+          <div className="md:flex items-end">
             <div>
               <h3 className="text-3xl mb-6">The Studio</h3>
               <p>
@@ -238,76 +238,51 @@ const About = () => {
         {/* gallery */}
         <div>
           {/* g-1 */}
-          <div className="grid grid-cols-2 mt-10 gap-10">
+          <div className="grid sm:grid-cols-2 mt-10 gap-6">
             <div>
               <img src={g1} alt="" />
             </div>
 
-            <div className="mt-5">
+            <div className="lg:mt-5">
               <img src={g2} alt="" />
             </div>
           </div>
 
           {/* g-2 */}
-          <div className="mt-16 space-y-6 gap-6 columns-3">
+          <div className="mt-7 grid lg:grid-cols-3 sm:grid-cols-2 gap-6">
             {/* 1 */}
-            <div className="">
+            <div className=" space-y-6">
               <img src={g3} alt="" />
-            </div>
-
-            {/* 2 */}
-            <div className="">
               <img src={g6} alt="" />
             </div>
 
-            {/* 4 */}
-            <div className="">
+            {/* 2 */}
+            <div className=" space-y-6">
               <img src={g4} alt="" />
-            </div>
-            {/* 3 */}
-            <div className="">
               <img src={g7} alt="" />
             </div>
 
-            {/* 5 */}
-            <div className="">
+            {/* 3 */}
+            <div className="space-y-6">
               <img src={g5} alt="" />
-            </div>
-
-            {/* 6 */}
-            <div className="">
               <img src={g8} alt="" />
-            </div>
-          </div>
-
-          {/* g-3 */}
-          <div className="mt-3 space-y-6 gap-6 columns-3">
-            {/* 1 */}
-            <div className="">
-              <img src={g9} alt="" />
-            </div>
-
-            {/* 2 */}
-            <div className="">
-              <img src={g10} alt="" />
             </div>
 
             {/* 4 */}
-            <div className="">
-              <img src={g11} alt="" />
-            </div>
-            {/* 3 */}
-            <div className="">
-              <img src={g12} alt="" />
+            <div className="space-y-6">
+              <img src={g9} alt="" />
+              <img src={g10} alt="" />
             </div>
 
             {/* 5 */}
-            <div className="">
-              <img src={g13} alt="" />
+            <div className="space-y-6">
+              <img src={g11} alt="" />
+              <img src={g12} alt="" />
             </div>
 
             {/* 6 */}
-            <div className="">
+            <div className="space-y-6">
+              <img src={g13} alt="" />
               <img src={g14} alt="" />
             </div>
           </div>
@@ -315,15 +290,19 @@ const About = () => {
       </div>
 
       {/* contact */}
-      <div className="py-20 text-center bg-base-200 mt-14">
+      <div className="py-20 text-center bg-base-200 mt-14 px-4">
         <h2 className="text-4xl">Let’s Create Together</h2>
         <p className=" pt-8">
           We invite you to explore the possibilities of your space with STONES
-          AND WALLS. <br /> Our diverse portfolio encompasses a wide range of projects,
-          from hospitality and leisure venues to residential and office spaces.
+          AND WALLS. <br /> Our diverse portfolio encompasses a wide range of
+          projects, from hospitality and leisure venues to residential and
+          office spaces.
         </p>
 
-        <p className="pt-4 pb-10">Contact us today to schedule your consultation and let’s bring your vision to life!</p>
+        <p className="pt-4 pb-10">
+          Contact us today to schedule your consultation and let’s bring your
+          vision to life!
+        </p>
         <button className="btn border-gray-300 rounded-full px-10">
           Contact
         </button>
