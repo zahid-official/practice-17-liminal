@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import image1 from "/assets/image1.jpeg";
+import image2 from "/assets/image2.jpeg";
 import { FaArrowRight } from "react-icons/fa";
 
 import { motion } from "motion/react";
 
-const About = () => {
+const Introduction = () => {
   return (
     <>
       <div className="overflow-hidden flex lg:flex-row flex-col xl:gap-32 gap-10 xl:w-10/12 w-11/12 mx-auto px-3 text-lg">
@@ -32,7 +33,7 @@ const About = () => {
             </p>
             <Link>
               <p className="relative group inline-block pt-4">
-                Read More
+                <Link to={"/about"}>Read More</Link>
                 <span className="w-full group-hover:w-0 duration-500 h-[2px] bg-[#154434] inline-block absolute -bottom-0.5 left-0"></span>
                 <span className="h-9 scale-0 transition-all duration-500 w-9 ml-1.5 absolute rounded-full bg-[#154434] group-hover:scale-100 -translate-x-8 group-hover:translate-x-0 inline-flex items-center justify-center ">
                   <FaArrowRight
@@ -53,7 +54,7 @@ const About = () => {
         whileInView={{ translateX: 0, opacity: 1 }}
         transition={{duration: 1.4, delay: 0.2}}
         >
-          <img src={image1} alt="" />
+          <img src={image2} alt="" />
         </motion.div>
 
         <motion.div 
@@ -72,7 +73,7 @@ const About = () => {
             </p>
             <Link>
               <p className="relative group inline-block pt-4">
-                Explore Services
+                <Link to={"/about"}>Explore Services</Link>
                 <span className="w-full group-hover:w-0 duration-500 h-[2px] bg-[#154434] inline-block absolute -bottom-0.5 left-0"></span>
                 <span className="h-9 scale-0 transition-all duration-500 w-9 ml-1.5 absolute rounded-full bg-[#154434] group-hover:scale-100 -translate-x-8 group-hover:translate-x-0 inline-flex items-center justify-center ">
                   <FaArrowRight
@@ -89,4 +90,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default Introduction;

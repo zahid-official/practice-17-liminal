@@ -33,7 +33,7 @@ const About = () => {
                 aesthetics—its about crafting experiences that resonate and
                 inspire. With over 15 years of industry expertise, our talented
                 team of designers, strategists, and storytellers is dedicated to
-                transforming ideas into impactful visual narratives. <br />{" "}
+                transforming ideas into impactful visual narratives. <br />
                 <br />
                 Our philosophy is rooted in collaboration and innovation. By
                 closely partnering with our clients, we delve deep into their

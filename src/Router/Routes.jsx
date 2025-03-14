@@ -5,6 +5,7 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import Home from "../Pages/Home/Home";
 import About from "../Pages/About/About";
+import Upcoming1 from "../Pages/Upcoming/Upcoming1";
 
 const Routes = createBrowserRouter([
   {
@@ -29,9 +30,9 @@ const Routes = createBrowserRouter([
         ),
       },
       {
-        path: "/route4",
+        path: "/upcoming1",
         element: (
-          <h1>Route4 Page</h1>
+          <Upcoming1></Upcoming1>
         ),
       },
       {

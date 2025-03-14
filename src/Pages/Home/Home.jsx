@@ -1,4 +1,4 @@
-import About from "./About";
+import About from "./Introduction";
 import Banner from "./Banner";
 import Contact from "./Contact";
 import Intro from "./Intro";

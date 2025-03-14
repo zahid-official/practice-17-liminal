@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import image3 from "/assets/image3.jpeg";
 import image4 from "/assets/image4.jpeg";
 import image5 from "/assets/image5.jpeg";
@@ -16,10 +17,12 @@ const Studio = () => {
           className="lg:col-span-3 flex lg:flex-col gap-8 sm:flex-row flex-col lg:items-start lg:justify-start items-center justify-center"
         >
           <div className="">
-            <img src={image3} className="h-full"></img>
+            <Link to={"/about"}>
+              <img src={image3} className="h-full"></img>
+            </Link>
           </div>
-          <div className="sm:text-7xl text-5xl lg:text-right text-center font-extralight ">
-            Our Team
+          <div className="text-5xl w-full lg:text-right text-center font-extralight ">
+            <Link to={"/about"}>Our Team</Link>
           </div>
         </motion.div>
 
@@ -40,11 +43,13 @@ const Studio = () => {
           transition={{ duration: 1.4, delay: 0.2 }}
           className="lg:col-span-3 flex lg:flex-col gap-8 sm:flex-row flex-col lg:items-end lg:justify-end  items-center justify-center"
         >
-          <div className="sm:text-7xl text-5xl lg:text-left text-center font-extralight">
-            Our Studio
+          <div className="text-5xl w-full lg:text-left text-center font-extralight">
+            <Link to={"/about"}>Our Studio</Link>
           </div>
           <div>
-            <img src={image5}></img>
+            <Link to={"/about"}>
+              <img src={image5}></img>
+            </Link>
           </div>
         </motion.div>
       </div>
