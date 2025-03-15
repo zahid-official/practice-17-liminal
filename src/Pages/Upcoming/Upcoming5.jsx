@@ -1,8 +1,8 @@
-import upcomingA from "/assets/upcoming1-a.jpeg";
-import upcomingB from "/assets/upcoming1-b.jpeg";
-import upcomingC from "/assets/upcoming1-c.jpeg";
-import upcomingD from "/assets/upcoming1-d.jpeg";
-import upcomingE from "/assets/upcoming1-e.jpeg";
+import upcomingA from "/assets/upcoming5-a.jpeg";
+import upcomingB from "/assets/upcoming5-b.jpeg";
+import upcomingC from "/assets/upcoming5-c.jpeg";
+import upcomingD from "/assets/upcoming5-d.jpeg";
+import upcomingE from "/assets/upcoming5-e.jpeg";
 
 const Upcoming5 = () => {
     return (
@@ -17,13 +17,13 @@ const Upcoming5 = () => {
                 <div className="sm:flex justify-end sm:-translate-y-20 sm:translate-x-10">
                   <div className="bg-[#154434] text-white sm:inline-block p-5 sm:pr-20">
                     <p className="sm:text-xl">Residence</p>
-                    <h2 className="sm:text-2xl text-xl">BK House Complex | Paros</h2>
+                    <h2 className="sm:text-2xl text-xl">Boutique Hotel | Andros</h2>
                   </div>
                 </div>
               </div>
         
               {/* status */}
-              <div className="container mx-auto px-3 text-right">
+              <div className="container mx-auto px-3 text-right mt-6">
                 <p>
                   <b>Status:</b> Upcomming
                 </p>
@@ -33,9 +33,9 @@ const Upcoming5 = () => {
               </div>
         
               {/* gallery */}
-              <div className="md:columns-2 container mx-auto gap-6 px-3 pb-28">
+              <div className="grid md:grid-cols-2 container mx-auto gap-6 px-3 pb-28">
                 {/* 1 */}
-                <div className="space-y-6 md:sticky top-0 md:mb-0 mb-6">
+                <div className="space-y-6 md:sticky top-0 md:mb-0 mb-6 self-start">
                   <img src={upcomingB} alt="" />
                   <img src={upcomingC} alt="" />
                 </div>
