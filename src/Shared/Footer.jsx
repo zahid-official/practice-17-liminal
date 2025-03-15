@@ -13,7 +13,7 @@ const Footer = () => {
             <h1 className="text-4xl font-bold"><img src={logo} alt=""  className="sm:h-16 h-14" /></h1>
           </div>
           <p>
-            Logo Industries Ltd.
+            Liminal Industries Ltd.
             <br />
             Providing reliable tech since 2015
           </p>
@@ -51,15 +51,7 @@ const Footer = () => {
         </aside>
 
         <nav>
-          <h6 className="text-black dark:text-white font-bold text-xl">Quick Link</h6>
-          <a className="link link-hover">Blog</a>
-          <a className="link link-hover">Features</a>
-          <a className="link link-hover">Top Author</a>
-          <a className="link link-hover">Top Categories</a>
-        </nav>
-        <nav>
           <h6 className="text-black dark:text-white font-bold text-xl">Help Center</h6>
-          <a className="link link-hover">Courses</a>
           <a className="link link-hover">Support</a>
           <a className="link link-hover">Get Help</a>
           <a className="link link-hover">Privacy Policy</a>

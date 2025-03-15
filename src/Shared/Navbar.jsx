@@ -1,22 +1,22 @@
 // import { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { toast } from "react-toastify";
-import useAuth from "../Auth/Hook/useAuth";
+// import { toast } from "react-toastify";
+// import useAuth from "../Auth/Hook/useAuth";
 import icon from "/assets/icon.png"
 import logo from "/assets/logo.png"
 
 const Navbar = () => {
   // useContext
-  const { users, logout } = useAuth();
+  // const { users, logout } = useAuth();
 
   // handleSignOut
-  const handleSignOut = () => {
-    logout()
-      .then(() => {
-        toast.success("Sign Out Successfully");
-      })
-      .catch((error) => toast.error(error.message));
-  };
+  // const handleSignOut = () => {
+  //   logout()
+  //     .then(() => {
+  //       toast.success("Sign Out Successfully");
+  //     })
+  //     .catch((error) => toast.error(error.message));
+  // };
 
   // handleDarkMode
   // const handleDarkMode = () => {
@@ -43,7 +43,7 @@ const Navbar = () => {
         <NavLink to={"/contact"} className={'dark:hover:bg-slate-800'}>Contact</NavLink>
       </li>
 
-      {users?.email ? (
+      {/* {users?.email ? (
         ""
       ) : (
         <>
@@ -59,7 +59,7 @@ const Navbar = () => {
             </NavLink>
           </li>
         </>
-      )}
+      )} */}
     </>
   );
 
@@ -69,13 +69,14 @@ const Navbar = () => {
         {/* start */}
         <div className="navbar-start sm:w-1/2 w-fit">
           <Link to={"/"}>
-            <h2 className="text-4xl ml-10 font-bold flex gap-2 justify-center items-center"> <img src={icon} alt="" className="sm:h-12 h-10 -mt-2.5" /> <img src={logo} alt=""  className="sm:h-16 h-14" /> </h2>
+            <h2 className="text-4xl ml-10 font-bold flex gap-2 justify-center items-center"> <img src={icon} alt="" className="sm:h-12 h-10 -mt-2.5" />  </h2>
           </Link>
         </div>
 
         {/* center */}
         <div className="navbar-center hidden xl:flex">
-          <ul className="menu menu-horizontal px-1 gap-2">{links}</ul>
+          <img src={logo} alt=""  className="sm:h-16 h-14" />
+          {/* <ul className="menu menu-horizontal px-1 gap-2">{links}</ul> */}
         </div>
 
         {/* end */}
@@ -110,7 +111,7 @@ const Navbar = () => {
             </label>
           </div> */}
 
-          {users?.email ? (
+          {/* {users?.email ? (
             <div className="relative rounded-full profilePhoto">
               <div className="dropdown dropdown-hover  rounded-full">
                 <div tabIndex={0} role="button" className="rounded-full m-1">
@@ -149,10 +150,11 @@ const Navbar = () => {
                 </button>
               </Link>
             </div>
-          )}
+          )} */}
 
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost xl:hidden">
+            <div tabIndex={0} role="button" className="btn btn-ghost ">
+              <p className="text-xl">Menu</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-7 w-7"
