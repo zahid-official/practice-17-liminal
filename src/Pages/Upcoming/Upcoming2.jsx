@@ -1,10 +1,10 @@
-import upcomingA from "/assets/upcoming1-a.jpeg";
-import upcomingB from "/assets/upcoming1-b.jpeg";
-import upcomingC from "/assets/upcoming1-c.jpeg";
-import upcomingD from "/assets/upcoming1-d.jpeg";
-import upcomingE from "/assets/upcoming1-e.jpeg";
+import upcomingA from "/assets/upcoming2-a.jpeg";
+import upcomingB from "/assets/upcoming2-b.jpeg";
+import upcomingC from "/assets/upcoming2-c.jpeg";
+import upcomingD from "/assets/upcoming2-d.jpeg";
+import upcomingE from "/assets/upcoming2-e.jpeg";
 
-const Upcoming1 = () => {
+const Upcoming2 = () => {
   return (
     <>
       {/* banner */}
@@ -17,7 +17,7 @@ const Upcoming1 = () => {
         <div className="sm:flex justify-end sm:-translate-y-20 sm:translate-x-10">
           <div className="bg-[#154434] text-white sm:inline-block p-5 sm:pr-20">
             <p className="sm:text-xl">Residence</p>
-            <h2 className="sm:text-2xl text-xl">BK House Complex | Paros</h2>
+            <h2 className="sm:text-2xl text-xl">N16 Residence | Palaio Pchyhiko</h2>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@ const Upcoming1 = () => {
       {/* gallery */}
       <div className="md:columns-2 container mx-auto gap-6 px-3 pb-28">
         {/* 1 */}
-        <div className="space-y-6 md:sticky top-0 md:mb-0 mb-6">
+        <div className="space-y-6 md:mb-0 mb-6">
           <img src={upcomingB} alt="" />
           <img src={upcomingC} alt="" />
         </div>
@@ -44,11 +44,10 @@ const Upcoming1 = () => {
         <div className="space-y-6">
           <img src={upcomingD} alt="" />
           <img src={upcomingE} alt="" />
-          <img src={upcomingB} alt="" />
         </div>
       </div>
     </>
   );
 };
 
-export default Upcoming1;
+export default Upcoming2;

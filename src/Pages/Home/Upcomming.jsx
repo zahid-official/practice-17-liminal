@@ -71,62 +71,70 @@ const Upcomming = () => {
 
           {/* banner-2 */}
           <SwiperSlide>
-            <div className="flex justify-center h-[75vh] group relative">
-              <img
-                src={upcoming2}
-                className="h-full w-full object-cover"
-                alt=""
-              />
-              {/* overflow */}
-              <div className="bg-[#15443486] absolute w-full -bottom-20 group-hover:bottom-0 duration-300 text-white text-center py-5 font-semibold">
-                <p>N16 Residence | Palaio Pchyhiko</p>
+            <Link to={"/upcoming2"}>
+              <div className="flex justify-center h-[75vh] group relative">
+                <img
+                  src={upcoming2}
+                  className="h-full w-full object-cover"
+                  alt=""
+                />
+                {/* overflow */}
+                <div className="bg-[#15443486] absolute w-full -bottom-20 group-hover:bottom-0 duration-300 text-white text-center py-5 font-semibold">
+                  <p>N16 Residence | Palaio Pchyhiko</p>
+                </div>
               </div>
-            </div>
+            </Link>
           </SwiperSlide>
 
           {/* banner-3 */}
           <SwiperSlide>
-            <div className="flex justify-center h-[75vh] group relative">
-              <img
-                src={upcoming3}
-                className="h-full w-full object-cover"
-                alt=""
-              />
-              {/* overflow */}
-              <div className="bg-[#15443485] absolute w-full -bottom-20 group-hover:bottom-0 duration-300 text-white text-center py-5 font-semibold">
-                <p>Boutique hotel | Paxos Island</p>
+            <Link to={"/upcoming3"}>
+              <div className="flex justify-center h-[75vh] group relative">
+                <img
+                  src={upcoming3}
+                  className="h-full w-full object-cover"
+                  alt=""
+                />
+                {/* overflow */}
+                <div className="bg-[#15443485] absolute w-full -bottom-20 group-hover:bottom-0 duration-300 text-white text-center py-5 font-semibold">
+                  <p>Boutique hotel | Paxos Island</p>
+                </div>
               </div>
-            </div>
+            </Link>
           </SwiperSlide>
 
           {/* banner-4 */}
           <SwiperSlide>
-            <div className="flex justify-center h-[75vh] group relative">
-              <img
-                src={upcoming4}
-                className="h-full w-full object-cover"
-                alt=""
-              />
-              {/* overflow */}
-              <div className="bg-[#1544349c] absolute w-full -bottom-20 group-hover:bottom-0 duration-300 text-white text-center py-5 font-semibold">
-                <p>Villa | Paros</p>
+            <Link to={"upcoming4"}>
+              <div className="flex justify-center h-[75vh] group relative">
+                <img
+                  src={upcoming4}
+                  className="h-full w-full object-cover"
+                  alt=""
+                />
+                {/* overflow */}
+                <div className="bg-[#1544349c] absolute w-full -bottom-20 group-hover:bottom-0 duration-300 text-white text-center py-5 font-semibold">
+                  <p>Villa | Paros</p>
+                </div>
               </div>
-            </div>
+            </Link>
           </SwiperSlide>
 
           {/* banner-5 */}
           <SwiperSlide>
-            <div className="flex justify-center h-[75vh] group relative">
-              <img
-                src={upcoming5}
-                className="h-full w-full object-cover"
-                alt=""
-              />
-              {/* overflow */}
-              <div className="bg-[#1544349c] absolute w-full -bottom-20 group-hover:bottom-0 duration-300 text-white text-center py-5 font-semibold">
-                <p>Boutique Hotel | Andros</p>
+            <Link to={"upcoming5"}>
+              <div className="flex justify-center h-[75vh] group relative">
+                <img
+                  src={upcoming5}
+                  className="h-full w-full object-cover"
+                  alt=""
+                />
+                {/* overflow */}
+                <div className="bg-[#1544349c] absolute w-full -bottom-20 group-hover:bottom-0 duration-300 text-white text-center py-5 font-semibold">
+                  <p>Boutique Hotel | Andros</p>
+                </div>
               </div>
-            </div>
+            </Link>
           </SwiperSlide>
 
           {/* navigation */}
