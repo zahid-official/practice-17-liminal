@@ -37,10 +37,10 @@ const Navbar = () => {
         <NavLink to={"/about"} className={'dark:hover:bg-slate-800'}>About Us</NavLink>
       </li>
       <li className="text-lg font-bold">
-        <NavLink to={"/route3"} className={'dark:hover:bg-slate-800'}>Route3</NavLink>
+        <NavLink to={"/projects"} className={'dark:hover:bg-slate-800'}>Projects</NavLink>
       </li>
       <li className="text-lg font-bold">
-        <NavLink to={"/route4"} className={'dark:hover:bg-slate-800'}>Route4</NavLink>
+        <NavLink to={"/contact"} className={'dark:hover:bg-slate-800'}>Contact</NavLink>
       </li>
 
       {users?.email ? (

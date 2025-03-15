@@ -10,6 +10,8 @@ import Upcoming2 from "../Pages/Upcoming/Upcoming2";
 import Upcoming3 from "../Pages/Upcoming/Upcoming3";
 import Upcoming4 from "../Pages/Upcoming/Upcoming4";
 import Upcoming5 from "../Pages/Upcoming/Upcoming5";
+import Projects from "../Pages/Projects/Projects";
+import Contact from "../Pages/Contact/Contact";
 
 const Routes = createBrowserRouter([
   {
@@ -28,9 +30,15 @@ const Routes = createBrowserRouter([
         ),
       },
       {
-        path: "/route3",
+        path: "/projects",
         element: (
-          <h1>Route3 Page</h1>
+          <Projects></Projects>
+        ),
+      },
+      {
+        path: "/contact",
+        element: (
+          <Contact></Contact>
         ),
       },
       {
