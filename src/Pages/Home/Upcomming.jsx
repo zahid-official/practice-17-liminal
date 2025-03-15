@@ -11,6 +11,7 @@ import "swiper/css";
 import "swiper/css/bundle";
 import { Autoplay, FreeMode, Navigation } from "swiper/modules";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Upcomming = () => {
   // innerWidth state
@@ -27,7 +28,7 @@ const Upcomming = () => {
   });
 
   return (
-    <div className="lg:w-11/12 mx-auto">
+    <div className="lg:w-11/12 mx-auto lg:px-10">
       {/* carousel */}
       <div className="md:px-12 px-9 relative">
         <h2 className="text-3xl font-semibold custom-title mb-2.5">
@@ -36,7 +37,7 @@ const Upcomming = () => {
 
         {/* banner */}
         <Swiper
-          loop={true}
+          // loop={true}
           slidesPerView={screenWidth}
           spaceBetween={30}
           freeMode={true}
@@ -53,17 +54,19 @@ const Upcomming = () => {
         >
           {/* banner-1 */}
           <SwiperSlide>
-            <div className="flex justify-center h-[75vh] group relative">
-              <img
-                src={upcoming1}
-                className="h-full w-full object-cover"
-                alt=""
-              />
-              {/* overflow */}
-              <div className="bg-[#1544349c] absolute w-full -bottom-20 group-hover:bottom-0 duration-300 text-white text-center py-5 font-semibold">
-                <p> BK House Complex | Paros </p>
+            <Link to={"/upcoming1"}>
+              <div className="flex justify-center h-[75vh] group relative">
+                <img
+                  src={upcoming1}
+                  className="h-full w-full object-cover"
+                  alt=""
+                />
+                {/* overflow */}
+                <div className="bg-[#1544349c] absolute w-full -bottom-20 group-hover:bottom-0 duration-300 text-white text-center py-5 font-semibold">
+                  <p> BK House Complex | Paros </p>
+                </div>
               </div>
-            </div>
+            </Link>
           </SwiperSlide>
 
           {/* banner-2 */}
