@@ -33,9 +33,9 @@ const Upcoming1 = () => {
       </div>
 
       {/* gallery */}
-      <div className="md:columns-2 container mx-auto gap-6 px-3 pb-28">
+      <div className="grid md:grid-cols-2 container mx-auto gap-6 px-3 pb-28">
         {/* 1 */}
-        <div className="space-y-6 md:sticky top-0 md:mb-0 mb-6">
+        <div className="space-y-6 md:sticky top-0 self-start md:mb-0 mb-6">
           <img src={upcomingB} alt="" />
           <img src={upcomingC} alt="" />
         </div>
