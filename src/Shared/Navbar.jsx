@@ -2,8 +2,8 @@
 import { Link, NavLink } from "react-router-dom";
 // import { toast } from "react-toastify";
 // import useAuth from "../Auth/Hook/useAuth";
-import icon from "/assets/icon.png"
-import logo from "/assets/logo.png"
+import icon from "/assets/icon.png";
+import logo from "/assets/logo.png";
 
 const Navbar = () => {
   // useContext
@@ -31,16 +31,24 @@ const Navbar = () => {
   const links = (
     <>
       <li className="text-lg font-bold">
-        <NavLink to={"/"} className={'dark:hover:bg-slate-800'}>Home</NavLink>
+        <NavLink to={"/"} className={"dark:hover:bg-slate-800"}>
+          Home
+        </NavLink>
       </li>
       <li className="text-lg font-bold">
-        <NavLink to={"/about"} className={'dark:hover:bg-slate-800'}>About Us</NavLink>
+        <NavLink to={"/about"} className={"dark:hover:bg-slate-800"}>
+          About Us
+        </NavLink>
       </li>
       <li className="text-lg font-bold">
-        <NavLink to={"/projects"} className={'dark:hover:bg-slate-800'}>Projects</NavLink>
+        <NavLink to={"/projects"} className={"dark:hover:bg-slate-800"}>
+          Projects
+        </NavLink>
       </li>
       <li className="text-lg font-bold">
-        <NavLink to={"/contact"} className={'dark:hover:bg-slate-800'}>Contact</NavLink>
+        <NavLink to={"/contact"} className={"dark:hover:bg-slate-800"}>
+          Contact
+        </NavLink>
       </li>
 
       {/* {users?.email ? (
@@ -69,13 +77,16 @@ const Navbar = () => {
         {/* start */}
         <div className="navbar-start sm:w-1/2 w-fit">
           <Link to={"/"}>
-            <h2 className="text-4xl ml-10 font-bold flex gap-2 justify-center items-center"> <img src={icon} alt="" className="sm:h-12 h-10 -mt-2.5" />  </h2>
+            <h2 className="text-4xl ml-10 font-bold flex gap-2 justify-center items-center">
+              <img src={icon} alt="" className="sm:h-12 h-10 -mt-2.5 hidden xl:flex" />
+              <img src={logo} alt=""  className="sm:h-16 h-14 xl:hidden flex" />
+            </h2>
           </Link>
         </div>
 
         {/* center */}
         <div className="navbar-center hidden xl:flex">
-          <img src={logo} alt=""  className="sm:h-16 h-14" />
+          <img src={logo} alt="" className="sm:h-16 h-14" />
           {/* <ul className="menu menu-horizontal px-1 gap-2">{links}</ul> */}
         </div>
 

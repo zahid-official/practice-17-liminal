@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { FaDiscord, FaFacebookSquare, FaLinkedin } from "react-icons/fa";
+import { FaFacebookSquare } from "react-icons/fa";
+import { IoLogoWhatsapp } from "react-icons/io";
 import { RiInstagramFill } from "react-icons/ri";
 
 const Contact = () => {
@@ -23,8 +24,8 @@ const Contact = () => {
             <div>
               <h3 className="text-xl border-b pb-1 mb-4"> Visit Us </h3>
               <p>
-                Kifisias Avenue 228, Kifisia, Greece 145-62 <br />
-                Mon - Fri: 9:00 am-6:00 pm
+                1A (Ground Floor), House 34 (near 12/13 more), Road 03, Sector
+                12, Uttara, Dhaka, Dhaka, Bangladesh
               </p>
             </div>
 
@@ -32,8 +33,22 @@ const Contact = () => {
             <div>
               <h3 className="text-xl border-b pb-1 mb-4"> Talk with Us </h3>
               <p>
-                T: +30 210 7296492 <br />
-                E: info@stonesandwalls.com
+                <Link
+                  className="link link-hover"
+                  to={"https://wa.me/%2B8801955464625"}
+                >
+                  Call Us: 01955-464625
+                </Link>
+                <br />
+                <br />
+                <Link
+                  className="link link-hover"
+                  to={
+                    "https://mail.google.com/mail/?view=cm&fs=1&to=interiorliminal%40gmail.com"
+                  }
+                >
+                  Email: interiorliminal@gmail.com
+                </Link>
               </p>
             </div>
           </div>
@@ -43,30 +58,31 @@ const Contact = () => {
             <h3 className="text-xl border-b pb-1 mb-5"> Follow Us </h3>
             <ul className="flex items-center gap-2 mt-2 justify-center">
               <li>
-                <Link to={"https://www.facebook.com/"}>
+                <Link
+                  to={
+                    "https://www.facebook.com/liminalinterior?mibextid=qi2Omg&rdid=5UrJaMM7lOWvHNYd&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1293aDinBYe%2F%3Fmibextid%3Dqi2Omg#"
+                  }
+                >
                   <span className="hover:text-[#0866ff]">
                     <FaFacebookSquare size={30} />
                   </span>
                 </Link>
               </li>
               <li>
-                <Link to={"https://www.linkedin.com/"}>
-                  <span className="hover:text-[#0a66c2]">
-                    <FaLinkedin size={30} />
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link to={"https://www.instagram.com/"}>
+                <Link
+                  to={
+                    "https://www.instagram.com/liminalinterior?igsh=anRlYm1ubWNmcXVw"
+                  }
+                >
                   <span className="hover:text-[#e0084b]">
                     <RiInstagramFill size={30} />
                   </span>
                 </Link>
               </li>
               <li>
-                <Link to={"https://discord.com/"}>
-                  <span className="hover:text-[#5866f1]">
-                    <FaDiscord size={30} />
+                <Link to={"https://wa.me/%2B8801955464625"}>
+                  <span className="hover:text-[#36c035]">
+                    <IoLogoWhatsapp size={30} />
                   </span>
                 </Link>
               </li>

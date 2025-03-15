@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { FaDiscord, FaFacebookSquare, FaLinkedin } from "react-icons/fa";
+import { FaFacebookSquare } from "react-icons/fa";
+import { IoLogoWhatsapp } from "react-icons/io";
 import { RiInstagramFill } from "react-icons/ri";
 import logo from "/assets/logo.png"
 
@@ -19,31 +20,23 @@ const Footer = () => {
           </p>
           <ul className="flex items-center gap-2 mt-2">
             <li>
-              <Link to={"https://www.facebook.com/"}>
+              <Link to={"https://www.facebook.com/liminalinterior?mibextid=qi2Omg&rdid=5UrJaMM7lOWvHNYd&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1293aDinBYe%2F%3Fmibextid%3Dqi2Omg#"}>
                 <span className="hover:text-[#0866ff]">
                   <FaFacebookSquare size={30} />
                 </span>
               </Link>
             </li>
             <li>
-              <Link to={"https://www.linkedin.com/"}>
-                
-                <span className="hover:text-[#0a66c2]">
-                  <FaLinkedin size={30} />
-                </span>
-              </Link>
-            </li>
-            <li>
-              <Link to={"https://www.instagram.com/"}>
+              <Link to={"https://www.instagram.com/liminalinterior?igsh=anRlYm1ubWNmcXVw"}>
                 <span className="hover:text-[#e0084b]">
                   <RiInstagramFill size={30} />
                 </span>
               </Link>
             </li>
             <li>
-              <Link to={"https://discord.com/"}>
-                <span className="hover:text-[#5866f1]">
-                  <FaDiscord size={30} />
+              <Link to={"https://wa.me/%2B8801955464625"}>
+                <span className="hover:text-[#36c035]">
+                  <IoLogoWhatsapp size={30} />
                 </span>
               </Link>
             </li>
@@ -56,14 +49,15 @@ const Footer = () => {
           <a className="link link-hover">Get Help</a>
           <a className="link link-hover">Privacy Policy</a>
         </nav>
+
         <nav>
           <h6 className="text-black dark:text-white font-bold text-xl">Contact Info</h6>
-          <a className="link link-hover"> Call Us: 1-885-665-2548</a>
+          <Link className="link link-hover" to="https://wa.me/%2B8801955464625"> <b>Call Us:</b>  01955-464625</Link>
           <a className="link link-hover">
             
-            Address: +7811 Vermont Ave, <br /> Los Angeles, CA 90054
+            <b>Address:</b> 1A (Ground Floor), House 34 (near 12/13 more), <br /> Road 03, Sector 12, Uttara, Dhaka, Dhaka, Bangladesh
           </a>
-          <a className="link link-hover">Mail Us: hello@logo.com</a>
+          <Link className="link link-hover" to="https://mail.google.com/mail/?view=cm&fs=1&to=interiorliminal%40gmail.com"><b>Mail Us:</b> interiorliminal@gmail.com</Link>
         </nav>
       </footer>
     </>
