@@ -73,14 +73,14 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="navbar sm:w-11/12 mx-auto py-6 px-3">
+      <div className="navbar justify-between xl:w-11/12 mx-auto py-6 px-6">
         {/* start */}
         <div className="navbar-start sm:w-1/2 w-fit">
           <Link to={"/"}>
-            <h2 className="text-4xl ml-10 font-bold flex gap-2 justify-center items-center">
+            <div className="text-4xl xl:ml-10 font-bold flex gap-2 justify-center items-center">
               <img src={icon} alt="" className="sm:h-12 h-10 -mt-2.5 hidden xl:flex" />
               <img src={logo} alt=""  className="sm:h-16 h-14 xl:hidden flex " />
-            </h2>
+            </div>
           </Link>
         </div>
 

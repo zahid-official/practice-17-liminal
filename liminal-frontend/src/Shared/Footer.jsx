@@ -55,7 +55,7 @@ const Footer = () => {
           <Link className="link link-hover" to="https://wa.me/%2B8801955464625"> <b>Call Us:</b>  01955-464625</Link>
           <a className="link link-hover">
             
-            <b>Address:</b> 1A (Ground Floor), House 34 (near 12/13 more), <br /> Road 03, Sector 12, Uttara, Dhaka, Dhaka, Bangladesh
+            <b>Address:</b> 1A (Ground Floor), House 34 (near 12/13 more), <br /> Road 03, Sector 12, Uttara, Dhaka, Bangladesh
           </a>
           <Link className="link link-hover" to="https://mail.google.com/mail/?view=cm&fs=1&to=interiorliminal%40gmail.com"><b>Mail Us:</b> interiorliminal@gmail.com</Link>
         </nav>

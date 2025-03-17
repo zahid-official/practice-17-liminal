@@ -6,7 +6,7 @@ import { RiInstagramFill } from "react-icons/ri";
 const Contact = () => {
   return (
     <div className="bg-[url(/assets/contact.jpg)]  bg-fixed">
-      <div className="flex h-[87.8vh] container mx-auto items-center">
+      <div className="flex min-h-[87.8vh] py-20 container mx-auto items-center">
         <div className="bg-[#154434] text-white max-w-screen-sm px-8 py-14">
           {/* 1 */}
           <div>
@@ -19,13 +19,13 @@ const Contact = () => {
           </div>
 
           {/* 2 */}
-          <div className="grid grid-cols-2 gap-6 mb-8">
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
             {/* left */}
             <div>
               <h3 className="text-xl border-b pb-1 mb-4"> Visit Us </h3>
               <p>
                 1A (Ground Floor), House 34 (near 12/13 more), Road 03, Sector
-                12, Uttara, Dhaka, Dhaka, Bangladesh
+                12, Uttara, Dhaka, Bangladesh
               </p>
             </div>
 
