@@ -1,17 +1,17 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GoogleAuthProvider } from "firebase/auth";
-import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 import Lottie from "lottie-react";
 import registerLottie from "../../Lottie/register.json";
 import useAuth from "../../Auth/Hook/useAuth";
+import useAxios from "../../Auth/Hook/useAxios";
 
 const Register = () => {
-  // useContent
+  // Hooks
   const { register, profile, setUsers, google } = useAuth();
-  // state for password
-  const [strongPassword, setStrongPassword] = useState("");
+  const axiosPublic = useAxios();
+
   // useLocation
   const location = useLocation();
   // useNavigate
@@ -28,16 +28,6 @@ const Register = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    // password validation
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-    setStrongPassword("");
-    if (!passwordRegex.test(password)) {
-      setStrongPassword(
-        "Must have an Uppercase & Lowercase letter and Length must be at least 6 character"
-      );
-      return;
-    }
-
     // register
     register(email, password)
       .then((result) => {
@@ -47,8 +37,15 @@ const Register = () => {
         profile({ displayName: name, photoURL: photo })
           .then(() => {
             setUsers({ ...result.user, displayName: name, photoURL: photo });
-            toast.success("Sign Up Successfully");
-            navigate(location?.state ? location.state : "/");
+
+            // create user in DB
+            const user = { name, email, role : "user" };
+            axiosPublic.post("/users", user).then((res) => {
+              if (res.data.insertedId) {
+                toast.success("Sign Up Successfully");
+                navigate(location?.state ? location.state : "/");
+              }
+            });
           })
           .catch((error) => toast.error(error.message));
       })
@@ -77,7 +74,7 @@ const Register = () => {
             className="max-w-xl w-full mt-28"
           ></Lottie>
         </div>
-        
+
         {/* registration form */}
         <div className="flex-1">
           <div className="card bg-[#f9f9f9] dark:bg-[#0a1020] w-full max-w-xl xl:mx-0 mx-auto py-14 mt-10 mb-28 sm:px-12 px-6">
@@ -144,15 +141,6 @@ const Register = () => {
                     className="input input-bordered dark:bg-[#010313]"
                     required
                   />
-
-                  {/* strong password */}
-                  <label className="label">
-                    {strongPassword && (
-                      <span className="label-text mt-3 text-red-600">
-                        {strongPassword}
-                      </span>
-                    )}
-                  </label>
                 </div>
 
                 {/* submit */}

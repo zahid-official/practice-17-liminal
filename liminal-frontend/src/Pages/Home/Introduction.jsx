@@ -31,9 +31,9 @@ const Introduction = () => {
               designers, strategists, and storytellers is dedicated to
               transforming visions into meaningful realities.
             </p>
-            <Link>
-              <p className="relative group inline-block pt-4">
-                <Link to={"/about"}>Read More</Link>
+            <Link  to={"/about"}>
+              <p className="relative group inline-block py-4">
+                Read More
                 <span className="w-full group-hover:w-0 duration-500 h-[2px] bg-[#154434] inline-block absolute -bottom-0.5 left-0"></span>
                 <span className="h-9 scale-0 transition-all duration-500 w-9 ml-1.5 absolute rounded-full bg-[#154434] group-hover:scale-100 -translate-x-8 group-hover:translate-x-0 inline-flex items-center justify-center ">
                   <FaArrowRight
@@ -71,9 +71,9 @@ const Introduction = () => {
               aesthetically pleasing spaces that meet their needs and
               preferences.
             </p>
-            <Link>
-              <p className="relative group inline-block pt-4">
-                <Link to={"/about"}>Explore Services</Link>
+            <Link  to={"/about"}>
+              <p className="relative group inline-block py-4">
+                Explore Services
                 <span className="w-full group-hover:w-0 duration-500 h-[2px] bg-[#154434] inline-block absolute -bottom-0.5 left-0"></span>
                 <span className="h-9 scale-0 transition-all duration-500 w-9 ml-1.5 absolute rounded-full bg-[#154434] group-hover:scale-100 -translate-x-8 group-hover:translate-x-0 inline-flex items-center justify-center ">
                   <FaArrowRight

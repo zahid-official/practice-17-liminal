@@ -23,51 +23,47 @@ const Routes = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home></Home>
+        element: <Home></Home>,
       },
       {
         path: "/about",
-        element: (
-          <About></About>
-        ),
+        element: <About></About>,
       },
       {
         path: "/projects",
-        element: (
-          <Projects></Projects>
-        ),
+        element: <Projects></Projects>,
       },
       {
         path: "/contact",
-        element: (
-          <Contact></Contact>
-        ),
+        element: <Contact></Contact>,
       },
       {
         path: "/upcoming1",
-        element: (
-          <Upcoming1></Upcoming1>
-        ),
+        element: <Upcoming1></Upcoming1>,
       },
       {
         path: "/upcoming2",
-        element: <Upcoming2></Upcoming2>
+        element: <Upcoming2></Upcoming2>,
       },
       {
         path: "/upcoming3",
-        element: <Upcoming3></Upcoming3>
+        element: <Upcoming3></Upcoming3>,
       },
       {
         path: "/upcoming4",
-        element: <Upcoming4></Upcoming4>
+        element: <Upcoming4></Upcoming4>,
       },
       {
         path: "/upcoming5",
-        element: <Upcoming5></Upcoming5>
+        element: <Upcoming5></Upcoming5>,
       },
       {
         path: "/admin",
-        element: <PrivateRouter><Admin></Admin></PrivateRouter>
+        element: (
+          <PrivateRouter>
+            <Admin></Admin>
+          </PrivateRouter>
+        ),
       },
       {
         path: "/login",

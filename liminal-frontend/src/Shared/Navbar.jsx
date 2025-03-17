@@ -1,22 +1,22 @@
 // import { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-// import { toast } from "react-toastify";
-// import useAuth from "../Auth/Hook/useAuth";
+import { toast } from "react-toastify";
+import useAuth from "../Auth/Hook/useAuth";
 import icon from "/assets/icon.png";
 import logo from "/assets/logo.png";
 
 const Navbar = () => {
   // useContext
-  // const { users, logout } = useAuth();
+  const { users, logout } = useAuth();
 
   // handleSignOut
-  // const handleSignOut = () => {
-  //   logout()
-  //     .then(() => {
-  //       toast.success("Sign Out Successfully");
-  //     })
-  //     .catch((error) => toast.error(error.message));
-  // };
+  const handleSignOut = () => {
+    logout()
+      .then(() => {
+        toast.success("Sign Out Successfully");
+      })
+      .catch((error) => toast.error(error.message));
+  };
 
   // handleDarkMode
   // const handleDarkMode = () => {
@@ -122,7 +122,7 @@ const Navbar = () => {
             </label>
           </div> */}
 
-          {/* {users?.email ? (
+          {users?.email && (
             <div className="relative rounded-full profilePhoto">
               <div className="dropdown dropdown-hover  rounded-full">
                 <div tabIndex={0} role="button" className="rounded-full m-1">
@@ -147,21 +147,7 @@ const Navbar = () => {
                 </ul>
               </div>
             </div>
-          ) : (
-            <div className="sm:flex gap-2.5 hidden">
-              <Link to={"/login"}>
-                <button className="btn bg-[#154434] dark:bg-base-200 dark:text-black dark:hover:bg-base-300 hover:bg-[#0e2e23] text-white text-lg font-bold min-w-28">
-                  Sign In
-                </button>
-              </Link>
-
-              <Link to={"/register"}>
-                <button className="btn bg-[#154434] dark:bg-base-200 dark:text-black dark:hover:bg-base-300 hover:bg-[#0e2e23] text-white text-lg font-bold min-w-28">
-                  Sign Up
-                </button>
-              </Link>
-            </div>
-          )} */}
+          )}
 
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost ">
