@@ -79,7 +79,7 @@ const Navbar = () => {
           <Link to={"/"}>
             <h2 className="text-4xl ml-10 font-bold flex gap-2 justify-center items-center">
               <img src={icon} alt="" className="sm:h-12 h-10 -mt-2.5 hidden xl:flex" />
-              <img src={logo} alt=""  className="sm:h-16 h-14 xl:hidden flex" />
+              <img src={logo} alt=""  className="sm:h-16 h-14 xl:hidden flex " />
             </h2>
           </Link>
         </div>
@@ -165,7 +165,7 @@ const Navbar = () => {
 
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost ">
-              <p className="text-xl">Menu</p>
+              <p className="text-xl sm:block hidden">Menu</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-7 w-7"
