@@ -58,6 +58,16 @@ const Register = () => {
     google(googleProvider)
       .then((result) => {
         setUsers(result.user);
+
+        // create user in DB
+        const user = { name: result.user.displayName, email: result.user.email, role : "user" };
+        axiosPublic.post("/users", user).then((res) => {
+          if (res.data.insertedId) {
+            toast.success("Sign Up Successfully");
+            navigate(location?.state ? location.state : "/");
+          }
+        });
+
         toast.success("Sign Up Successfully");
         navigate(location?.state ? location.state : "/");
       })

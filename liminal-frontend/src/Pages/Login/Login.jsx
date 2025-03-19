@@ -5,10 +5,13 @@ import { GoogleAuthProvider } from "firebase/auth";
 import loginLottie from "../../Lottie/login.json";
 import Lottie from "lottie-react";
 import useAuth from "../../Auth/Hook/useAuth";
+import useAxios from "../../Auth/Hook/useAxios";
 
 const Login = () => {
   // useContext
   const { login, setUsers, google } = useAuth();
+  const axiosPublic = useAxios();
+
   // useLocation
   const location = useLocation();
   // useNavigate
@@ -38,8 +41,13 @@ const Login = () => {
     google(googleProvider)
       .then((result) => {
         setUsers(result.user);
-        toast.success("Sign In Successfully");
-        navigate(location?.state ? location.state : "/");
+        // create user in DB
+        const user = { name: result.user.displayName, email: result.user.email, role : "user" };
+        axiosPublic.post("/users", user).then((res) => {
+          console.log(res.data);
+          toast.success("Sign Up Successfully");
+          navigate(location?.state ? location.state : "/");
+        });
       })
       .catch((error) => toast.error(error.message));
   };
