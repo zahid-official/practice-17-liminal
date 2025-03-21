@@ -3,7 +3,7 @@
 const AddProject = () => {
     return (
         <div>
-            
+            add project
         </div>
     );
 };

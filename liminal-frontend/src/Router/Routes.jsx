@@ -13,6 +13,7 @@ import Upcoming5 from "../Pages/Upcoming/Upcoming5";
 import Projects from "../Pages/Projects/Projects";
 import Contact from "../Pages/Contact/Contact";
 import PrivateRouter from "./PrivateRouter";
+import AddProject from "../Pages/AddProject/AddProject";
 
 const Routes = createBrowserRouter([
   {
@@ -60,6 +61,7 @@ const Routes = createBrowserRouter([
         path: "/addProject",
         element: (
           <PrivateRouter>
+            <AddProject></AddProject>
           </PrivateRouter>
         ),
       },
