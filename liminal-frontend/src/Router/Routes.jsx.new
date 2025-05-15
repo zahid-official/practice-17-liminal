@@ -93,8 +93,9 @@ const Routes = createBrowserRouter([
         path: "/dashboard/projects",
         element: <AddProject></AddProject>,
       },
+      // Other dashboard routes can be added here
     ],
-  }
+  },
 ]);
 
 export default Routes;
