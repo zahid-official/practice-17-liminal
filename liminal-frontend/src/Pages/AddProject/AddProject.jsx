@@ -3,12 +3,14 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import useAxios from "../../Auth/Hook/useAxios";
+import useAxiosSecure from "../../Auth/Hook/useAxiosSecure";
 import useAuth from "../../Auth/Hook/useAuth";
 import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
 
 const AddProject = () => {
     const { users } = useAuth();
     const axiosPublic = useAxios();
+    const axiosSecure = useAxiosSecure();
     const [loading, setLoading] = useState(false);
     const [subImages, setSubImages] = useState([]);
     const [subImagePreviews, setSubImagePreviews] = useState([]);
@@ -69,7 +71,7 @@ const onSubmit = async (data) => {
             const bannerForm = new FormData();
             bannerForm.append('image', bannerImage);
 
-            const bannerRes = await axiosPublic.post("/upload-single-image", bannerForm, {
+            const bannerRes = await axiosSecure.post("/upload-single-image", bannerForm, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
@@ -83,7 +85,7 @@ const onSubmit = async (data) => {
                 subForm.append('images', file);
             });
 
-            const subRes = await axiosPublic.post('/upload-multiple-images', subForm, {
+            const subRes = await axiosSecure.post('/upload-multiple-images', subForm, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
@@ -103,8 +105,8 @@ const onSubmit = async (data) => {
             addedDate: new Date()
         };
 
-        // 4. Save project
-        await axiosPublic.post("/projects", projectData);
+        // 4. Save project - using secure axios with JWT token
+        await axiosSecure.post("/projects", projectData);
 
         toast.success("Project added successfully!");
         reset();

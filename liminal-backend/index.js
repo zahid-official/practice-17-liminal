@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const cloudinary = require('cloudinary').v2;
+const jwt = require('jsonwebtoken');
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const PORT = process.env.PORT || 5000;
@@ -33,13 +34,99 @@ const client = new MongoClient(uri, {
   },
 });
 
+// JWT Verification Middleware
+const verifyToken = (req, res, next) => {
+  const authorization = req.headers.authorization;
+  if (!authorization) {
+    return res.status(401).json({ message: 'Unauthorized access' });
+  }
+
+  // Get token from Bearer token
+  const token = authorization.split(' ')[1];
+
+  // Verify token
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ message: 'Forbidden access' });
+    }
+    req.decoded = decoded;
+    next();
+  });
+};
+
+// Admin Verification Middleware
+const verifyAdmin = async (req, res, next) => {
+  const email = req.decoded.email;
+  const query = { email: email };
+
+  const usersCollection = client.db('liminalDB').collection("users");
+  const user = await usersCollection.findOne(query);
+
+  if (user?.role !== 'admin') {
+    return res.status(403).json({ message: 'Forbidden: Admin access required' });
+  }
+
+  next();
+};
+
 async function run() {
   try {
     await client.connect();
     const liminalCollections = client.db('liminalDB').collection("liminal_data");
+    const usersCollection = client.db('liminalDB').collection("users");
 
-    // ✅ Upload a single image
-    app.post('/upload-single-image', async (req, res) => {
+    // 🔑 JWT API
+    app.post('/jwt', async (req, res) => {
+      const user = req.body;
+      const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '356d' });
+      res.send({ token });
+    });
+
+    // 👤 Users API
+    app.post('/users', async (req, res) => {
+      const user = req.body;
+
+      // Check if user already exists
+      const existingUser = await usersCollection.findOne({ email: user.email });
+      if (existingUser) {
+        return res.send({ message: 'User already exists', insertedId: existingUser._id });
+      }
+
+      const result = await usersCollection.insertOne(user);
+      res.send(result);
+    });
+
+    // 👤 Get user role
+    app.get('/users/role/:email', verifyToken, async (req, res) => {
+      const email = req.params.email;
+
+      // Check if the request is from the same user
+      if (req.decoded.email !== email) {
+        return res.status(403).json({ message: 'Forbidden access' });
+      }
+
+      const query = { email: email };
+      const user = await usersCollection.findOne(query);
+      res.send({ role: user?.role || 'user' });
+    });
+
+    // 👤 Check if user is admin
+    app.get('/users/admin/:email', verifyToken, async (req, res) => {
+      const email = req.params.email;
+
+      // Check if the request is from the same user
+      if (req.decoded.email !== email) {
+        return res.status(403).json({ message: 'Forbidden access' });
+      }
+
+      const query = { email: email };
+      const user = await usersCollection.findOne(query);
+      const isAdmin = user?.role === 'admin';
+      res.send({ isAdmin });
+    });
+
+    // Upload a single image - Only authenticated users can upload
+    app.post('/upload-single-image', verifyToken, async (req, res) => {
       try {
         if (!req.files || !req.files.image) {
           return res.status(400).json({ message: 'No file uploaded' });
@@ -57,8 +144,8 @@ async function run() {
       }
     });
 
-    // ✅ Upload multiple images
-    app.post('/upload-multiple-images', async (req, res) => {
+    // ✅ Upload multiple images - Only authenticated users can upload
+    app.post('/upload-multiple-images', verifyToken, async (req, res) => {
       console.log(req.files);
       try {
         if (!req.files || !req.files.images) {
@@ -85,8 +172,8 @@ async function run() {
       }
     });
 
-    // ➕ Create post
-    app.post('/projects', async (req, res) => {
+    // ➕ Create post - Only admin can create projects
+    app.post('/projects', verifyToken, verifyAdmin, async (req, res) => {
       const { bannerImage, title, status, description, subImages } = req.body;
 
       if (!bannerImage || !title || !status || !description || !Array.isArray(subImages)) {
@@ -100,6 +187,7 @@ async function run() {
           status,
           description,
           subImages,
+          addedBy: req.decoded.email,
           createdAt: new Date()
         };
 
@@ -112,7 +200,7 @@ async function run() {
     });
 
     // 📥 Get all posts
-    app.get('/posts', async (req, res) => {
+    app.get('/projects', async (req, res) => {
       try {
         const posts = await liminalCollections.find().toArray();
         res.status(200).json(posts);
@@ -123,7 +211,7 @@ async function run() {
     });
 
     // 📥 Get a single post
-    app.get('/posts/:id', async (req, res) => {
+    app.get('/projects/:id', async (req, res) => {
       const { id } = req.params;
 
       try {
@@ -140,8 +228,8 @@ async function run() {
       }
     });
 
-    // ✏️ Update post
-    app.patch('/posts/:id', async (req, res) => {
+    // ✏️ Update post - Only admin can update
+    app.patch('/projects/:id', verifyToken, verifyAdmin, async (req, res) => {
       const { id } = req.params;
       const updateData = req.body;
 
@@ -162,8 +250,8 @@ async function run() {
       }
     });
 
-    // 🗑️ Delete post
-    app.delete('/posts/:id', async (req, res) => {
+    // 🗑️ Delete post - Only admin can delete
+    app.delete('/projects/:id', verifyToken, verifyAdmin, async (req, res) => {
       const { id } = req.params;
 
       try {

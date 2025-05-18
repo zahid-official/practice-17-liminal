@@ -14,6 +14,7 @@ import Upcoming5 from "../Pages/Upcoming/Upcoming5";
 import Projects from "../Pages/Projects/Projects";
 import Contact from "../Pages/Contact/Contact";
 import PrivateRouter from "./PrivateRouter";
+import AdminRoute from "./AdminRoute";
 import AddProject from "../Pages/AddProject/AddProject";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 
@@ -63,7 +64,9 @@ const Routes = createBrowserRouter([
         path: "/addProject",
         element: (
           <PrivateRouter>
-            <AddProject></AddProject>
+            <AdminRoute>
+              <AddProject></AddProject>
+            </AdminRoute>
           </PrivateRouter>
         ),
       },
@@ -91,7 +94,11 @@ const Routes = createBrowserRouter([
       },
       {
         path: "/dashboard/projects",
-        element: <AddProject></AddProject>,
+        element: (
+          <AdminRoute>
+            <AddProject></AddProject>
+          </AdminRoute>
+        ),
       },
     ],
   }
