@@ -50,21 +50,27 @@ const Navbar = () => {
           Contact
         </NavLink>
       </li>
-
       {users?.email && (
         <>
           <li className="text-lg font-bold">
-            <NavLink to={"/addProject"} className={"dark:hover:bg-slate-800"}>
-              Add Project
+            <NavLink to={"/dashboard"} className={"dark:hover:bg-slate-800"}>
+              Dashboard
             </NavLink>
           </li>
-          <li className="text-lg font-bold">
+          {/* <li className="text-lg font-bold">
             <NavLink to={"/updateProject"} className={"dark:hover:bg-slate-800"}>
               Update Project
             </NavLink>
-          </li>
+          </li> */}
         </>
       )}
+      <li onClick={handleSignOut} className="text-lg font-bold">
+        <NavLink to={"/login"} className={"dark:hover:bg-slate-800"}>
+          Logout
+        </NavLink>
+      </li>
+
+      
     </>
   );
 
