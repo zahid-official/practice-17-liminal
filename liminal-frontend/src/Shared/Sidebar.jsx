@@ -8,15 +8,14 @@ const Sidebar = () => {
   return (
     <div className="p-4">
       <div className="mb-6 text-center">
-        <h2 className="text-xl font-bold">Dashboard</h2>
         {users?.email && (
-          <div className="mt-4 flex flex-col items-center">
+          <div className="pt-10 flex flex-col items-center">
             <img
               src={users?.photoURL || "https://i.ibb.co/MgsTCcv/avater.jpg"}
               alt="profile"
               className="h-16 w-16 rounded-full object-cover border-2 border-[#154434] dark:border-gray-400"
             />
-            <p className="mt-2 font-medium">{users?.displayName || "User"}</p>
+            <h2 className="mt-2 text-2xl font-semibold">{users?.displayName || "User"}</h2>
           </div>
         )}
       </div>
@@ -34,7 +33,7 @@ const Sidebar = () => {
             }
             end
           >
-            <FaHome /> <span>Dashboard Home</span>
+            <FaHome /> <span>Dashboard</span>
           </NavLink>
         </li>
         <li>
@@ -48,7 +47,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <FaProjectDiagram /> <span>Projects</span>
+            <FaProjectDiagram /> <span>Add Project</span>
           </NavLink>
         </li>
         <li>
@@ -62,7 +61,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <FaChartBar /> <span>Analytics</span>
+            <FaChartBar /> <span>Manage Projects</span>
           </NavLink>
         </li>
         <li>
