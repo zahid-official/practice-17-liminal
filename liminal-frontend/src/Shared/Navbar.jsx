@@ -57,18 +57,8 @@ const Navbar = () => {
               Dashboard
             </NavLink>
           </li>
-          {/* <li className="text-lg font-bold">
-            <NavLink to={"/updateProject"} className={"dark:hover:bg-slate-800"}>
-              Update Project
-            </NavLink>
-          </li> */}
         </>
       )}
-      <li onClick={handleSignOut} className="text-lg font-bold">
-        <NavLink to={"/login"} className={"dark:hover:bg-slate-800"}>
-          Logout
-        </NavLink>
-      </li>
 
       
     </>
