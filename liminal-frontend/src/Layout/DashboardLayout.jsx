@@ -1,18 +1,12 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../Shared/Sidebar";
-import Navbar from "../Shared/Navbar";
-import Footer from "../Shared/Footer";
 
 const DashboardLayout = () => {
   return (
     <div className="duration-500 dark:bg-[#010313] dark:text-white">
-      <header>
-        <Navbar></Navbar>
-      </header>
-
-      <main className="min-h-[80vh] flex">
+      <main className="flex">
         {/* Sidebar */}
-        <div className="w-64 bg-[#f9f9f9] dark:bg-[#0a1020] min-h-[80vh] shadow-md">
+        <div className="w-72 bg-[#f9f9f9] dark:bg-[#0a1020] min-h-screen shadow-md">
           <Sidebar></Sidebar>
         </div>
         
@@ -21,10 +15,6 @@ const DashboardLayout = () => {
           <Outlet></Outlet>
         </div>
       </main>
-
-      <footer className="bg-[#f9f9f9] dark:bg-[#0a1020]">
-        <Footer></Footer>
-      </footer>
     </div>
   );
 };
