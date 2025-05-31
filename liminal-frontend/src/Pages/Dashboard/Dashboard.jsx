@@ -37,8 +37,8 @@ const Dashboard = () => {
   ];
 
   return (
-    <div>
-      <div className="mb-6">
+    <div className="py-12 px-12">
+      <div className="pb-6">
         <h1 className="text-3xl font-bold custom-title">Dashboard</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-2">
           Welcome back, {users?.displayName || "User"}!
