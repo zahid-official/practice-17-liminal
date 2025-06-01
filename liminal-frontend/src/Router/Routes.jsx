@@ -14,6 +14,7 @@ import Projects from "../Pages/Projects/Projects";
 import Contact from "../Pages/Contact/Contact";
 import PrivateRouter from "./PrivateRouter";
 import DashboardLayout from "../Layout/DashboardLayout";
+import Dashboard from "../Pages/Admin/dashboard";
 
 const Routes = createBrowserRouter([
   {
@@ -74,6 +75,13 @@ const Routes = createBrowserRouter([
         <DashboardLayout></DashboardLayout>
       </PrivateRouter>
     ),
+    errorElement: <Error></Error>,
+    children: [
+      {
+        path: "",
+        element: <Dashboard></Dashboard>
+      }
+    ]
   },
 ]);
 
