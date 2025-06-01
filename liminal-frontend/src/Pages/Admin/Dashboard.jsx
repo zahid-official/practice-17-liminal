@@ -99,6 +99,21 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* Quick Actions */}
+      <div className="bg-white dark:bg-[#0a1020] rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <h2 className="text-xl font-bold mb-4">Quick Actions</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <button className="btn bg-[#154434] hover:bg-[#0d2c22] text-white">
+            Add New Project
+          </button>
+          <button className="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">
+            Schedule Meeting
+          </button>
+          <button className="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600">
+            Generate Report
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
