@@ -50,17 +50,21 @@ const Navbar = () => {
           Contact
         </NavLink>
       </li>
+
       {users?.email && (
         <>
           <li className="text-lg font-bold">
-            <NavLink to={"/dashboard"} className={"dark:hover:bg-slate-800"}>
-              Dashboard
+            <NavLink to={"/addProject"} className={"dark:hover:bg-slate-800"}>
+              Add Project
+            </NavLink>
+          </li>
+          <li className="text-lg font-bold">
+            <NavLink to={"/updateProject"} className={"dark:hover:bg-slate-800"}>
+              Update Project
             </NavLink>
           </li>
         </>
       )}
-
-      
     </>
   );
 

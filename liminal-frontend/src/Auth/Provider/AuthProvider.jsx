@@ -4,7 +4,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import ContextAPI from "../Context/ContextAPI";
 import { auth } from "../Firebase/firebase";
-import axios from "axios";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -35,8 +34,6 @@ const AuthProvider = ({ children }) => {
   // logout
   const logout = () => {
     setLoading(true);
-    // Clear token on logout
-    localStorage.removeItem('access-token');
     return signOut(auth);
   };
 
@@ -55,27 +52,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const observer = onAuthStateChanged(auth, (usersData) => {
       setUsers(usersData);
-
-      // Get JWT token when user is logged in
-      if (usersData) {
-        // Get token from server
-        axios.post('http://localhost:5000/jwt', {
-          email: usersData.email
-        })
-        .then(res => {
-          // Store token in localStorage
-          localStorage.setItem('access-token', res.data.token);
-          setLoading(false);
-        })
-        .catch(error => {
-          console.error('JWT Error:', error);
-          setLoading(false);
-        });
-      } else {
-        // Remove token when user logs out
-        localStorage.removeItem('access-token');
-        setLoading(false);
-      }
+      setLoading(false);
     });
 
     return () => {

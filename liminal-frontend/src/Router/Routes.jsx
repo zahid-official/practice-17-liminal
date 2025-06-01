@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../Layout/MainLayout";
-import DashboardLayout from "../Layout/DashboardLayout";
 import Error from "../Pages/Error/Error";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
@@ -14,9 +13,7 @@ import Upcoming5 from "../Pages/Upcoming/Upcoming5";
 import Projects from "../Pages/Projects/Projects";
 import Contact from "../Pages/Contact/Contact";
 import PrivateRouter from "./PrivateRouter";
-import AdminRoute from "./AdminRoute";
 import AddProject from "../Pages/AddProject/AddProject";
-import Dashboard from "../Pages/Dashboard/Dashboard";
 
 const Routes = createBrowserRouter([
   {
@@ -64,9 +61,7 @@ const Routes = createBrowserRouter([
         path: "/addProject",
         element: (
           <PrivateRouter>
-            <AdminRoute>
-              <AddProject></AddProject>
-            </AdminRoute>
+            <AddProject></AddProject>
           </PrivateRouter>
         ),
       },
@@ -80,28 +75,6 @@ const Routes = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/dashboard",
-    element: (
-      <PrivateRouter>
-        <DashboardLayout></DashboardLayout>
-      </PrivateRouter>
-    ),
-    children: [
-      {
-        path: "/dashboard",
-        element: <Dashboard></Dashboard>,
-      },
-      {
-        path: "/dashboard/projects",
-        element: (
-          <AdminRoute>
-            <AddProject></AddProject>
-          </AdminRoute>
-        ),
-      },
-    ],
-  }
 ]);
 
 export default Routes;
