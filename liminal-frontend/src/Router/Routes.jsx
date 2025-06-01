@@ -12,8 +12,8 @@ import Upcoming4 from "../Pages/Upcoming/Upcoming4";
 import Upcoming5 from "../Pages/Upcoming/Upcoming5";
 import Projects from "../Pages/Projects/Projects";
 import Contact from "../Pages/Contact/Contact";
-import AdminPanel from "../Pages/Admin/AdminPanel";
 import PrivateRouter from "./PrivateRouter";
+import DashboardLayout from "../Layout/DashboardLayout";
 
 const Routes = createBrowserRouter([
   {
@@ -65,15 +65,15 @@ const Routes = createBrowserRouter([
         path: "/register",
         element: <Register></Register>,
       },
-      {
-        path: "/adminPanel",
-        element: (
-          <PrivateRouter>
-            <AdminPanel></AdminPanel>
-          </PrivateRouter>
-        ),
-      },
     ],
+  },
+  {
+    path: "adminPanel",
+    element: (
+      <PrivateRouter>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRouter>
+    ),
   },
 ]);
 
