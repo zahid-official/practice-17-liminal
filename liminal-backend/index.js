@@ -56,8 +56,8 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // database
-    const database = client.db("nameDB"); //change DB name as requirement
-    const nameCollection = database.collection("collections"); //change collection as requirement
+    const database = client.db("liminalDB");
+    const usersCollection = database.collection("usersCollection");
 
     // jwt token generate (only for personal info based route)
     app.post("/jwt", (req, res) => {
@@ -101,6 +101,16 @@ async function run() {
     // read Operation
     app.get("/", (req, res) => {
       res.send("Server Connected Successfully");
+    });
+
+
+
+
+    // create Operation
+    app.post("/users", async(req, res) => {
+      const user = req.body;
+      const result = await usersCollection.insertOne(user);
+      res.send(result);
     });
   } finally {
   }
