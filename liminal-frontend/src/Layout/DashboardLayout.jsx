@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
 const DashboardLayout = () => {
@@ -6,7 +7,7 @@ const DashboardLayout = () => {
       <div className="drawer lg:drawer-open">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
-          {/* Page content here */}
+          {/* menu-bars icon*/}
           <label htmlFor="my-drawer" className="btn bg-transparent absolute top-4 left-3 hover:text-black drawer-button ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -22,6 +23,11 @@ const DashboardLayout = () => {
               ></path>
             </svg>
           </label>
+
+          {/* page-content */}
+          <main>
+            <Outlet></Outlet>
+          </main>
         </div>
 
         {/* sidebar */}
