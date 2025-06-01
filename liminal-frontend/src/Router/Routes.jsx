@@ -12,8 +12,8 @@ import Upcoming4 from "../Pages/Upcoming/Upcoming4";
 import Upcoming5 from "../Pages/Upcoming/Upcoming5";
 import Projects from "../Pages/Projects/Projects";
 import Contact from "../Pages/Contact/Contact";
+import AdminPanel from "../Pages/Admin/AdminPanel";
 import PrivateRouter from "./PrivateRouter";
-import AddProject from "../Pages/AddProject/AddProject";
 
 const Routes = createBrowserRouter([
   {
@@ -58,20 +58,20 @@ const Routes = createBrowserRouter([
         element: <Upcoming5></Upcoming5>,
       },
       {
-        path: "/addProject",
-        element: (
-          <PrivateRouter>
-            <AddProject></AddProject>
-          </PrivateRouter>
-        ),
-      },
-      {
         path: "/login",
         element: <Login></Login>,
       },
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/adminPanel",
+        element: (
+          <PrivateRouter>
+            <AdminPanel></AdminPanel>
+          </PrivateRouter>
+        ),
       },
     ],
   },
