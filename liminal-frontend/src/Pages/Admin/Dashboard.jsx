@@ -45,11 +45,11 @@ const Dashboard = () => {
       {/* intro */}
       <div>
         <h2 className="text-3xl font-semibold">Dashboard</h2>
-        <p className="py-2">Welcome Back, {users?.displayName}!</p>
+        <p className="py-1">Welcome Back, {users?.displayName}!</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-6 mb-8 mt-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-6 mb-8 mt-6">
         {stats.map((stat) => (
           <div
             key={stat.id}
