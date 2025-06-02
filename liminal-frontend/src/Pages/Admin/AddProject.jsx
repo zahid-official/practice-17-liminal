@@ -1,6 +1,5 @@
 import { FaCloudUploadAlt, FaPlus } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-import { p } from "motion/react-client";
 
 const AddProject = () => {
   const {
