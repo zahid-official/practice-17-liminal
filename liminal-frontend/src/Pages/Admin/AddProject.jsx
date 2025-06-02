@@ -6,7 +6,7 @@ const AddProject = () => {
   return (
     <div className="container mx-auto py-20 mt-4 max-w-4xl sm:px-10 px-4">
       {/* intro */}
-      <div>
+      <div className="text-center">
         <h2 className="text-3xl font-semibold">Add New Project</h2>
         <p className="py-1">Enter the details to create your new project</p>
       </div>
@@ -44,8 +44,8 @@ const AddProject = () => {
               <label className="label font-semibold text-lg">Title</label>
               <input
                 type="text"
-                className="input input-bordered w-full"
-                placeholder="Email"
+                className="input input-bordered w-full text-sm"
+                placeholder="Enter project title"
               />
             </div>
 
@@ -55,8 +55,8 @@ const AddProject = () => {
                 <label className="label font-semibold text-lg">Category</label>
                 <input
                   type="text"
-                  className="input input-bordered w-full"
-                  placeholder="Email"
+                  className="input input-bordered w-full text-sm"
+                  placeholder="Enter the category this project belongs to"
                 />
               </div>
 
@@ -65,8 +65,8 @@ const AddProject = () => {
                 <label className="label font-semibold text-lg">Status</label>
 
                 <select
-                  defaultValue="Medium"
-                  className="select select-md w-full input-bordered"
+                  defaultValue="Small"
+                  className="select select-md w-full input-bordered text-sm"
                 >
                   <option disabled={true}>Select Current Status</option>
                   <option>Upcoming</option>
@@ -79,7 +79,7 @@ const AddProject = () => {
             <div>
               <label className="label font-semibold text-lg">Description</label>
               <textarea
-                placeholder="Bio"
+                placeholder="Write a short description about your project"
                 className="textarea textarea-md w-full input-bordered"
                 rows={4}
               ></textarea>
@@ -109,7 +109,7 @@ const AddProject = () => {
             </div>
 
             <div>
-              <button className="btn bg-[#154434] hover:bg-[#0d2c22] text-white mt-6 w-full">
+              <button className="btn bg-[#154434] hover:bg-[#0d2c22] text-white text-base mt-6 w-full">
                 Add Project
               </button>
             </div>
