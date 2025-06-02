@@ -1,8 +1,15 @@
-import { useState } from "react";
-import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
+import { FaCloudUploadAlt, FaPlus } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { p } from "motion/react-client";
 
 const AddProject = () => {
-  const [bannerPreview, setBannerPreview] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (formData) => console.log(formData);
   return (
     <div className="container mx-auto py-20 mt-4 max-w-4xl sm:px-10 px-4">
       {/* intro */}
@@ -13,7 +20,7 @@ const AddProject = () => {
 
       {/* form */}
       <div className="card bg-base-100 w-full border mt-6">
-        <div className="card-body">
+        <form onSubmit={handleSubmit(onSubmit)} className="card-body">
           <fieldset className="fieldset space-y-4">
             {/* banner image */}
             <div>
@@ -26,6 +33,9 @@ const AddProject = () => {
                   id="bannerImage"
                   className="hidden"
                   accept="image/*"
+                  {...register("bannerImage", {
+                    required: "banner image is required",
+                  })}
                 />
                 <label
                   htmlFor="bannerImage"
@@ -37,6 +47,11 @@ const AddProject = () => {
                   </span>
                 </label>
               </div>
+              {errors.bannerImage && (
+                <p className="text-red-600 text-sm pt-2">
+                  * {errors.bannerImage.message}
+                </p>
+              )}
             </div>
 
             {/* title */}
@@ -46,7 +61,13 @@ const AddProject = () => {
                 type="text"
                 className="input input-bordered w-full text-sm"
                 placeholder="Enter project title"
+                {...register("title", { required: "title is required" })}
               />
+              {errors.title && (
+                <p className="text-red-600 text-sm pt-2">
+                  * {errors.title.message}
+                </p>
+              )}
             </div>
 
             <div className="flex gap-5">
@@ -57,7 +78,15 @@ const AddProject = () => {
                   type="text"
                   className="input input-bordered w-full text-sm"
                   placeholder="Enter the category this project belongs to"
+                  {...register("category", {
+                    required: "category is required",
+                  })}
                 />
+                {errors.category && (
+                  <p className="text-red-600 text-sm pt-2">
+                    * {errors.category.message}
+                  </p>
+                )}
               </div>
 
               {/*  status */}
@@ -65,13 +94,24 @@ const AddProject = () => {
                 <label className="label font-semibold text-lg">Status</label>
 
                 <select
-                  defaultValue="Small"
+                  defaultValue=""
                   className="select select-md w-full input-bordered text-sm"
+                  {...register("status", {
+                    required: "status is required",
+                  })}
                 >
-                  <option disabled={true}>Select Current Status</option>
-                  <option>Upcoming</option>
-                  <option>Completed</option>
+                  <option value="" disabled>
+                    Select Current Status
+                  </option>
+                  <option value="Upcoming">Upcoming</option>
+                  <option value="Completed">Completed</option>
                 </select>
+
+                {errors.status && (
+                  <p className="text-red-600 text-sm pt-2">
+                    * {errors.status.message}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -82,7 +122,15 @@ const AddProject = () => {
                 placeholder="Write a short description about your project"
                 className="textarea textarea-md w-full input-bordered"
                 rows={4}
+                {...register("description", {
+                  required: "description is required",
+                })}
               ></textarea>
+              {errors.description && (
+                <p className="text-red-600 text-sm pt-2">
+                  * {errors.description.message}
+                </p>
+              )}
             </div>
 
             {/* Additional  images */}
@@ -90,6 +138,7 @@ const AddProject = () => {
               <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
                 Additional Images
               </label>
+
               <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4">
                 <input
                   type="file"
@@ -97,6 +146,9 @@ const AddProject = () => {
                   className="hidden"
                   accept="image/*"
                   multiple
+                  {...register("additionalImages", {
+                    required: "additional images are required",
+                  })}
                 />
                 <label
                   htmlFor="additionalImages"
@@ -106,6 +158,12 @@ const AddProject = () => {
                   <span>Add Images</span>
                 </label>
               </div>
+
+              {errors.additionalImages && (
+                <p className="text-red-600 text-sm pt-2">
+                  * {errors.additionalImages.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -114,7 +172,7 @@ const AddProject = () => {
               </button>
             </div>
           </fieldset>
-        </div>
+        </form>
       </div>
     </div>
   );
