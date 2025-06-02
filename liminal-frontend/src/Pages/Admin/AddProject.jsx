@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaCloudUploadAlt, FaTrash } from "react-icons/fa";
+import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
 
 const AddProject = () => {
   const [bannerPreview, setBannerPreview] = useState(null);
@@ -14,29 +14,105 @@ const AddProject = () => {
       {/* form */}
       <div className="card bg-base-100 w-full border mt-6">
         <div className="card-body">
-          <fieldset className="fieldset">
-
+          <fieldset className="fieldset space-y-4">
             {/* banner image */}
-            <label className="label font-semibold text-xl">Banner Image</label>
-            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center">
-              <input
-                type="file"
-                id="bannerImage"
-                className="hidden"
-                accept="image/*"
-              />
-              <label
-                htmlFor="bannerImage"
-                className="cursor-pointer flex flex-col items-center justify-center py-6"
-              >
-                <FaCloudUploadAlt className="text-4xl text-gray-400 mb-2" />
-                <span className="text-gray-500">
-                  Click to upload banner image
-                </span>
+            <div>
+              <label className="label font-semibold text-lg">
+                Banner Image
               </label>
+              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center">
+                <input
+                  type="file"
+                  id="bannerImage"
+                  className="hidden"
+                  accept="image/*"
+                />
+                <label
+                  htmlFor="bannerImage"
+                  className="cursor-pointer flex flex-col items-center justify-center py-6"
+                >
+                  <FaCloudUploadAlt className="text-4xl text-gray-400 mb-2" />
+                  <span className="text-gray-500">
+                    Click to upload banner image
+                  </span>
+                </label>
+              </div>
             </div>
 
-            <button className="btn btn-neutral mt-4">Login</button>
+            {/* title */}
+            <div>
+              <label className="label font-semibold text-lg">Title</label>
+              <input
+                type="text"
+                className="input input-bordered w-full"
+                placeholder="Email"
+              />
+            </div>
+
+            <div className="flex gap-5">
+              {/* category */}
+              <div className="w-full">
+                <label className="label font-semibold text-lg">Category</label>
+                <input
+                  type="text"
+                  className="input input-bordered w-full"
+                  placeholder="Email"
+                />
+              </div>
+
+              {/*  status */}
+              <div className="w-full">
+                <label className="label font-semibold text-lg">Status</label>
+
+                <select
+                  defaultValue="Medium"
+                  className="select select-md w-full input-bordered"
+                >
+                  <option disabled={true}>Select Current Status</option>
+                  <option>Upcoming</option>
+                  <option>Completed</option>
+                </select>
+              </div>
+            </div>
+
+            {/* description if completed */}
+            <div>
+              <label className="label font-semibold text-lg">Description</label>
+              <textarea
+                placeholder="Bio"
+                className="textarea textarea-md w-full input-bordered"
+                rows={4}
+              ></textarea>
+            </div>
+
+            {/* Additional  images */}
+            <div className="mb-6">
+              <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
+                Additional Images
+              </label>
+              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4">
+                <input
+                  type="file"
+                  id="additionalImages"
+                  className="hidden"
+                  accept="image/*"
+                  multiple
+                />
+                <label
+                  htmlFor="additionalImages"
+                  className="cursor-pointer flex items-center justify-center py-4 bg-gray-100 dark:bg-gray-800 rounded-md"
+                >
+                  <FaPlus className="mr-2" />
+                  <span>Add Images</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <button className="btn bg-[#154434] hover:bg-[#0d2c22] text-white mt-6 w-full">
+                Add Project
+              </button>
+            </div>
           </fieldset>
         </div>
       </div>
