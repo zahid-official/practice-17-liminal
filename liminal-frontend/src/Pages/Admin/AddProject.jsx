@@ -10,6 +10,7 @@ const AddProject = () => {
     formState: { errors },
     setValue,
     watch,
+    clearErrors,
   } = useForm();
 
   // state to store the selected file
@@ -97,9 +98,10 @@ const AddProject = () => {
     });
 
     if (watchStatus !== "Completed") {
+       clearErrors("description");
       setValue("description", "");
     }
-  }, [register, watchStatus, setValue]);
+  }, [register, watchStatus, setValue, clearErrors]);
 
   return (
     <div className="container mx-auto py-20 mt-4 max-w-4xl sm:px-10 px-4">
@@ -242,7 +244,7 @@ const AddProject = () => {
                   },
                 })}
               />
-              
+
               {errors.description && (
                 <p className="text-red-600 text-sm pt-2">
                   * {errors.description.message}
