@@ -9,6 +9,7 @@ const AddProject = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm();
 
   // state to store the selected file
@@ -18,6 +19,9 @@ const AddProject = () => {
   // state to store the preview URL of the selected
   const [previewBannerImage, setPreviewBannerImage] = useState(null);
   const [previewAdditionalImages, setPreviewAdditionalImages] = useState([]);
+
+  // observer for status
+  const watchStatus = watch("status");
 
   // handleBannerImage
   const handleBannerImage = (event) => {
@@ -53,7 +57,7 @@ const AddProject = () => {
         )
     );
 
-    if (!filteredFiles.length === 4 ) return;
+    if (!filteredFiles.length === 4) return;
 
     const updatedFiles = [...additionalImages, ...filteredFiles];
     setAdditionalImages(updatedFiles);
@@ -85,12 +89,17 @@ const AddProject = () => {
   // useEffect to required bannerImage & additionalImages
   useEffect(() => {
     register("bannerImage", { required: "banner image is required" });
+
     register("additionalImages", {
       required: "additional images are required",
       validate: (files) =>
         files.length === 4 || "Exactly 4 images are required",
     });
-  }, [register]);
+
+    if (watchStatus !== "Completed") {
+      setValue("description", "");
+    }
+  }, [register, watchStatus, setValue]);
 
   return (
     <div className="container mx-auto py-20 mt-4 max-w-4xl sm:px-10 px-4">
@@ -219,8 +228,14 @@ const AddProject = () => {
                 placeholder="Write a short description about your project"
                 className="textarea textarea-md w-full input-bordered"
                 rows={4}
+                disabled={watchStatus !== "Completed"}
                 {...register("description", {
-                  required: "description is required",
+                  validate: (value) => {
+                    if (watchStatus === "Completed" && !value) {
+                      return "description is required for completed projects";
+                    }
+                    return true;
+                  },
                 })}
               ></textarea>
               {errors.description && (
