@@ -12,9 +12,11 @@ const AddProject = () => {
 
   // state to store the selected file
   const [bannerImage, setBannerImage] = useState(null);
+  const [additionalImages, setAdditionalImages] = useState([]);
 
   // state to store the preview URL of the selected
   const [previewBannerImage, setPreviewBannerImage] = useState(null);
+  const [previewAdditionalImages, setPreviewAdditionalImages] = useState([]);
 
   // handleBannerImage
   const handleBannerImage = (event) => {
@@ -37,6 +39,24 @@ const AddProject = () => {
     setBannerImage(null);
     setPreviewBannerImage(null);
     document.getElementById("bannerImage").value = "";
+  };
+
+  // handleAdditionalImages
+  const handleAdditionalImages = (event) => {
+    const files = Array.from(event.target.files);
+    // store the selected files in state
+    setAdditionalImages((prev) => [...prev, ...files]);
+
+    // generate & store preview URLs of the selected images
+    const previewURLs = files.map((file) => URL.createObjectURL(file));
+    setPreviewAdditionalImages((prev) => [...prev, ...previewURLs]);
+  };
+
+  // removeAdditionalImage
+  const removeAdditionalImage = (index) => {
+    URL.revokeObjectURL(previewAdditionalImages[index]);
+    setAdditionalImages(additionalImages.filter((_, idx) => idx !== index));
+    setPreviewAdditionalImages(previewAdditionalImages.filter((_, idx) => idx !== index));
   };
 
   const onSubmit = (formData) => console.log(formData);
@@ -198,7 +218,9 @@ const AddProject = () => {
                   {...register("additionalImages", {
                     required: "additional images are required",
                   })}
+                  onChange={handleAdditionalImages}
                 />
+
                 <label
                   htmlFor="additionalImages"
                   className="cursor-pointer flex items-center justify-center py-4 bg-gray-100 dark:bg-gray-800 rounded-md"
@@ -206,6 +228,27 @@ const AddProject = () => {
                   <FaPlus className="mr-2" />
                   <span>Add Images</span>
                 </label>
+
+                {additionalImages.length > 0 && (
+                  <div className="flex flex-wrap gap-5 pt-5">
+                    {previewAdditionalImages.map((previewURL, idx) => (
+                      <div key={idx} className="relative">
+                        <img
+                          src={previewURL}
+                          className="max-h-32 object-cover rounded"
+                          alt={`preview-${idx}`}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeAdditionalImage(idx)}
+                          className="absolute top-1 right-1 bg-red-500 text-white p-1.5 text-xs rounded-full"
+                        >
+                          <FaTrash></FaTrash>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {errors.additionalImages && (
