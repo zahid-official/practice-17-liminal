@@ -1,12 +1,43 @@
-import { FaCloudUploadAlt, FaPlus } from "react-icons/fa";
+import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const AddProject = () => {
+  // form handling hooks
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  // state to store the selected file
+  const [bannerImage, setBannerImage] = useState(null);
+
+  // state to store the preview URL of the selected
+  const [previewBannerImage, setPreviewBannerImage] = useState(null);
+
+  // handleBannerImage
+  const handleBannerImage = (event) => {
+    const file = event.target.files[0];
+    // store the selected file in state
+    setBannerImage(file);
+
+    // generate & store a preview URL of the selected image
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      setPreviewBannerImage(previewUrl);
+    }
+  };
+
+  // removeBannerImage
+  const removeBannerImage = () => {
+    if (previewBannerImage) {
+      URL.revokeObjectURL(previewBannerImage);
+    }
+    setBannerImage(null);
+    setPreviewBannerImage(null);
+    document.getElementById("bannerImage").value = "";
+  };
 
   const onSubmit = (formData) => console.log(formData);
   return (
@@ -35,16 +66,35 @@ const AddProject = () => {
                   {...register("bannerImage", {
                     required: "banner image is required",
                   })}
+                  onChange={handleBannerImage}
                 />
-                <label
-                  htmlFor="bannerImage"
-                  className="cursor-pointer flex flex-col items-center justify-center py-6"
-                >
-                  <FaCloudUploadAlt className="text-4xl text-gray-400 mb-2" />
-                  <span className="text-gray-500">
-                    Click to upload banner image
-                  </span>
-                </label>
+
+                {bannerImage ? (
+                  <div className="relative">
+                    <img
+                      src={previewBannerImage}
+                      alt="Preview"
+                      className="max-h-64 mx-auto rounded"
+                    />
+                    <button
+                      type="button"
+                      onClick={removeBannerImage}
+                      className="absolute top-1 right-1 bg-red-500 text-white p-2 rounded-full"
+                    >
+                      <FaTrash></FaTrash>
+                    </button>
+                  </div>
+                ) : (
+                  <label
+                    htmlFor="bannerImage"
+                    className="cursor-pointer flex flex-col items-center justify-center py-6"
+                  >
+                    <FaCloudUploadAlt className="text-4xl text-gray-400 mb-2" />
+                    <span className="text-gray-500">
+                      Click to upload banner image
+                    </span>
+                  </label>
+                )}
               </div>
               {errors.bannerImage && (
                 <p className="text-red-600 text-sm pt-2">
