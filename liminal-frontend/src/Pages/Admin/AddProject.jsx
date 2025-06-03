@@ -44,11 +44,26 @@ const AddProject = () => {
   // handleAdditionalImages
   const handleAdditionalImages = (event) => {
     const files = Array.from(event.target.files);
+
+    // filter out duplicate files
+    const filteredFiles = files.filter(
+      (newFile) =>
+        !additionalImages.some(
+          (existingFile) =>
+            existingFile.name === newFile.name &&
+            existingFile.lastModified === newFile.lastModified
+        )
+    );
+
+    if (filteredFiles.length === 0) {
+      return;
+    }
+
     // store the selected files in state
-    setAdditionalImages((prev) => [...prev, ...files]);
+    setAdditionalImages((prev) => [...prev, ...filteredFiles]);
 
     // generate & store preview URLs of the selected images
-    const previewURLs = files.map((file) => URL.createObjectURL(file));
+    const previewURLs = filteredFiles.map((file) => URL.createObjectURL(file));
     setPreviewAdditionalImages((prev) => [...prev, ...previewURLs]);
   };
 
@@ -56,7 +71,9 @@ const AddProject = () => {
   const removeAdditionalImage = (index) => {
     URL.revokeObjectURL(previewAdditionalImages[index]);
     setAdditionalImages(additionalImages.filter((_, idx) => idx !== index));
-    setPreviewAdditionalImages(previewAdditionalImages.filter((_, idx) => idx !== index));
+    setPreviewAdditionalImages(
+      previewAdditionalImages.filter((_, idx) => idx !== index)
+    );
   };
 
   const onSubmit = (formData) => console.log(formData);
