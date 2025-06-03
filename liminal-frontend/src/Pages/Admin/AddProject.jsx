@@ -1,6 +1,6 @@
 import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const AddProject = () => {
   // form handling hooks
@@ -8,6 +8,7 @@ const AddProject = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
   // state to store the selected file
@@ -21,14 +22,9 @@ const AddProject = () => {
   // handleBannerImage
   const handleBannerImage = (event) => {
     const file = event.target.files[0];
-    // store the selected file in state
     setBannerImage(file);
-
-    // generate & store a preview URL of the selected image
-    if (file) {
-      const previewUrl = URL.createObjectURL(file);
-      setPreviewBannerImage(previewUrl);
-    }
+    setPreviewBannerImage(URL.createObjectURL(file));
+    setValue("bannerImage", file, { shouldValidate: true });
   };
 
   // removeBannerImage
@@ -38,6 +34,8 @@ const AddProject = () => {
     }
     setBannerImage(null);
     setPreviewBannerImage(null);
+    setValue("bannerImage", null, { shouldValidate: true });
+
     document.getElementById("bannerImage").value = "";
   };
 
@@ -55,12 +53,11 @@ const AddProject = () => {
         )
     );
 
-    if (filteredFiles.length === 0) {
-      return;
-    }
+    if (!filteredFiles.length === 4 ) return;
 
-    // store the selected files in state
-    setAdditionalImages((prev) => [...prev, ...filteredFiles]);
+    const updatedFiles = [...additionalImages, ...filteredFiles];
+    setAdditionalImages(updatedFiles);
+    setValue("additionalImages", updatedFiles, { shouldValidate: true });
 
     // generate & store preview URLs of the selected images
     const previewURLs = filteredFiles.map((file) => URL.createObjectURL(file));
@@ -70,13 +67,31 @@ const AddProject = () => {
   // removeAdditionalImage
   const removeAdditionalImage = (index) => {
     URL.revokeObjectURL(previewAdditionalImages[index]);
-    setAdditionalImages(additionalImages.filter((_, idx) => idx !== index));
-    setPreviewAdditionalImages(
-      previewAdditionalImages.filter((_, idx) => idx !== index)
+
+    const newFiles = additionalImages.filter((_, idx) => idx !== index);
+    const newPreviews = previewAdditionalImages.filter(
+      (_, idx) => idx !== index
     );
+
+    setAdditionalImages(newFiles);
+    setPreviewAdditionalImages(newPreviews);
+    setValue("additionalImages", newFiles, { shouldValidate: true });
   };
 
-  const onSubmit = (formData) => console.log(formData);
+  const onSubmit = (formData) => {
+    console.log("Submitted Data:", formData);
+  };
+
+  // useEffect to required bannerImage & additionalImages
+  useEffect(() => {
+    register("bannerImage", { required: "banner image is required" });
+    register("additionalImages", {
+      required: "additional images are required",
+      validate: (files) =>
+        files.length === 4 || "Exactly 4 images are required",
+    });
+  }, [register]);
+
   return (
     <div className="container mx-auto py-20 mt-4 max-w-4xl sm:px-10 px-4">
       {/* intro */}
@@ -100,9 +115,6 @@ const AddProject = () => {
                   id="bannerImage"
                   className="hidden"
                   accept="image/*"
-                  {...register("bannerImage", {
-                    required: "banner image is required",
-                  })}
                   onChange={handleBannerImage}
                 />
 
@@ -118,7 +130,7 @@ const AddProject = () => {
                       onClick={removeBannerImage}
                       className="absolute top-1 right-1 bg-red-500 text-white p-2 rounded-full"
                     >
-                      <FaTrash></FaTrash>
+                      <FaTrash />
                     </button>
                   </div>
                 ) : (
@@ -175,10 +187,9 @@ const AddProject = () => {
                 )}
               </div>
 
-              {/*  status */}
+              {/* status */}
               <div className="w-full">
                 <label className="label font-semibold text-lg">Status</label>
-
                 <select
                   defaultValue=""
                   className="select select-md w-full input-bordered text-sm"
@@ -219,7 +230,7 @@ const AddProject = () => {
               )}
             </div>
 
-            {/* Additional  images */}
+            {/* Additional Images */}
             <div className="mb-6">
               <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
                 Additional Images
@@ -232,9 +243,6 @@ const AddProject = () => {
                   className="hidden"
                   accept="image/*"
                   multiple
-                  {...register("additionalImages", {
-                    required: "additional images are required",
-                  })}
                   onChange={handleAdditionalImages}
                 />
 
@@ -260,7 +268,7 @@ const AddProject = () => {
                           onClick={() => removeAdditionalImage(idx)}
                           className="absolute top-1 right-1 bg-red-500 text-white p-1.5 text-xs rounded-full"
                         >
-                          <FaTrash></FaTrash>
+                          <FaTrash />
                         </button>
                       </div>
                     ))}
@@ -275,6 +283,7 @@ const AddProject = () => {
               )}
             </div>
 
+            {/* Submit */}
             <div>
               <button className="btn bg-[#154434] hover:bg-[#0d2c22] text-white text-base mt-6 w-full">
                 Add Project
