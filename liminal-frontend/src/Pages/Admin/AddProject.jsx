@@ -226,7 +226,11 @@ const AddProject = () => {
               <label className="label font-semibold text-lg">Description</label>
               <textarea
                 placeholder="Write a short description about your project"
-                className="textarea textarea-md w-full input-bordered"
+                className={`textarea textarea-md w-full input-bordered ${
+                  watchStatus !== "Completed"
+                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    : ""
+                }`}
                 rows={4}
                 disabled={watchStatus !== "Completed"}
                 {...register("description", {
@@ -237,7 +241,8 @@ const AddProject = () => {
                     return true;
                   },
                 })}
-              ></textarea>
+              />
+              
               {errors.description && (
                 <p className="text-red-600 text-sm pt-2">
                   * {errors.description.message}
