@@ -61,43 +61,45 @@ async function run() {
     const projectsCollection = database.collection("projectsCollection");
 
     // jwt token generate (only for personal info based route)
-    app.post("/jwt", (req, res) => {
-      const user = req.body;
+    {
+      app.post("/jwt", (req, res) => {
+        const user = req.body;
 
-      const token = jwt.sign(user, process.env.ACCESS_TOKEN, {
-        expiresIn: "1h",
+        const token = jwt.sign(user, process.env.ACCESS_TOKEN, {
+          expiresIn: "1h",
+        });
+        res
+          .cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+          })
+          .send({ login: true });
       });
-      res
-        .cookie("token", token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-        })
-        .send({ login: true });
-    });
 
-    // jwt token remove
-    app.post("/jwtRemove", (req, res) => {
-      res
-        .clearCookie("token", {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-        })
-        .send({ logout: true });
-    });
+      // jwt token remove
+      app.post("/jwtRemove", (req, res) => {
+        res
+          .clearCookie("token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+          })
+          .send({ logout: true });
+      });
 
-    // verify token in private info route ( Demo )
-    app.get("/privateInfo/:email", verifyJWT, (req, res) => {
-      const email = req.params.email;
+      // verify token in private info route ( Demo )
+      app.get("/privateInfo/:email", verifyJWT, (req, res) => {
+        const email = req.params.email;
 
-      // verify token email
-      if (req.decodedToken.email !== email) {
-        return res.status(403).send({ message: "Forbidden Access" });
-      }
+        // verify token email
+        if (req.decodedToken.email !== email) {
+          return res.status(403).send({ message: "Forbidden Access" });
+        }
 
-      res.send("Sent Database Data based on paramas email");
-    });
+        res.send("Sent Database Data based on paramas email");
+      });
+    }
 
     // read Operation
     {
@@ -113,7 +115,7 @@ async function run() {
         const user = req.body;
         const query = { email: user?.email };
         const existingUser = await usersCollection.findOne(query);
-        if(existingUser){
+        if (existingUser) {
           return res.send({ message: "User Already Exist", insertedId: null });
         }
 
