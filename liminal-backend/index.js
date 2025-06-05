@@ -100,23 +100,35 @@ async function run() {
     });
 
     // read Operation
-    app.get("/", (req, res) => {
-      res.send("Server Connected Successfully");
-    });
+    {
+      app.get("/", (req, res) => {
+        res.send("Server Connected Successfully");
+      });
+    }
 
     // create Operation
-    app.post("/users", async (req, res) => {
-      const user = req.body;
-      const result = await usersCollection.insertOne(user);
-      res.send(result);
-    });
+    {
+      // insert user
+      app.post("/users", async (req, res) => {
+        const user = req.body;
 
-    // add project
-    app.post("/addProject", async (req, res) => {
-      const projectData = req.body;
-      const result = await projectsCollection.insertOne(projectData);
-      res.send(result);
-    });
+
+        const query = { email: user?.email };
+        const existingUser = await usersCollection.findOne(query);
+        if(existingUser){
+          return res.send({ message: "User Already Exist", insertedId: null });
+        }
+        const result = await usersCollection.insertOne(user);
+        res.send(result);
+      });
+
+      // add project
+      app.post("/addProject", async (req, res) => {
+        const projectData = req.body;
+        const result = await projectsCollection.insertOne(projectData);
+        res.send(result);
+      });
+    }
   } finally {
   }
 }
