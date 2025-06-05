@@ -122,23 +122,26 @@ const AddProject = () => {
     }
 
     // uploading additionalImages in cloudinary
-    const additionalURLs = [];
-    for (let image of additionalImages) {
-      try {
-        const additionalForm = new FormData();
-        additionalForm.append("file", image);
-        additionalForm.append("upload_preset", "liminal");
-        const additionalRes = await axios.post(
+    let additionalURLs = [];
+    try {
+      const uploadPromises = additionalImages.map((image) => {
+        const formData = new FormData();
+        formData.append("file", image);
+        formData.append("upload_preset", "liminal");
+
+        return axios.post(
           "https://api.cloudinary.com/v1_1/drgjpteya/image/upload",
-          additionalForm
+          formData
         );
-        additionalURLs.push(additionalRes.data.secure_url);
-      } catch (error) {
-        console.error("Additional image upload failed:", error);
-        toast.error("Additional image upload failed. Please try again.");
-        setUploading(false);
-        return;
-      }
+      });
+
+      const responses = await Promise.all(uploadPromises);
+      additionalURLs = responses.map((res) => res.data.secure_url);
+    } catch (error) {
+      console.error("Additional image upload failed:", error);
+      toast.error("Additional images upload failed. Please try again.");
+      setUploading(false);
+      return;
     }
 
     // project data
@@ -152,8 +155,8 @@ const AddProject = () => {
     try {
       const res = await axiosPublic.post("/addProject", projectData);
       if (res.data.insertedId) {
-        toast.success("Project Added Successfully");
         setUploading(false);
+        toast.success("Project Added Successfully");
 
         // reset states & form
         setBannerImage(null);
