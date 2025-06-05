@@ -120,7 +120,7 @@ const AddProject = () => {
     projectData.additionalImages = additionalURLs;
 
     // Send project data to backend via addProject API
-    const res = await axiosPublic('/addProject', projectData);
+    const res = await axiosPublic.post('/addProject', projectData);
     console.log(res.data);
   };
 
