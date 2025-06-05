@@ -106,6 +106,12 @@ async function run() {
       app.get("/", (req, res) => {
         res.send("Server Connected Successfully");
       });
+
+      // get all projects
+      app.get("/projects", async (req, res) => {
+        const result = await projectsCollection.find().toArray();
+        res.send(result);
+      });
     }
 
     // create Operation
