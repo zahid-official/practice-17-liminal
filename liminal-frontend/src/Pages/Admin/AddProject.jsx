@@ -112,7 +112,11 @@ const AddProject = () => {
       additionalURLs.push(additionalRes.data.secure_url);
     }
 
-    console.log("Submitted Data:", formData);
+    // project data
+    const projectData = formData;
+    projectData.bannerImage = bannerURL;
+    projectData.additionalImages = additionalURLs;
+    console.log("Submitted Data:", projectData);
   };
 
   // useEffect to required bannerImage & additionalImages
