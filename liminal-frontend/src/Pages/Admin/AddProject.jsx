@@ -36,9 +36,6 @@ const AddProject = () => {
   // handleBannerImage
   const handleBannerImage = (event) => {
     const file = event.target.files[0];
-    // validation
-    if (!file) return;
-
     setBannerImage(file);
     setPreviewBannerImage(URL.createObjectURL(file));
     setValue("bannerImage", file, { shouldValidate: true });
@@ -71,10 +68,6 @@ const AddProject = () => {
     );
 
     const updatedFiles = [...additionalImages, ...filteredFiles];
-
-    //validation
-    if (updatedFiles.length !== 4) return;
-
     setAdditionalImages(updatedFiles);
     setValue("additionalImages", updatedFiles, { shouldValidate: true });
 
@@ -99,6 +92,7 @@ const AddProject = () => {
 
   // onSubmit
   const onSubmit = async (formData) => {
+
     // validation & setLoading
     if (!bannerImage || additionalImages.length === 0) return;
     setUploading(true);
