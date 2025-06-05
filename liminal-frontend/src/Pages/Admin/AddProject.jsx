@@ -1,6 +1,7 @@
 import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 const AddProject = () => {
   // form handling hooks
@@ -83,7 +84,20 @@ const AddProject = () => {
     setValue("additionalImages", newFiles, { shouldValidate: true });
   };
 
-  const onSubmit = (formData) => {
+  // onSubmit
+  const onSubmit = async(formData) => {
+    // validation
+    if (!bannerImage) return;
+    
+    // uploading bannerImage in cloudinary
+    const bannerForm = new FormData();
+    bannerForm.append("file", bannerImage);
+    bannerForm.append("upload_preset", "liminal");
+    const bannerRes = await axios.post('https://api.cloudinary.com/v1_1/drgjpteya/image/upload', bannerForm);
+    const bannerURL = bannerRes.data.secure_url;
+
+    console.log(bannerURL)
+
     console.log("Submitted Data:", formData);
   };
 
@@ -98,7 +112,7 @@ const AddProject = () => {
     });
 
     if (watchStatus !== "Completed") {
-       clearErrors("description");
+      clearErrors("description");
       setValue("description", "");
     }
   }, [register, watchStatus, setValue, clearErrors]);
