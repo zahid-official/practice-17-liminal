@@ -143,11 +143,9 @@ const AddProject = () => {
       setPreviewBannerImage(null);
       setAdditionalImages([]);
       setPreviewAdditionalImages([]);
+      document.getElementById("bannerImage").value = "";
+      document.getElementById("additionalImages").value = "";
       reset();
-
-      console.log(
-        `banner: ${bannerImage}, additional: ${additionalImages}, bannerPreview: ${previewBannerImage}, addiPrev: ${previewAdditionalImages}`
-      );
     }
   };
 
