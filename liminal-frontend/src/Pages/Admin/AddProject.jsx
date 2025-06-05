@@ -85,18 +85,32 @@ const AddProject = () => {
   };
 
   // onSubmit
-  const onSubmit = async(formData) => {
+  const onSubmit = async (formData) => {
     // validation
-    if (!bannerImage) return;
-    
+    if (!bannerImage || additionalImages.length === 0) return;
+
     // uploading bannerImage in cloudinary
     const bannerForm = new FormData();
     bannerForm.append("file", bannerImage);
     bannerForm.append("upload_preset", "liminal");
-    const bannerRes = await axios.post('https://api.cloudinary.com/v1_1/drgjpteya/image/upload', bannerForm);
+    const bannerRes = await axios.post(
+      "https://api.cloudinary.com/v1_1/drgjpteya/image/upload",
+      bannerForm
+    );
     const bannerURL = bannerRes.data.secure_url;
 
-    console.log(bannerURL)
+    // uploading additionalImages in cloudinary
+    const additionalURLs = [];
+    for (let image of additionalImages) {
+      const additionalForm = new FormData();
+      additionalForm.append("file", image);
+      additionalForm.append("upload_preset", "liminal");
+      const additionalRes = await axios.post(
+        "https://api.cloudinary.com/v1_1/drgjpteya/image/upload",
+        additionalForm
+      );
+      additionalURLs.push(additionalRes.data.secure_url);
+    }
 
     console.log("Submitted Data:", formData);
   };
