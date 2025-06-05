@@ -2,6 +2,7 @@ import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import useAxios from "../../Auth/Hook/useAxios";
 
 const AddProject = () => {
   // form handling hooks
@@ -13,6 +14,7 @@ const AddProject = () => {
     watch,
     clearErrors,
   } = useForm();
+  const axiosPublic = useAxios();
 
   // state to store the selected file
   const [bannerImage, setBannerImage] = useState(null);
@@ -116,7 +118,10 @@ const AddProject = () => {
     const projectData = formData;
     projectData.bannerImage = bannerURL;
     projectData.additionalImages = additionalURLs;
-    console.log("Submitted Data:", projectData);
+
+    // Send project data to backend via addProject API
+    const res = await axiosPublic('/addProject', projectData);
+    console.log(res.data);
   };
 
   // useEffect to required bannerImage & additionalImages
