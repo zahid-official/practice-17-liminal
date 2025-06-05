@@ -1,7 +1,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -110,6 +110,14 @@ async function run() {
       // get all projects
       app.get("/projects", async (req, res) => {
         const result = await projectsCollection.find().toArray();
+        res.send(result);
+      });
+
+      // get single project details
+      app.get("/projectDetails/:id", async (req, res) => {
+        const paramas = req.params.id;
+        const query = { _id: new ObjectId(paramas) };
+        const result = await projectsCollection.findOne(query);
         res.send(result);
       });
     }
