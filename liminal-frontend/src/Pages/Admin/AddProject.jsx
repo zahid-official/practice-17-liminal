@@ -66,7 +66,13 @@ const AddProject = () => {
         )
     );
 
-    if (!filteredFiles.length === 4) return;
+    if (
+      filteredFiles.length === 0 ||
+      additionalImages.length + filteredFiles.length > 4
+    ) {
+      toast.error("You can only upload exactly 4 images.");
+      return;
+    }
 
     const updatedFiles = [...additionalImages, ...filteredFiles];
     setAdditionalImages(updatedFiles);
@@ -138,8 +144,10 @@ const AddProject = () => {
       setAdditionalImages([]);
       setPreviewAdditionalImages([]);
       reset();
-      
-      console.log(`banner: ${bannerImage}, additional: ${additionalImages}, bannerPreview: ${previewBannerImage}, addiPrev: ${previewAdditionalImages}`);
+
+      console.log(
+        `banner: ${bannerImage}, additional: ${additionalImages}, bannerPreview: ${previewBannerImage}, addiPrev: ${previewAdditionalImages}`
+      );
     }
   };
 

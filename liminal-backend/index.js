@@ -58,6 +58,7 @@ async function run() {
     // database
     const database = client.db("liminalDB");
     const usersCollection = database.collection("usersCollection");
+    const projectsCollection = database.collection("projectsCollection");
 
     // jwt token generate (only for personal info based route)
     app.post("/jwt", (req, res) => {
@@ -103,13 +104,17 @@ async function run() {
       res.send("Server Connected Successfully");
     });
 
-
-
-
     // create Operation
-    app.post("/users", async(req, res) => {
+    app.post("/users", async (req, res) => {
       const user = req.body;
       const result = await usersCollection.insertOne(user);
+      res.send(result);
+    });
+
+    // add project
+    app.post("/addProject", async (req, res) => {
+      const projectData = req.body;
+      const result = await projectsCollection.insertOne(projectData);
       res.send(result);
     });
   } finally {
