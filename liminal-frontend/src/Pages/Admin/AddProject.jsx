@@ -16,6 +16,7 @@ const AddProject = () => {
     clearErrors,
     reset,
   } = useForm();
+
   const axiosPublic = useAxios();
 
   // state to store the selected file
@@ -35,6 +36,9 @@ const AddProject = () => {
   // handleBannerImage
   const handleBannerImage = (event) => {
     const file = event.target.files[0];
+    // validation
+    if (!file) return;
+
     setBannerImage(file);
     setPreviewBannerImage(URL.createObjectURL(file));
     setValue("bannerImage", file, { shouldValidate: true });
@@ -66,15 +70,11 @@ const AddProject = () => {
         )
     );
 
-    if (
-      filteredFiles.length === 0 ||
-      additionalImages.length + filteredFiles.length > 4
-    ) {
-      toast.error("You can only upload exactly 4 images.");
-      return;
-    }
-
     const updatedFiles = [...additionalImages, ...filteredFiles];
+
+    //validation
+    if (updatedFiles.length !== 4) return;
+
     setAdditionalImages(updatedFiles);
     setValue("additionalImages", updatedFiles, { shouldValidate: true });
 
@@ -104,48 +104,70 @@ const AddProject = () => {
     setUploading(true);
 
     // uploading bannerImage in cloudinary
-    const bannerForm = new FormData();
-    bannerForm.append("file", bannerImage);
-    bannerForm.append("upload_preset", "liminal");
-    const bannerRes = await axios.post(
-      "https://api.cloudinary.com/v1_1/drgjpteya/image/upload",
-      bannerForm
-    );
-    const bannerURL = bannerRes.data.secure_url;
+    let bannerURL = "";
+    try {
+      const bannerForm = new FormData();
+      bannerForm.append("file", bannerImage);
+      bannerForm.append("upload_preset", "liminal");
+      const bannerRes = await axios.post(
+        "https://api.cloudinary.com/v1_1/drgjpteya/image/upload",
+        bannerForm
+      );
+      bannerURL = bannerRes.data.secure_url;
+    } catch (error) {
+      console.error("Banner upload failed:", error);
+      toast.error("Banner upload failed. Please try again.");
+      setUploading(false);
+      return;
+    }
 
     // uploading additionalImages in cloudinary
     const additionalURLs = [];
     for (let image of additionalImages) {
-      const additionalForm = new FormData();
-      additionalForm.append("file", image);
-      additionalForm.append("upload_preset", "liminal");
-      const additionalRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/drgjpteya/image/upload",
-        additionalForm
-      );
-      additionalURLs.push(additionalRes.data.secure_url);
+      try {
+        const additionalForm = new FormData();
+        additionalForm.append("file", image);
+        additionalForm.append("upload_preset", "liminal");
+        const additionalRes = await axios.post(
+          "https://api.cloudinary.com/v1_1/drgjpteya/image/upload",
+          additionalForm
+        );
+        additionalURLs.push(additionalRes.data.secure_url);
+      } catch (error) {
+        console.error("Additional image upload failed:", error);
+        toast.error("Additional image upload failed. Please try again.");
+        setUploading(false);
+        return;
+      }
     }
 
     // project data
-    const projectData = formData;
-    projectData.bannerImage = bannerURL;
-    projectData.additionalImages = additionalURLs;
+    const projectData = {
+      ...formData,
+      bannerImage: bannerURL,
+      additionalImages: additionalURLs,
+    };
 
-    console.log("now calling api");
     // Send project data to backend via addProject API
-    const res = await axiosPublic.post("/addProject", projectData);
-    if (res.data.insertedId) {
-      toast.success("Project Added Successfully");
-      setUploading(false);
+    try {
+      const res = await axiosPublic.post("/addProject", projectData);
+      if (res.data.insertedId) {
+        toast.success("Project Added Successfully");
+        setUploading(false);
 
-      // reset states & form
-      setBannerImage(null);
-      setPreviewBannerImage(null);
-      setAdditionalImages([]);
-      setPreviewAdditionalImages([]);
-      document.getElementById("bannerImage").value = "";
-      document.getElementById("additionalImages").value = "";
-      reset();
+        // reset states & form
+        setBannerImage(null);
+        setPreviewBannerImage(null);
+        setAdditionalImages([]);
+        setPreviewAdditionalImages([]);
+        document.getElementById("bannerImage").value = "";
+        document.getElementById("additionalImages").value = "";
+        reset();
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to add project. Please try again.");
+      setUploading(false);
     }
   };
 
