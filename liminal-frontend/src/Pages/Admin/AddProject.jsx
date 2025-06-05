@@ -14,6 +14,7 @@ const AddProject = () => {
     setValue,
     watch,
     clearErrors,
+    reset,
   } = useForm();
   const axiosPublic = useAxios();
 
@@ -127,9 +128,19 @@ const AddProject = () => {
     console.log("now calling api");
     // Send project data to backend via addProject API
     const res = await axiosPublic.post("/addProject", projectData);
-    console.log(res.data);
-    toast.success("Project Added Successfully");
-    setUploading(false);
+    if (res.data.insertedId) {
+      toast.success("Project Added Successfully");
+      setUploading(false);
+
+      // reset states & form
+      setBannerImage(null);
+      setPreviewBannerImage(null);
+      setAdditionalImages([]);
+      setPreviewAdditionalImages([]);
+      reset();
+      
+      console.log(`banner: ${bannerImage}, additional: ${additionalImages}, bannerPreview: ${previewBannerImage}, addiPrev: ${previewAdditionalImages}`);
+    }
   };
 
   // useEffect to required bannerImage & additionalImages
