@@ -16,6 +16,7 @@ import PrivateRouter from "./PrivateRouter";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Dashboard from "../Pages/Admin/dashboard";
 import AddProject from "../Pages/Admin/AddProject";
+import ProjectDetails from "../Pages/Projects/ProjectDetails";
 
 const Routes = createBrowserRouter([
   {
@@ -35,6 +36,11 @@ const Routes = createBrowserRouter([
         path: "/projects",
         element: <Projects></Projects>,
         loader: () => fetch("http://localhost:5000/projects"),
+      },
+      {
+        path: "/projectDetails/:id",
+        element: <ProjectDetails></ProjectDetails>,
+        loader: ({params})=> fetch(`http://localhost:5000/projectDetails/${params.id}`)
       },
       {
         path: "/contact",
