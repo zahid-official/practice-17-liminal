@@ -266,7 +266,7 @@ const AddProject = () => {
               )}
             </div>
 
-            <div className="flex gap-5">
+            <div className="flex sm:flex-row flex-col gap-5">
               {/* category */}
               <div className="w-full">
                 <label className="label font-semibold text-lg">Category</label>
