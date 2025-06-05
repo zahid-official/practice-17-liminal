@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import useAxios from "../../Auth/Hook/useAxios";
+import { toast } from "react-toastify";
 
 const AddProject = () => {
   // form handling hooks
@@ -23,6 +24,9 @@ const AddProject = () => {
   // state to store the preview URL of the selected
   const [previewBannerImage, setPreviewBannerImage] = useState(null);
   const [previewAdditionalImages, setPreviewAdditionalImages] = useState([]);
+
+  // state for project uploading
+  const [uploading, setUploading] = useState(false);
 
   // observer for status
   const watchStatus = watch("status");
@@ -88,8 +92,9 @@ const AddProject = () => {
 
   // onSubmit
   const onSubmit = async (formData) => {
-    // validation
+    // validation & setLoading
     if (!bannerImage || additionalImages.length === 0) return;
+    setUploading(true);
 
     // uploading bannerImage in cloudinary
     const bannerForm = new FormData();
@@ -119,9 +124,12 @@ const AddProject = () => {
     projectData.bannerImage = bannerURL;
     projectData.additionalImages = additionalURLs;
 
+    console.log("now calling api");
     // Send project data to backend via addProject API
-    const res = await axiosPublic.post('/addProject', projectData);
+    const res = await axiosPublic.post("/addProject", projectData);
     console.log(res.data);
+    toast.success("Project Added Successfully");
+    setUploading(false);
   };
 
   // useEffect to required bannerImage & additionalImages
@@ -344,8 +352,18 @@ const AddProject = () => {
 
             {/* Submit */}
             <div>
-              <button className="btn bg-[#154434] hover:bg-[#0d2c22] text-white text-base mt-6 w-full">
-                Add Project
+              <button
+                disabled={uploading}
+                className="btn bg-[#154434] hover:bg-[#0d2c22] text-white text-base mt-6 w-full"
+              >
+                {uploading ? (
+                  <>
+                    Uploading
+                    <span className="loading loading-spinner loading-md"></span>
+                  </>
+                ) : (
+                  "Add Project"
+                )}
               </button>
             </div>
           </fieldset>
