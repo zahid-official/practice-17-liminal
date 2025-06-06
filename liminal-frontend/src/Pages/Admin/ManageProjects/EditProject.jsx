@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { FaPen } from "react-icons/fa";
+import ProjectModal from "./ProjectModal";
 
 const EditProject = ({ projectId }) => {
   // state for projectData
@@ -12,16 +13,6 @@ const EditProject = ({ projectId }) => {
     setProjectData(data);
     document.getElementById(`modal_${id}`).showModal();
   };
-
-  const {
-    additionalImages,
-    bannerImage,
-    category,
-    status,
-    title,
-    description,
-    _id,
-  } = projectData;
 
   return (
     <>
@@ -36,17 +27,16 @@ const EditProject = ({ projectId }) => {
 
       {/* modal */}
       <dialog id={`modal_${projectId}`} className="modal">
-        <div className="modal-box">
+        <div className="modal-box max-w-3xl py-10 px-8">
           {/* close modal */}
           <form method="dialog">
-            {/* if there is a button in form, it will close the modal */}
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               ✕
             </button>
           </form>
 
-          <h3 className="font-bold text-lg">Modal-{projectId}</h3>
-          <p className="py-4">Press ESC key or click on ✕ button to close</p>
+          {/* modal content */}
+          <ProjectModal projectData={projectData}></ProjectModal>
         </div>
       </dialog>
     </>
