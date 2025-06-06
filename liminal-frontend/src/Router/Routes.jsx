@@ -17,6 +17,7 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import Dashboard from "../Pages/Admin/dashboard";
 import AddProject from "../Pages/Admin/AddProject";
 import ProjectDetails from "../Pages/Projects/ProjectDetails";
+import ManageProjects from "../Pages/Admin/ManageProjects";
 
 const Routes = createBrowserRouter([
   {
@@ -92,6 +93,11 @@ const Routes = createBrowserRouter([
       {
         path: "addProject",
         element: <AddProject></AddProject>,
+      },
+      {
+        path: "manageProjects",
+        element: <ManageProjects></ManageProjects>,
+        loader: () => fetch("http://localhost:5000/projects"),
       },
     ],
   },
