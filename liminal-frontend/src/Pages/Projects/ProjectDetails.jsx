@@ -34,7 +34,7 @@ const ProjectDetails = () => {
         </p>
 
         {description && (
-          <p className="max-w-[50%] text-right ml-auto pt-5">{description}</p>
+          <p className="lg:max-w-[50%] text-right ml-auto pt-5">{description}</p>
         )}
         <Link to={"/projects"}>
           <button className="btn rounded-full border-2 border-[#1544348e] text-[#154434] my-9">
