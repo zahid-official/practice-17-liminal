@@ -92,7 +92,6 @@ const AddProject = () => {
 
   // onSubmit
   const onSubmit = async (formData) => {
-
     // validation & setLoading
     if (!bannerImage || additionalImages.length === 0) return;
     setUploading(true);
@@ -145,7 +144,7 @@ const AddProject = () => {
       additionalImages: additionalURLs,
     };
 
-    // Send project data to backend via addProject API
+    // send project data to backend via addProject API
     try {
       const res = await axiosPublic.post("/addProject", projectData);
       if (res.data.insertedId) {
