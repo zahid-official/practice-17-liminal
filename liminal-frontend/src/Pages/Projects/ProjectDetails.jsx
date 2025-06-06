@@ -32,8 +32,11 @@ const ProjectDetails = () => {
         <p className="text-xl">
           <b>Status:</b> {status}
         </p>
-        <p className="max-w-[50%] text-right ml-auto pt-5">{description}</p>
-        <Link to={'/projects'}>
+
+        {description && (
+          <p className="max-w-[50%] text-right ml-auto pt-5">{description}</p>
+        )}
+        <Link to={"/projects"}>
           <button className="btn rounded-full border-2 border-[#1544348e] text-[#154434] my-9">
             Back to Project
           </button>
@@ -41,7 +44,7 @@ const ProjectDetails = () => {
       </div>
 
       {/* gallery */}
-      <div className="grid md:grid-cols-2 container mx-auto gap-6 px-3 pb-28">
+      <div className="grid md:grid-cols-2 container mx-auto gap-6 px-3 pb-16">
         {/* Left Column (first two images) */}
         <div className="space-y-6 md:sticky top-0 self-start md:mb-0 mb-6">
           {additionalImages.slice(0, 2).map((src, index) => (
