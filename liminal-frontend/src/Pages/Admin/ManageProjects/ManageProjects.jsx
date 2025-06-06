@@ -1,5 +1,6 @@
-import { FaPen, FaRegTrashAlt } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
 import { useLoaderData } from "react-router-dom";
+import EditProject from "./EditProject";
 
 const ManageProjects = () => {
   const projects = useLoaderData();
@@ -15,11 +16,9 @@ const ManageProjects = () => {
           <div className="flex justify-between items-center flex-wrap">
             <h3 className="text-lg pt-3">{project.title}</h3>
 
-            <div className="flex gap-1.5 pt-3">
+            <div className="flex gap-2 pt-3">
               {/* edit button */}
-              <button className="btn text-[#054b32] btn-sm text-xl h-10">
-                <FaPen></FaPen>
-              </button>
+              <EditProject projectId={project._id}></EditProject>
 
               {/* delete button */}
               <button className="btn text-red-600/90 btn-sm text-xl h-10">

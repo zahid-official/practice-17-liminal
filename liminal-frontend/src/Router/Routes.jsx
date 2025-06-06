@@ -17,7 +17,7 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import Dashboard from "../Pages/Admin/dashboard";
 import AddProject from "../Pages/Admin/AddProject";
 import ProjectDetails from "../Pages/Projects/ProjectDetails";
-import ManageProjects from "../Pages/Admin/ManageProjects";
+import ManageProjects from "../Pages/Admin/ManageProjects/ManageProjects";
 
 const Routes = createBrowserRouter([
   {
