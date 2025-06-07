@@ -174,7 +174,7 @@ const AddProject = () => {
     register("additionalImages", {
       required: "additional images are required",
       validate: (files) =>
-        files.length === 4 || "Exactly 4 images are required",
+        files.length === 5 || "Exactly 5 images are required",
     });
 
     if (watchStatus !== "Completed") {
