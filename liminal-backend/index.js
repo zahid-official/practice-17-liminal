@@ -144,6 +144,29 @@ async function run() {
         res.send(result);
       });
     }
+
+    // update Operation
+    {
+      app.patch("/updateProject/:id", async (req, res) => {
+        const id = req.params.id;
+        const data = req.body;
+        const query = { _id: new ObjectId(id) };
+
+        const updatedData = {
+          $set: {
+            title: data?.title,
+            category: data?.category,
+            status: data?.status,
+            description: data?.description,
+            bannerImage: data?.bannerImage,
+            additionalImages: data?.additionalImages,
+          },
+        };
+
+        const result = await projectsCollection.updateOne(query, updatedData);
+        res.send(result)
+      });
+    }
   } finally {
   }
 }
