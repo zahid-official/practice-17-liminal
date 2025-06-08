@@ -1,22 +1,66 @@
-import { useForm } from "react-hook-form";
-import { FaCloudUploadAlt, FaPlus } from "react-icons/fa";
+/* eslint-disable react/prop-types */
 
-const ProjectModal = () => {
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { FaCloudUploadAlt, FaTrash } from "react-icons/fa";
+
+const ProjectModal = ({ projectData }) => {
   // react hook form
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    setValue,
+    reset,
   } = useForm();
 
-  // observer for status
-  const watchStatus = watch("status");
+  // state to store the selected file
+  const [bannerImage, setBannerImage] = useState(null);
+
+  // state to store the preview URL of the selected
+  const [previewBannerImage, setPreviewBannerImage] = useState(null);
+
+  // handleBannerImage
+  const handleBannerImage = (event) => {
+    const file = event.target.files[0];
+
+    if (!file) return;
+    setBannerImage(file);
+    setPreviewBannerImage(URL.createObjectURL(file));
+    setValue("bannerImage", file, { shouldValidate: true });
+  };
+
+  // removeBannerImage
+  const removeBannerImage = () => {
+    if (previewBannerImage) {
+      URL.revokeObjectURL(previewBannerImage);
+    }
+    setBannerImage(null);
+    setPreviewBannerImage(null);
+    setValue("bannerImage", null, { shouldValidate: true });
+
+    document.getElementById("bannerImage").value = "";
+  };
 
   // formSubmit
   const formSubmit = (formData) => {
     console.log("submit :", formData);
+
+    // after submit
+    reset();
+    setBannerImage(null);
+    setPreviewBannerImage(null);
+    document.getElementById(`bannerImage`).value = "";
+
+    // close modal
+    document.getElementById(`modal_${projectData._id}`).close();
   };
+
+  // useEffect to required bannerImage & additionalImages
+  useEffect(() => {
+    register("bannerImage", { required: "banner image is required" });
+  }, [register]);
+
   return (
     <div className="py-4">
       {/* intro */}
@@ -40,141 +84,39 @@ const ProjectModal = () => {
                   id="bannerImage"
                   className="hidden"
                   accept="image/*"
+                  onChange={handleBannerImage}
                 />
 
-                <label
-                  htmlFor="bannerImage"
-                  className="cursor-pointer flex flex-col items-center justify-center py-6"
-                >
-                  <FaCloudUploadAlt className="text-4xl text-gray-400 mb-2" />
-                  <span className="text-gray-500">
-                    Click to upload banner image
-                  </span>
-                </label>
+                {bannerImage ? (
+                  <div className="relative">
+                    <img
+                      src={previewBannerImage}
+                      alt="Preview"
+                      className="max-h-64 mx-auto rounded"
+                    />
+                    <button
+                      type="button"
+                      onClick={removeBannerImage}
+                      className="absolute top-1 right-1 bg-red-500 text-white p-2 rounded-full"
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
+                ) : (
+                  <label
+                    htmlFor="bannerImage"
+                    className="cursor-pointer flex flex-col items-center justify-center py-6"
+                  >
+                    <FaCloudUploadAlt className="text-4xl text-gray-400 mb-2" />
+                    <span className="text-gray-500">
+                      Click to upload banner image
+                    </span>
+                  </label>
+                )}
               </div>
               {errors.bannerImage && (
                 <p className="text-red-600 text-sm pt-2">
                   * {errors.bannerImage.message}
-                </p>
-              )}
-            </div>
-
-            {/* title */}
-            <div>
-              <label className="label font-semibold text-lg">Title</label>
-              <input
-                type="text"
-                className="input input-bordered w-full text-sm"
-                placeholder="Enter project title"
-                {...register("title", { required: "title is required" })}
-              />
-              {errors.title && (
-                <p className="text-red-600 text-sm pt-2">
-                  * {errors.title.message}
-                </p>
-              )}
-            </div>
-
-            <div className="flex sm:flex-row flex-col gap-5">
-              {/* category */}
-              <div className="w-full">
-                <label className="label font-semibold text-lg">Category</label>
-                <input
-                  type="text"
-                  className="input input-bordered w-full text-sm"
-                  placeholder="Enter the category this project belongs to"
-                  {...register("category", {
-                    required: "category is required",
-                  })}
-                />
-                {errors.category && (
-                  <p className="text-red-600 text-sm pt-2">
-                    * {errors.category.message}
-                  </p>
-                )}
-              </div>
-
-              {/* status */}
-              <div className="w-full">
-                <label className="label font-semibold text-lg">Status</label>
-                <select
-                  defaultValue=""
-                  className="select select-md w-full input-bordered text-sm"
-                  {...register("status", {
-                    required: "status is required",
-                  })}
-                >
-                  <option value="" disabled>
-                    Select Current Status
-                  </option>
-                  <option value="Upcoming">Upcoming</option>
-                  <option value="Completed">Completed</option>
-                </select>
-
-                {errors.status && (
-                  <p className="text-red-600 text-sm pt-2">
-                    * {errors.status.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* description if completed */}
-            <div>
-              <label className="label font-semibold text-lg">Description</label>
-              <textarea
-                placeholder="Write a short description about your project"
-                className={`textarea textarea-md w-full input-bordered ${
-                  watchStatus !== "Completed"
-                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : ""
-                }`}
-                rows={4}
-                disabled={watchStatus !== "Completed"}
-                {...register("description", {
-                  validate: (value) => {
-                    if (watchStatus === "Completed" && !value) {
-                      return "description is required for completed projects";
-                    }
-                    return true;
-                  },
-                })}
-              />
-
-              {errors.description && (
-                <p className="text-red-600 text-sm pt-2">
-                  * {errors.description.message}
-                </p>
-              )}
-            </div>
-
-            {/* Additional Images */}
-            <div className="mb-6">
-              <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
-                Additional Images
-              </label>
-
-              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4">
-                <input
-                  type="file"
-                  id="additionalImages"
-                  className="hidden"
-                  accept="image/*"
-                  multiple
-                />
-
-                <label
-                  htmlFor="additionalImages"
-                  className="cursor-pointer flex items-center justify-center py-4 bg-gray-100 dark:bg-gray-800 rounded-md"
-                >
-                  <FaPlus className="mr-2" />
-                  <span>Add Images</span>
-                </label>
-              </div>
-
-              {errors.additionalImages && (
-                <p className="text-red-600 text-sm pt-2">
-                  * {errors.additionalImages.message}
                 </p>
               )}
             </div>

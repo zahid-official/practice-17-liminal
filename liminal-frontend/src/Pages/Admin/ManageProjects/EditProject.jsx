@@ -28,12 +28,6 @@ const EditProject = ({ projectId }) => {
       {/* modal */}
       <dialog id={`modal_${projectId}`} className="modal">
         <div className="modal-box max-w-3xl py-16 px-8">
-          {/* close modal */}
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-red-600 text-lg">
-              ✕
-            </button>
-          </form>
 
           {/* modal content */}
           <ProjectModal projectData={projectData}></ProjectModal>
