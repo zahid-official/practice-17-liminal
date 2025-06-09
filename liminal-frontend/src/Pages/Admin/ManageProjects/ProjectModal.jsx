@@ -47,6 +47,7 @@ const ProjectModal = ({ projectData }) => {
   };
 
   console.log("banner ", bannerImage);
+  console.log("preview ", previewBannerImage);
 
   // removeBannerImage
   const removeBannerImage = () => {
@@ -160,9 +161,9 @@ const ProjectModal = ({ projectData }) => {
               <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center">
                 <input
                   type="file"
-                  id="bannerImage"
+                  id={`bannerImage_${projectData._id}`}
                   accept="image/*"
-                  // className="hidden"
+                  className="hidden"
                   onChange={handleBannerImage}
                   ref={bannerImageRef}
                 />
@@ -186,7 +187,7 @@ const ProjectModal = ({ projectData }) => {
                     </div>
                   ) : (
                     <label
-                      htmlFor="bannerImage"
+                      htmlFor={`bannerImage_${projectData._id}`}
                       className="cursor-pointer flex flex-col items-center justify-center py-6"
                     >
                       <FaCloudUploadAlt className="text-4xl text-gray-400 mb-2" />
