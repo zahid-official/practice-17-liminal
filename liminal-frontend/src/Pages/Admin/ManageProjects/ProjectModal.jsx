@@ -135,27 +135,16 @@ const ProjectModal = ({ projectData }) => {
         const bannerForm = new FormData();
         bannerForm.append("file", bannerImage);
         bannerForm.append("upload_preset", "liminal");
-
-        // Use original filename and prevent duplication
-        bannerForm.append("use_filename", "true");
-        bannerForm.append("unique_filename", "false");
-        bannerForm.append("overwrite", "false");
-
         const bannerRes = await axios.post(
           "https://api.cloudinary.com/v1_1/drgjpteya/image/upload",
           bannerForm
         );
         bannerURL = bannerRes.data.secure_url;
       } catch (error) {
-        if (error.response?.data?.error?.message.includes("already exists")) {
-          toast.warn("This Image Already Exists");
-          bannerURL = projectData.bannerImage || "";
-        } else {
-          console.error("Banner upload failed:", error);
-          toast.error("Banner upload failed. Please try again.");
-          setUploading(false);
-          return;
-        }
+        console.error("Banner upload failed:", error);
+        toast.error("Banner upload failed. Please try again.");
+        setUploading(false);
+        return;
       }
     }
 
@@ -169,33 +158,33 @@ const ProjectModal = ({ projectData }) => {
     setUploading(false);
 
     // send project data to backend via addProject API
-    // try {
-    //   const res = await axiosPublic.patch(
-    //     `/updateProject/${projectData._id}`,
-    //     updatedData
-    //   );
-    //   if (res.data.modifiedCount) {
-    //     setUploading(false);
-    //     toast.success("Project Added Successfully");
+    try {
+      const res = await axiosPublic.patch(
+        `/updateProject/${projectData._id}`,
+        updatedData
+      );
+      if (res.data.modifiedCount) {
+        setUploading(false);
+        toast.success("Project Added Successfully");
 
-    //     // reset states
-    //     setBannerImage(null);
-    //     setPreviewBannerImage(null);
+        // reset states
+        setBannerImage(null);
+        setPreviewBannerImage(null);
 
-    //     // form input field
-    //     if (bannerImageRef.current) {
-    //       bannerImageRef.current.value = "";
-    //     }
-    //     reset();
-    //   } else {
-    //     setUploading(false);
-    //     toast.warn("No Updating Data Found");
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    //   toast.error("Failed to add project. Please try again.");
-    //   setUploading(false);
-    // }
+        // form input field
+        if (bannerImageRef.current) {
+          bannerImageRef.current.value = "";
+        }
+        reset();
+      } else {
+        setUploading(false);
+        toast.warn("No Updating Data Found");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to add project. Please try again.");
+      setUploading(false);
+    }
 
     // close modal
     document.getElementById(`modal_${projectData._id}`).close();
