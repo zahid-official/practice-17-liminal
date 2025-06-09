@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaCloudUploadAlt, FaTrash } from "react-icons/fa";
+import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
 import axios from "axios";
 import useAxios from "../../../Auth/Hook/useAxios";
 import { toast } from "react-toastify";
@@ -23,15 +23,18 @@ const ProjectModal = ({ projectData }) => {
 
   // state to store the selected file
   const [bannerImage, setBannerImage] = useState(null);
+  const [additionalImages, setAdditionalImages] = useState([]);
 
   // state to store the preview URL of the selected
   const [previewBannerImage, setPreviewBannerImage] = useState(null);
-
-  // state for project uploading
-  const [uploading, setUploading] = useState(false);
+  const [previewAdditionalImages, setPreviewAdditionalImages] = useState([]);
 
   // ref to reset input field
   const bannerImageRef = useRef(null);
+  const additionalImagesRef = useRef(null);
+
+  // state for project uploading
+  const [uploading, setUploading] = useState(false);
 
   // handleBannerImage
   const handleBannerImage = (event) => {
@@ -46,9 +49,6 @@ const ProjectModal = ({ projectData }) => {
     });
   };
 
-  console.log("banner ", bannerImage);
-  console.log("preview ", previewBannerImage);
-
   // removeBannerImage
   const removeBannerImage = () => {
     if (previewBannerImage) {
@@ -56,7 +56,7 @@ const ProjectModal = ({ projectData }) => {
     }
     setBannerImage(null);
     setPreviewBannerImage(null);
-    setValue("bannerImage", null, { shouldValidate: true });
+    setValue("bannerImage", null, { shouldValidate: true, shouldDirty: true });
 
     // reset input field
     if (bannerImageRef.current) {
@@ -64,10 +64,68 @@ const ProjectModal = ({ projectData }) => {
     }
   };
 
+  // handleAdditionalImages
+  const handleAdditionalImages = (event) => {
+    const files = Array.from(event.target.files);
+
+    // filter out duplicate files
+    const filteredFiles = files.filter(
+      (newFile) =>
+        !additionalImages.some(
+          (existingFile) =>
+            existingFile.name === newFile.name &&
+            existingFile.lastModified === newFile.lastModified
+        )
+    );
+
+    const updatedFiles = [...additionalImages, ...filteredFiles];
+    if (!updatedFiles.length) return;
+
+    setAdditionalImages(updatedFiles);
+    setValue("additionalImages", updatedFiles, { shouldValidate: true });
+
+    // generate & store preview URLs of the selected images
+    const previewURLs = filteredFiles.map((file) => URL.createObjectURL(file));
+    setPreviewAdditionalImages((prev) => [...prev, ...previewURLs]);
+
+    setValue("additionalImages", updatedFiles, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  };
+
+  // removeAdditionalImage
+  const removeAdditionalImage = (index) => {
+    URL.revokeObjectURL(previewAdditionalImages[index]);
+
+    const newFiles = additionalImages.filter((_, idx) => idx !== index);
+    const newPreviews = previewAdditionalImages.filter(
+      (_, idx) => idx !== index
+    );
+
+    setAdditionalImages(newFiles);
+    setPreviewAdditionalImages(newPreviews);
+    setValue("additionalImages", newFiles, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+
+    // reset input field
+    if (additionalImagesRef.current) {
+      additionalImagesRef.current.value = "";
+    }
+  };
+
+  console.log("adi");
+  console.log("def");
   // formSubmit
   const formSubmit = async (formData) => {
     // validation & setLoading
-    if (!bannerImage && !projectData.bannerImage) return;
+    if (
+      (!bannerImage && !projectData?.bannerImage) ||
+      (!additionalImages?.length && !projectData?.additionalImages?.length)
+    )
+      return;
     setUploading(true);
 
     // uploading bannerImage in cloudinary
@@ -77,16 +135,27 @@ const ProjectModal = ({ projectData }) => {
         const bannerForm = new FormData();
         bannerForm.append("file", bannerImage);
         bannerForm.append("upload_preset", "liminal");
+
+        // Use original filename and prevent duplication
+        bannerForm.append("use_filename", "true");
+        bannerForm.append("unique_filename", "false");
+        bannerForm.append("overwrite", "false");
+
         const bannerRes = await axios.post(
           "https://api.cloudinary.com/v1_1/drgjpteya/image/upload",
           bannerForm
         );
         bannerURL = bannerRes.data.secure_url;
       } catch (error) {
-        console.error("Banner upload failed:", error);
-        toast.error("Banner upload failed. Please try again.");
-        setUploading(false);
-        return;
+        if (error.response?.data?.error?.message.includes("already exists")) {
+          toast.warn("This Image Already Exists");
+          bannerURL = projectData.bannerImage || "";
+        } else {
+          console.error("Banner upload failed:", error);
+          toast.error("Banner upload failed. Please try again.");
+          setUploading(false);
+          return;
+        }
       }
     }
 
@@ -96,34 +165,37 @@ const ProjectModal = ({ projectData }) => {
       bannerImage: bannerURL || projectData.bannerImage,
     };
 
+    console.log("Submit: ", updatedData);
+    setUploading(false);
+
     // send project data to backend via addProject API
-    try {
-      const res = await axiosPublic.patch(
-        `/updateProject/${projectData._id}`,
-        updatedData
-      );
-      if (res.data.modifiedCount) {
-        setUploading(false);
-        toast.success("Project Added Successfully");
+    // try {
+    //   const res = await axiosPublic.patch(
+    //     `/updateProject/${projectData._id}`,
+    //     updatedData
+    //   );
+    //   if (res.data.modifiedCount) {
+    //     setUploading(false);
+    //     toast.success("Project Added Successfully");
 
-        // reset states
-        setBannerImage(null);
-        setPreviewBannerImage(null);
+    //     // reset states
+    //     setBannerImage(null);
+    //     setPreviewBannerImage(null);
 
-        // form input field
-        if (bannerImageRef.current) {
-          bannerImageRef.current.value = "";
-        }
-        reset();
-      } else {
-        setUploading(false);
-        toast.warn("No Updating Data Found");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to add project. Please try again.");
-      setUploading(false);
-    }
+    //     // form input field
+    //     if (bannerImageRef.current) {
+    //       bannerImageRef.current.value = "";
+    //     }
+    //     reset();
+    //   } else {
+    //     setUploading(false);
+    //     toast.warn("No Updating Data Found");
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    //   toast.error("Failed to add project. Please try again.");
+    //   setUploading(false);
+    // }
 
     // close modal
     document.getElementById(`modal_${projectData._id}`).close();
@@ -133,11 +205,23 @@ const ProjectModal = ({ projectData }) => {
   useEffect(() => {
     register("bannerImage", { required: "banner image is required" });
 
+    register("additionalImages", {
+      required: "additional images are required",
+      validate: (files) =>
+        files.length === 5 || "Exactly 5 images are required",
+    });
+
     // set default value
     if (projectData?.bannerImage) {
       setPreviewBannerImage(projectData.bannerImage);
       setValue("bannerImage", projectData.bannerImage);
       clearErrors("bannerImage");
+    }
+
+    if (projectData?.additionalImages) {
+      setPreviewAdditionalImages(projectData.additionalImages);
+      setValue("additionalImages", projectData.additionalImages);
+      clearErrors("additionalImages");
     }
   }, [register, setValue, projectData, clearErrors]);
 
@@ -202,6 +286,60 @@ const ProjectModal = ({ projectData }) => {
               {errors.bannerImage && (
                 <p className="text-red-600 text-sm pt-2">
                   * {errors.bannerImage.message}
+                </p>
+              )}
+            </div>
+
+            {/* Additional Images */}
+            <div className="mb-6">
+              <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
+                Additional Images
+              </label>
+
+              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4">
+                <input
+                  type="file"
+                  id={`additionalImages${projectData._id}`}
+                  className="hidden"
+                  accept="image/*"
+                  multiple
+                  onChange={handleAdditionalImages}
+                  ref={additionalImagesRef}
+                />
+
+                <label
+                  htmlFor={`additionalImages${projectData._id}`}
+                  className="cursor-pointer flex items-center justify-center py-4 bg-gray-100 dark:bg-gray-800 rounded-md"
+                >
+                  <FaPlus className="mr-2" />
+                  <span>Add Images</span>
+                </label>
+
+                {previewAdditionalImages.length > 0 && (
+                  <div className="flex flex-wrap gap-5 pt-5">
+                    {previewAdditionalImages.map((previewURL, idx) => (
+                      <div key={idx} className="relative">
+                        <img
+                          src={previewURL}
+                          className="max-h-32 object-cover rounded"
+                          alt={`preview-${idx}`}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeAdditionalImage(idx)}
+                          className="absolute top-1 right-1 bg-red-500 text-white p-1.5 text-xs rounded-full"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {errors.additionalImages && (
+                <p className="text-red-600 text-sm pt-2">
+                  * {errors.additionalImages.message}
                 </p>
               )}
             </div>
