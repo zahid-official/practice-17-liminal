@@ -178,8 +178,6 @@ async function run() {
               })
             );
 
-            // preview response
-            console.log("Uploaded URLs:", { bannerURL, additionalURLs });
             res.json({ bannerURL, additionalURLs });
           } catch (error) {
             console.error("Image Upload Error:", error);
