@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
-import axios from "axios";
 import useAxios from "../../../Auth/Hook/useAxios";
 import { toast } from "react-toastify";
 
@@ -73,19 +72,16 @@ const ProjectModal = ({ projectData }) => {
       (newFile) =>
         !additionalImages.some(
           (existingFile) =>
+            existingFile instanceof File &&
             existingFile.name === newFile.name &&
             existingFile.lastModified === newFile.lastModified
         )
     );
 
     const updatedFiles = [...additionalImages, ...filteredFiles];
-    if (!updatedFiles.length) return;
+    const previewURLs = filteredFiles.map((file) => URL.createObjectURL(file));
 
     setAdditionalImages(updatedFiles);
-    setValue("additionalImages", updatedFiles, { shouldValidate: true });
-
-    // generate & store preview URLs of the selected images
-    const previewURLs = filteredFiles.map((file) => URL.createObjectURL(file));
     setPreviewAdditionalImages((prev) => [...prev, ...previewURLs]);
 
     setValue("additionalImages", updatedFiles, {
@@ -96,12 +92,15 @@ const ProjectModal = ({ projectData }) => {
 
   // removeAdditionalImage
   const removeAdditionalImage = (index) => {
-    URL.revokeObjectURL(previewAdditionalImages[index]);
-
     const newFiles = additionalImages.filter((_, idx) => idx !== index);
     const newPreviews = previewAdditionalImages.filter(
       (_, idx) => idx !== index
     );
+
+    // revoke only if it's a File
+    if (additionalImages[index] instanceof File) {
+      URL.revokeObjectURL(previewAdditionalImages[index]);
+    }
 
     setAdditionalImages(newFiles);
     setPreviewAdditionalImages(newPreviews);
@@ -116,77 +115,53 @@ const ProjectModal = ({ projectData }) => {
     }
   };
 
-  console.log("adi");
-  console.log("def");
   // formSubmit
   const formSubmit = async (formData) => {
     // validation & setLoading
     if (
       (!bannerImage && !projectData?.bannerImage) ||
-      (!additionalImages?.length && !projectData?.additionalImages?.length)
+      !additionalImages?.length
     )
       return;
     setUploading(true);
 
-    // uploading bannerImage in cloudinary
-    let bannerURL = "";
-    if (bannerImage) {
-      try {
-        const bannerForm = new FormData();
-        bannerForm.append("file", bannerImage);
-        bannerForm.append("upload_preset", "liminal");
-        const bannerRes = await axios.post(
-          "https://api.cloudinary.com/v1_1/drgjpteya/image/upload",
-          bannerForm
-        );
-        bannerURL = bannerRes.data.secure_url;
-      } catch (error) {
-        console.error("Banner upload failed:", error);
-        toast.error("Banner upload failed. Please try again.");
-        setUploading(false);
-        return;
-      }
-    }
+    // filter files & urls from additionalImages
+    const newlyAddedFiles = additionalImages.filter(
+      (item) => typeof item === "object"
+    );
+    const defaultValueURLs = additionalImages.filter(
+      (item) => typeof item === "string"
+    );
 
-    // updatedData
-    const updatedData = {
-      ...formData,
-      bannerImage: bannerURL || projectData.bannerImage,
-    };
+    // imageForm for upload in cloudinary
+    const imageForm = new FormData();
+    imageForm.append("bannerImage", bannerImage);
+    newlyAddedFiles?.forEach((img) =>
+      imageForm.append("additionalImages", img)
+    );
 
-    console.log("Submit: ", updatedData);
-    setUploading(false);
-
-    // send project data to backend via addProject API
     try {
-      const res = await axiosPublic.patch(
-        `/updateProject/${projectData._id}`,
-        updatedData
-      );
-      if (res.data.modifiedCount) {
-        setUploading(false);
-        toast.success("Project Added Successfully");
-
-        // reset states
-        setBannerImage(null);
-        setPreviewBannerImage(null);
-
-        // form input field
-        if (bannerImageRef.current) {
-          bannerImageRef.current.value = "";
+      // Step 1: Upload images
+      const uploadImagesRes = await axiosPublic.post(
+        "/uploadImages",
+        imageForm,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
         }
-        reset();
-      } else {
-        setUploading(false);
-        toast.warn("No Updating Data Found");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to add project. Please try again.");
+      );
+
+      const { bannerURL, additionalURLs } = uploadImagesRes.data;
+      console.log(bannerURL, additionalURLs);
+    } catch (uploadError) {
+      console.error("Image upload failed:", uploadError);
+      toast.error(
+        "Image upload failed. Please check your files or connection."
+      );
+    } finally {
       setUploading(false);
     }
 
-    // close modal
+    setUploading(false);
     document.getElementById(`modal_${projectData._id}`).close();
   };
 
@@ -209,6 +184,7 @@ const ProjectModal = ({ projectData }) => {
 
     if (projectData?.additionalImages) {
       setPreviewAdditionalImages(projectData.additionalImages);
+      setAdditionalImages(projectData.additionalImages);
       setValue("additionalImages", projectData.additionalImages);
       clearErrors("additionalImages");
     }
@@ -241,35 +217,32 @@ const ProjectModal = ({ projectData }) => {
                   ref={bannerImageRef}
                 />
 
-                {/* banner preview */}
-                <>
-                  {previewBannerImage ? (
-                    <div className="relative">
-                      <img
-                        src={previewBannerImage}
-                        alt="Preview"
-                        className="max-h-64 mx-auto rounded"
-                      />
-                      <button
-                        type="button"
-                        onClick={removeBannerImage}
-                        className="absolute top-1 right-1 bg-red-500 text-white p-2 rounded-full"
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
-                  ) : (
-                    <label
-                      htmlFor={`bannerImage_${projectData._id}`}
-                      className="cursor-pointer flex flex-col items-center justify-center py-6"
+                {previewBannerImage ? (
+                  <div className="relative">
+                    <img
+                      src={previewBannerImage}
+                      alt="Preview"
+                      className="max-h-64 mx-auto rounded"
+                    />
+                    <button
+                      type="button"
+                      onClick={removeBannerImage}
+                      className="absolute top-1 right-1 bg-red-500 text-white p-2 rounded-full"
                     >
-                      <FaCloudUploadAlt className="text-4xl text-gray-400 mb-2" />
-                      <span className="text-gray-500">
-                        Click to upload banner image
-                      </span>
-                    </label>
-                  )}
-                </>
+                      <FaTrash />
+                    </button>
+                  </div>
+                ) : (
+                  <label
+                    htmlFor={`bannerImage_${projectData._id}`}
+                    className="cursor-pointer flex flex-col items-center justify-center py-6"
+                  >
+                    <FaCloudUploadAlt className="text-4xl text-gray-400 mb-2" />
+                    <span className="text-gray-500">
+                      Click to upload banner image
+                    </span>
+                  </label>
+                )}
               </div>
 
               {errors.bannerImage && (

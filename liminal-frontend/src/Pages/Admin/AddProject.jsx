@@ -106,26 +106,34 @@ const AddProject = () => {
     if (!bannerImage || additionalImages.length === 0) return;
     setUploading(true);
 
-    // imageForm for upload in cloudinary
-    const imageForm = new FormData();
-    imageForm.append("bannerImage", bannerImage);
-    additionalImages.forEach((img) =>
-      imageForm.append("additionalImages", img)
-    );
-
     try {
-      // Step 1: Upload images
-      const uploadImagesRes = await axiosPublic.post(
-        "/uploadImages",
-        imageForm,
+      // upload banner image in cloudinary
+      const bannerForm = new FormData();
+      bannerForm.append("bannerImage", bannerImage);
+      const bannerRes = await axiosPublic.post(
+        "/uploadBannerImage",
+        bannerForm,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
+      const bannerURL = bannerRes.data.bannerURL;
 
-      const { bannerURL, additionalURLs } = uploadImagesRes.data;
+      // upload additional images in cloudinary
+      const additionalForm = new FormData();
+      additionalImages.forEach((img) =>
+        additionalForm.append("additionalImages", img)
+      );
+      const additionalRes = await axiosPublic.post(
+        "/uploadAdditionalImages",
+        additionalForm,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      const additionalURLs = additionalRes.data.additionalURLs;
 
-      // Step 2: Submit project data
+      // Submit project data with uploaded URLs
       try {
         const projectData = {
           ...formData,
@@ -158,11 +166,9 @@ const AddProject = () => {
         console.error("Project submission failed:", projectError);
         toast.error("Project data submission failed. Please try again.");
       }
-    } catch (uploadError) {
-      console.error("Image upload failed:", uploadError);
-      toast.error(
-        "Image upload failed. Please check your files or connection."
-      );
+    } catch (error) {
+      console.error("Upload or submission failed:", error);
+      toast.error("Uploading or submission failed. Please try again.");
     } finally {
       setUploading(false);
     }
