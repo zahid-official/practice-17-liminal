@@ -14,12 +14,14 @@ const ProjectModal = ({ projectData }) => {
     formState: { errors },
     setValue,
     reset,
+    watch,
     clearErrors,
   } = useForm({
     defaultValues: {
       title: projectData?.title || "",
       category: projectData?.category || "",
       status: projectData?.status || "",
+      description: projectData?.description || "",
     },
   });
 
@@ -41,6 +43,9 @@ const ProjectModal = ({ projectData }) => {
   // ref to reset input field
   const bannerImageRef = useRef(null);
   const additionalImagesRef = useRef(null);
+
+  // observer for status
+  const watchStatus = watch("status");
 
   // handleBannerImage
   const handleBannerImage = (event) => {
@@ -134,7 +139,7 @@ const ProjectModal = ({ projectData }) => {
 
     // filter files & urls from additionalImages
     const newlyAddedFiles = additionalImages.filter(
-      (item) => typeof item === "object"
+      (item) => item instanceof File
     );
     const defaultValueURLs = additionalImages.filter(
       (item) => typeof item === "string"
@@ -260,6 +265,7 @@ const ProjectModal = ({ projectData }) => {
         title: projectData.title || "",
         category: projectData?.category || "",
         status: projectData?.status || "",
+        description: projectData?.description || "",
       });
     }
 
@@ -397,6 +403,35 @@ const ProjectModal = ({ projectData }) => {
                   </p>
                 )}
               </div>
+            </div>
+
+            {/* description if completed */}
+            <div>
+              <label className="label font-semibold text-lg">Description</label>
+              <textarea
+                placeholder="Write a short description about your project"
+                className={`textarea textarea-md w-full input-bordered ${
+                  watchStatus !== "Completed"
+                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    : ""
+                }`}
+                rows={4}
+                disabled={watchStatus !== "Completed"}
+                {...register("description", {
+                  validate: (value) => {
+                    if (watchStatus === "Completed" && !value) {
+                      return "description is required for completed projects";
+                    }
+                    return true;
+                  },
+                })}
+              />
+
+              {errors.description && (
+                <p className="text-red-600 text-sm pt-2">
+                  * {errors.description.message}
+                </p>
+              )}
             </div>
 
             {/* Additional Images */}
