@@ -28,12 +28,13 @@ const ProjectModal = ({ projectData }) => {
   const [previewBannerImage, setPreviewBannerImage] = useState(null);
   const [previewAdditionalImages, setPreviewAdditionalImages] = useState([]);
 
+  // state for duplicateURL & project uploading
+  const [duplicateURLError, setDuplicateURLError] = useState("");
+  const [uploading, setUploading] = useState(false);
+
   // ref to reset input field
   const bannerImageRef = useRef(null);
   const additionalImagesRef = useRef(null);
-
-  // state for project uploading
-  const [uploading, setUploading] = useState(false);
 
   // handleBannerImage
   const handleBannerImage = (event) => {
@@ -116,7 +117,7 @@ const ProjectModal = ({ projectData }) => {
   };
 
   // formSubmit
-  const formSubmit = async (formData) => {
+  const formSubmit = async () => {
     // validation & setLoading
     if (
       (!bannerImage && !projectData?.bannerImage) ||
@@ -133,33 +134,64 @@ const ProjectModal = ({ projectData }) => {
       (item) => typeof item === "string"
     );
 
-    // imageForm for upload in cloudinary
-    const imageForm = new FormData();
-    imageForm.append("bannerImage", bannerImage);
-    newlyAddedFiles?.forEach((img) =>
-      imageForm.append("additionalImages", img)
+    // upload banner image in cloudinary
+    let bannerURL = "";
+    if (bannerImage) {
+      try {
+        const bannerForm = new FormData();
+        bannerForm.append("bannerImage", bannerImage);
+        const bannerRes = await axiosPublic.post(
+          "/uploadBannerImage",
+          bannerForm,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+        bannerURL = bannerRes.data.bannerURL;
+      } catch (bannerUploadError) {
+        console.error("Banner Image upload failed:", bannerUploadError);
+        toast.error("Banner Image upload failed. Please try again.");
+      }
+    }
+
+    // upload additional images in cloudinary
+    let additionalURLs = [];
+    if (newlyAddedFiles.length) {
+      try {
+        const additionalForm = new FormData();
+        newlyAddedFiles.forEach((img) =>
+          additionalForm.append("additionalImages", img)
+        );
+        const additionalRes = await axiosPublic.post(
+          "/uploadAdditionalImages",
+          additionalForm,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+        additionalURLs = additionalRes.data.additionalURLs;
+      } catch (additionalUploadError) {
+        console.error(
+          "Additional Images upload failed:",
+          additionalUploadError
+        );
+        toast.error("Additional Images upload failed. Please try again.");
+      }
+    }
+
+    // prevent duplicate url
+    const duplicateURLs = additionalURLs.filter((url) =>
+      defaultValueURLs.includes(url)
     );
 
-    try {
-      // Step 1: Upload images
-      const uploadImagesRes = await axiosPublic.post(
-        "/uploadImages",
-        imageForm,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
+    if (duplicateURLs.length > 0) {
+      setDuplicateURLError(
+        "Some images are already exist. Please select different ones"
       );
-
-      const { bannerURL, additionalURLs } = uploadImagesRes.data;
-      console.log(bannerURL, additionalURLs);
-    } catch (uploadError) {
-      console.error("Image upload failed:", uploadError);
-      toast.error(
-        "Image upload failed. Please check your files or connection."
-      );
-    } finally {
       setUploading(false);
+      return;
     }
+    setDuplicateURLError("");
 
     setUploading(false);
     document.getElementById(`modal_${projectData._id}`).close();
@@ -302,6 +334,14 @@ const ProjectModal = ({ projectData }) => {
               {errors.additionalImages && (
                 <p className="text-red-600 text-sm pt-2">
                   * {errors.additionalImages.message}
+                </p>
+              )}
+
+              {/* duplicateURL error */}
+              {duplicateURLError && (
+                <p className="text-red-600 text-sm pt-2">
+                  * <strong>Duplicate image detected:</strong>{" "}
+                  {duplicateURLError}
                 </p>
               )}
             </div>
