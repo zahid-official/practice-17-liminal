@@ -7,6 +7,18 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 5000;
 
+const cloudinary = require("cloudinary").v2;
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+// cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 // middleware
 app.use(
   cors({
@@ -101,6 +113,82 @@ async function run() {
       });
     }
 
+    // cloudinary
+    {
+      const generatePublicId = (buffer) => {
+        const crypto = require("crypto");
+        return crypto.createHash("md5").update(buffer).digest("hex");
+      };
+
+      // image upload API
+      app.post(
+        "/uploadImages",
+        upload.fields([
+          { name: "bannerImage", maxCount: 1 },
+          { name: "additionalImages", maxCount: 10 },
+        ]),
+        async (req, res) => {
+          try {
+            const bannerFile = req.files.bannerImage?.[0];
+            const additionalFiles = req.files.additionalImages || [];
+
+            if (!bannerFile || additionalFiles.length === 0) {
+              return res
+                .status(400)
+                .json({ error: "Banner and Additional Images required" });
+            }
+
+            // Upload banner image with fixed public_id
+            const bannerPublicId = generatePublicId(bannerFile.buffer);
+            const bannerURL = await new Promise((resolve, reject) => {
+              const stream = cloudinary.uploader.upload_stream(
+                {
+                  folder: "projects/banner",
+                  public_id: bannerPublicId,
+                  overwrite: true,
+                  unique_filename: false,
+                },
+                (error, result) => {
+                  if (error) return reject(error);
+                  resolve(result.secure_url);
+                }
+              );
+              stream.end(bannerFile.buffer);
+            });
+
+            // Upload additional images with fixed public_id
+            const additionalURLs = await Promise.all(
+              additionalFiles.map((file) => {
+                const filePublicId = generatePublicId(file.buffer);
+                return new Promise((resolve, reject) => {
+                  const stream = cloudinary.uploader.upload_stream(
+                    {
+                      folder: "projects/additional",
+                      public_id: filePublicId,
+                      overwrite: true,
+                      unique_filename: false,
+                    },
+                    (error, result) => {
+                      if (error) return reject(error);
+                      resolve(result.secure_url);
+                    }
+                  );
+                  stream.end(file.buffer);
+                });
+              })
+            );
+
+            // preview response
+            console.log("Uploaded URLs:", { bannerURL, additionalURLs });
+            res.json({ bannerURL, additionalURLs });
+          } catch (error) {
+            console.error("Image Upload Error:", error);
+            res.status(500).json({ error: "Image upload failed" });
+          }
+        }
+      );
+    }
+
     // read Operation
     {
       app.get("/", (req, res) => {
@@ -164,7 +252,7 @@ async function run() {
         };
 
         const result = await projectsCollection.updateOne(query, updatedData);
-        res.send(result)
+        res.send(result);
       });
     }
   } finally {
