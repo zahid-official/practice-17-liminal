@@ -1,6 +1,6 @@
-import { FaRegTrashAlt } from "react-icons/fa";
 import { useLoaderData } from "react-router-dom";
 import EditProject from "./EditProject";
+import DeleteProject from "./DeleteProject";
 
 const ManageProjects = () => {
   const projects = useLoaderData();
@@ -21,9 +21,7 @@ const ManageProjects = () => {
               <EditProject projectId={project._id}></EditProject>
 
               {/* delete button */}
-              <button className="btn text-red-600/90 btn-sm text-xl h-10">
-                <FaRegTrashAlt></FaRegTrashAlt>
-              </button>
+              <DeleteProject projectId={project._id}></DeleteProject>
             </div>
           </div>
         </div>
