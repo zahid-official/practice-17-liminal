@@ -120,25 +120,18 @@ async function run() {
         return crypto.createHash("md5").update(buffer).digest("hex");
       };
 
-      // image upload API
+      // bannerImage upload API
       app.post(
-        "/uploadImages",
-        upload.fields([
-          { name: "bannerImage", maxCount: 1 },
-          { name: "additionalImages", maxCount: 10 },
-        ]),
+        "/uploadBannerImage",
+        upload.single("bannerImage"),
         async (req, res) => {
           try {
-            const bannerFile = req.files.bannerImage?.[0];
-            const additionalFiles = req.files.additionalImages || [];
+            const bannerFile = req.file;
 
-            if (!bannerFile || additionalFiles.length === 0) {
-              return res
-                .status(400)
-                .json({ error: "Banner and Additional Images required" });
+            if (!bannerFile) {
+              return res.status(400).json({ error: "Banner Image required" });
             }
 
-            // Upload banner image with fixed public_id
             const bannerPublicId = generatePublicId(bannerFile.buffer);
             const bannerURL = await new Promise((resolve, reject) => {
               const stream = cloudinary.uploader.upload_stream(
@@ -156,7 +149,28 @@ async function run() {
               stream.end(bannerFile.buffer);
             });
 
-            // Upload additional images with fixed public_id
+            res.json({ bannerURL });
+          } catch (error) {
+            console.error("Banner Upload Error:", error);
+            res.status(500).json({ error: "Banner upload failed" });
+          }
+        }
+      );
+
+      // additionalImages upload API
+      app.post(
+        "/uploadAdditionalImages",
+        upload.array("additionalImages", 10),
+        async (req, res) => {
+          try {
+            const additionalFiles = req.files;
+
+            if (!additionalFiles || additionalFiles.length === 0) {
+              return res
+                .status(400)
+                .json({ error: "Additional Images required" });
+            }
+
             const additionalURLs = await Promise.all(
               additionalFiles.map((file) => {
                 const filePublicId = generatePublicId(file.buffer);
@@ -178,10 +192,10 @@ async function run() {
               })
             );
 
-            res.json({ bannerURL, additionalURLs });
+            res.json({ additionalURLs });
           } catch (error) {
-            console.error("Image Upload Error:", error);
-            res.status(500).json({ error: "Image upload failed" });
+            console.error("Additional Upload Error:", error);
+            res.status(500).json({ error: "Additional image upload failed" });
           }
         }
       );
