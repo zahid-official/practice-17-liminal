@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaPen } from "react-icons/fa";
 import ProjectModal from "./ProjectModal";
 
-const EditProject = ({ projectId }) => {
+const EditProject = ({ projectId, refetchProjects }) => {
   // state for projectData
   const [projectData, setProjectData] = useState({});
   // handleEdit
@@ -36,7 +36,7 @@ const EditProject = ({ projectId }) => {
           </form>
 
           {/* modal content */}
-          <ProjectModal projectData={projectData}></ProjectModal>
+          <ProjectModal projectData={projectData} refetchProjects={refetchProjects}></ProjectModal>
         </div>
       </dialog>
     </>

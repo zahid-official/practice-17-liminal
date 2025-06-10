@@ -41,7 +41,8 @@ const Routes = createBrowserRouter([
       {
         path: "/projectDetails/:id",
         element: <ProjectDetails></ProjectDetails>,
-        loader: ({params})=> fetch(`http://localhost:5000/projectDetails/${params.id}`)
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/projectDetails/${params.id}`),
       },
       {
         path: "/contact",
@@ -97,7 +98,6 @@ const Routes = createBrowserRouter([
       {
         path: "manageProjects",
         element: <ManageProjects></ManageProjects>,
-        loader: () => fetch("http://localhost:5000/projects"),
       },
     ],
   },

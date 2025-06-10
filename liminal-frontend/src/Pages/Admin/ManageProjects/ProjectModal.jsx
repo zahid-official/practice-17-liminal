@@ -6,7 +6,7 @@ import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
 import useAxios from "../../../Auth/Hook/useAxios";
 import { toast } from "react-toastify";
 
-const ProjectModal = ({ projectData }) => {
+const ProjectModal = ({ projectData, refetchProjects }) => {
   // react hook form
   const {
     register,
@@ -232,8 +232,10 @@ const ProjectModal = ({ projectData }) => {
         if (additionalImagesRef.current) {
           additionalImagesRef.current.value = "";
         }
-
         reset();
+
+        // refetch project to update UI
+        refetchProjects();
       } else {
         setUploading(false);
         toast.warn("No Updating Data Found");

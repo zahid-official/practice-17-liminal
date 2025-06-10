@@ -1,9 +1,20 @@
-import { useLoaderData } from "react-router-dom";
 import EditProject from "./EditProject";
 import DeleteProject from "./DeleteProject";
+import useAxios from "../../../Auth/Hook/useAxios";
+import { useQuery } from "@tanstack/react-query";
 
 const ManageProjects = () => {
-  const projects = useLoaderData();
+  const axiosPublic = useAxios();
+
+  // fetch all projects
+  const { data: projects = [], refetch: refetchProjects } = useQuery({
+    queryKey: ["projects"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/projects");
+      return res.data;
+    },
+  });
+
   return (
     <div className="max-w-7xl mx-auto px-6 pt-28 pb-36 grid grid-cols-3 gap-x-10 gap-y-32">
       {projects?.map((project) => (
@@ -18,10 +29,16 @@ const ManageProjects = () => {
 
             <div className="flex gap-2 pt-3">
               {/* edit button */}
-              <EditProject projectId={project._id}></EditProject>
+              <EditProject
+                projectId={project._id}
+                refetchProjects={refetchProjects}
+              ></EditProject>
 
               {/* delete button */}
-              <DeleteProject projectId={project._id}></DeleteProject>
+              <DeleteProject
+                projectId={project._id}
+                refetchProjects={refetchProjects}
+              ></DeleteProject>
             </div>
           </div>
         </div>

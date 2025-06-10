@@ -4,7 +4,7 @@ import useAxios from "../../../Auth/Hook/useAxios";
 import { toast } from "react-toastify";
 import { useState } from "react";
 
-const DeleteProject = ({ projectId }) => {
+const DeleteProject = ({ projectId, refetchProjects }) => {
   const axiosPublic = useAxios();
 
   // state for deleting
@@ -18,16 +18,15 @@ const DeleteProject = ({ projectId }) => {
       const res = await axiosPublic.delete(`/deleteProject/${id}`);
       if (res.data.deletedCount) {
         toast.success("Project Deleted Successfully");
+        refetchProjects();
       }
     } catch (setDeleting) {
       console.error("Failed to Delete project:", setDeleting);
       toast.error("Failed to Delete project. Please try again.");
     } finally {
       setDeleting(false);
+      document.getElementById(`delete_modal-${projectId}`).close();
     }
-
-    // close modal
-    document.getElementById(`delete_modal-${projectId}`).close();
   };
 
   return (
