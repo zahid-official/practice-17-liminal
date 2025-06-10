@@ -1,7 +1,6 @@
 import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect, useRef } from "react";
 import useAxios from "../../Auth/Hook/useAxios";
 import { toast } from "react-toastify";
 
@@ -27,6 +26,10 @@ const AddProject = () => {
   const [previewBannerImage, setPreviewBannerImage] = useState(null);
   const [previewAdditionalImages, setPreviewAdditionalImages] = useState([]);
 
+  // ref to reset input field
+  const bannerImageRef = useRef(null);
+  const additionalImagesRef = useRef(null);
+
   // state for project uploading
   const [uploading, setUploading] = useState(false);
 
@@ -50,7 +53,10 @@ const AddProject = () => {
     setPreviewBannerImage(null);
     setValue("bannerImage", null, { shouldValidate: true });
 
-    document.getElementById("bannerImage").value = "";
+    // reset input field
+    if (bannerImageRef.current) {
+      bannerImageRef.current.value = "";
+    }
   };
 
   // handleAdditionalImages
@@ -88,81 +94,76 @@ const AddProject = () => {
     setAdditionalImages(newFiles);
     setPreviewAdditionalImages(newPreviews);
     setValue("additionalImages", newFiles, { shouldValidate: true });
+
+    // reset input field
+    if (additionalImagesRef.current) {
+      additionalImagesRef.current.value = "";
+    }
   };
 
   // onSubmit
   const onSubmit = async (formData) => {
-    // validation & setLoading
     if (!bannerImage || additionalImages.length === 0) return;
     setUploading(true);
 
-    // uploading bannerImage in cloudinary
-    let bannerURL = "";
+    // imageForm for upload in cloudinary
+    const imageForm = new FormData();
+    imageForm.append("bannerImage", bannerImage);
+    additionalImages.forEach((img) =>
+      imageForm.append("additionalImages", img)
+    );
+
     try {
-      const bannerForm = new FormData();
-      bannerForm.append("file", bannerImage);
-      bannerForm.append("upload_preset", "liminal");
-      const bannerRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/drgjpteya/image/upload",
-        bannerForm
+      // Step 1: Upload images
+      const uploadImagesRes = await axiosPublic.post(
+        "/uploadImages",
+        imageForm,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
       );
-      bannerURL = bannerRes.data.secure_url;
-    } catch (error) {
-      console.error("Banner upload failed:", error);
-      toast.error("Banner upload failed. Please try again.");
-      setUploading(false);
-      return;
-    }
 
-    // uploading additionalImages in cloudinary
-    let additionalURLs = [];
-    try {
-      const uploadPromises = additionalImages.map((image) => {
-        const formData = new FormData();
-        formData.append("file", image);
-        formData.append("upload_preset", "liminal");
+      const { bannerURL, additionalURLs } = uploadImagesRes.data;
 
-        return axios.post(
-          "https://api.cloudinary.com/v1_1/drgjpteya/image/upload",
-          formData
-        );
-      });
+      // Step 2: Submit project data
+      try {
+        const projectData = {
+          ...formData,
+          bannerImage: bannerURL,
+          additionalImages: additionalURLs,
+        };
 
-      const responses = await Promise.all(uploadPromises);
-      additionalURLs = responses.map((res) => res.data.secure_url);
-    } catch (error) {
-      console.error("Additional image upload failed:", error);
-      toast.error("Additional images upload failed. Please try again.");
-      setUploading(false);
-      return;
-    }
+        const res = await axiosPublic.post("/addProject", projectData);
 
-    // project data
-    const projectData = {
-      ...formData,
-      bannerImage: bannerURL,
-      additionalImages: additionalURLs,
-    };
+        if (res.data.insertedId) {
+          toast.success("Project Added Successfully");
 
-    // send project data to backend via addProject API
-    try {
-      const res = await axiosPublic.post("/addProject", projectData);
-      if (res.data.insertedId) {
-        setUploading(false);
-        toast.success("Project Added Successfully");
+          // reset states
+          setBannerImage(null);
+          setPreviewBannerImage(null);
+          setAdditionalImages([]);
+          setPreviewAdditionalImages([]);
 
-        // reset states & form
-        setBannerImage(null);
-        setPreviewBannerImage(null);
-        setAdditionalImages([]);
-        setPreviewAdditionalImages([]);
-        document.getElementById("bannerImage").value = "";
-        document.getElementById("additionalImages").value = "";
-        reset();
+          // form input field
+          if (bannerImageRef.current) {
+            bannerImageRef.current.value = "";
+          }
+          if (additionalImagesRef.current) {
+            additionalImagesRef.current.value = "";
+          }
+
+          reset();
+        }
+      } catch (projectError) {
+        console.error("Project submission failed:", projectError);
+        toast.error("Project data submission failed. Please try again.");
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to add project. Please try again.");
+    } catch (uploadError) {
+      console.error("Image upload failed:", uploadError);
+      toast.error(
+        "Image upload failed. Please check your files or connection."
+      );
+    } finally {
       setUploading(false);
     }
   };
@@ -207,6 +208,7 @@ const AddProject = () => {
                   className="hidden"
                   accept="image/*"
                   onChange={handleBannerImage}
+                  ref={bannerImageRef}
                 />
 
                 {bannerImage ? (
@@ -346,6 +348,7 @@ const AddProject = () => {
                   accept="image/*"
                   multiple
                   onChange={handleAdditionalImages}
+                  ref={additionalImagesRef}
                 />
 
                 <label
