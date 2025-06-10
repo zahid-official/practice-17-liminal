@@ -15,7 +15,11 @@ const ProjectModal = ({ projectData }) => {
     setValue,
     reset,
     clearErrors,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      title: projectData?.title || "",
+    },
+  });
 
   // axios from useAxios hook
   const axiosPublic = useAxios();
@@ -249,6 +253,12 @@ const ProjectModal = ({ projectData }) => {
     });
 
     // set default value
+    if (projectData) {
+      reset({
+        title: projectData.title || "",
+      });
+    }
+
     if (projectData?.bannerImage) {
       setPreviewBannerImage(projectData.bannerImage);
       setValue("bannerImage", projectData.bannerImage);
@@ -261,7 +271,7 @@ const ProjectModal = ({ projectData }) => {
       setValue("additionalImages", projectData.additionalImages);
       clearErrors("additionalImages");
     }
-  }, [register, setValue, projectData, clearErrors]);
+  }, [register, setValue, projectData, clearErrors, reset]);
 
   return (
     <div className="py-4">
@@ -321,6 +331,22 @@ const ProjectModal = ({ projectData }) => {
               {errors.bannerImage && (
                 <p className="text-red-600 text-sm pt-2">
                   * {errors.bannerImage.message}
+                </p>
+              )}
+            </div>
+
+            {/* title */}
+            <div>
+              <label className="label font-semibold text-lg">Title</label>
+              <input
+                type="text"
+                className="input input-bordered w-full text-sm"
+                placeholder="Enter project title"
+                {...register("title", { required: "title is required" })}
+              />
+              {errors.title && (
+                <p className="text-red-600 text-sm pt-2">
+                  * {errors.title.message}
                 </p>
               )}
             </div>
