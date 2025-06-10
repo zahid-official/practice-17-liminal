@@ -18,6 +18,8 @@ const ProjectModal = ({ projectData }) => {
   } = useForm({
     defaultValues: {
       title: projectData?.title || "",
+      category: projectData?.category || "",
+      status: projectData?.status || "",
     },
   });
 
@@ -256,6 +258,8 @@ const ProjectModal = ({ projectData }) => {
     if (projectData) {
       reset({
         title: projectData.title || "",
+        category: projectData?.category || "",
+        status: projectData?.status || "",
       });
     }
 
@@ -349,6 +353,50 @@ const ProjectModal = ({ projectData }) => {
                   * {errors.title.message}
                 </p>
               )}
+            </div>
+
+            <div className="flex sm:flex-row flex-col gap-5">
+              {/* category */}
+              <div className="w-full">
+                <label className="label font-semibold text-lg">Category</label>
+                <input
+                  type="text"
+                  className="input input-bordered w-full text-sm"
+                  placeholder="Enter the category this project belongs to"
+                  {...register("category", {
+                    required: "category is required",
+                  })}
+                />
+                {errors.category && (
+                  <p className="text-red-600 text-sm pt-2">
+                    * {errors.category.message}
+                  </p>
+                )}
+              </div>
+
+              {/* status */}
+              <div className="w-full">
+                <label className="label font-semibold text-lg">Status</label>
+                <select
+                  defaultValue=""
+                  className="select select-md w-full input-bordered text-sm"
+                  {...register("status", {
+                    required: "status is required",
+                  })}
+                >
+                  <option value="" disabled>
+                    Select Current Status
+                  </option>
+                  <option value="Upcoming">Upcoming</option>
+                  <option value="Completed">Completed</option>
+                </select>
+
+                {errors.status && (
+                  <p className="text-red-600 text-sm pt-2">
+                    * {errors.status.message}
+                  </p>
+                )}
+              </div>
             </div>
 
             {/* Additional Images */}
