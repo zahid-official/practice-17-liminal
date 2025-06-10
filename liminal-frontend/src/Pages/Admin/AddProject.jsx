@@ -299,7 +299,7 @@ const AddProject = () => {
                   <option value="" disabled>
                     Select Current Status
                   </option>
-                  <option value="Upcoming">Upcoming</option>
+                  <option value="Ongoing">Ongoing Project</option>
                   <option value="Completed">Completed</option>
                 </select>
 
