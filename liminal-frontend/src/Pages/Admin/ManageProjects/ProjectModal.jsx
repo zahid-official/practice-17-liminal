@@ -117,7 +117,7 @@ const ProjectModal = ({ projectData }) => {
   };
 
   // formSubmit
-  const formSubmit = async () => {
+  const formSubmit = async (formData) => {
     // validation & setLoading
     if (
       (!bannerImage && !projectData?.bannerImage) ||
@@ -183,7 +183,6 @@ const ProjectModal = ({ projectData }) => {
     const duplicateURLs = additionalURLs.filter((url) =>
       defaultValueURLs.includes(url)
     );
-
     if (duplicateURLs.length > 0) {
       setDuplicateURLError(
         "Some images are already exist. Please select different ones"
@@ -193,7 +192,49 @@ const ProjectModal = ({ projectData }) => {
     }
     setDuplicateURLError("");
 
-    setUploading(false);
+    // Submit project data with uploaded URLs
+    try {
+      const newAdditionalURLs = [...defaultValueURLs, ...additionalURLs];
+      const updatedData = {
+        ...formData,
+        bannerImage: bannerURL || projectData.bannerImage,
+        additionalImages: newAdditionalURLs,
+      };
+
+      const res = await axiosPublic.patch(
+        `/updateProject/${projectData._id}`,
+        updatedData
+      );
+      if (res.data.modifiedCount) {
+        toast.success("Project Updated Successfully");
+
+        // reset states
+        setBannerImage(null);
+        setPreviewBannerImage(null);
+        setAdditionalImages([]);
+        setPreviewAdditionalImages([]);
+
+        // form input field
+        if (bannerImageRef.current) {
+          bannerImageRef.current.value = "";
+        }
+        if (additionalImagesRef.current) {
+          additionalImagesRef.current.value = "";
+        }
+
+        reset();
+      } else {
+        setUploading(false);
+        toast.warn("No Updating Data Found");
+      }
+    } catch (projectError) {
+      console.error("Project submission failed:", projectError);
+      toast.error("Project data submission failed. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+
+    // close modal
     document.getElementById(`modal_${projectData._id}`).close();
   };
 
