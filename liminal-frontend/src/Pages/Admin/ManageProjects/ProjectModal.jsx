@@ -262,7 +262,7 @@ const ProjectModal = ({ projectData }) => {
     // set default value
     if (projectData) {
       reset({
-        title: projectData.title || "",
+        title: projectData?.title || "",
         category: projectData?.category || "",
         status: projectData?.status || "",
         description: projectData?.description || "",
@@ -282,6 +282,15 @@ const ProjectModal = ({ projectData }) => {
       clearErrors("additionalImages");
     }
   }, [register, setValue, projectData, clearErrors, reset]);
+
+  // useEffect for description to update it's value based on status
+  useEffect(() => {
+    if (watchStatus === "Completed") {
+      setValue("description", projectData?.description || "");
+    } else {
+      setValue("description", "");
+    }
+  }, [watchStatus, projectData?.description, setValue]);
 
   return (
     <div className="py-4">
@@ -393,7 +402,7 @@ const ProjectModal = ({ projectData }) => {
                   <option value="" disabled>
                     Select Current Status
                   </option>
-                  <option value="Upcoming">Upcoming</option>
+                  <option value="Ongoing">Ongoing Project</option>
                   <option value="Completed">Completed</option>
                 </select>
 
