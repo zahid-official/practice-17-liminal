@@ -48,6 +48,7 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
+  // need to implement jwt here
   // observer
   useEffect(() => {
     const observer = onAuthStateChanged(auth, (usersData) => {
