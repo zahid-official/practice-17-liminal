@@ -5,12 +5,12 @@ import { GoogleAuthProvider } from "firebase/auth";
 import loginLottie from "../../Lottie/login.json";
 import Lottie from "lottie-react";
 import useAuth from "../../Auth/Hook/useAuth";
-import useAxios from "../../Auth/Hook/useAxios";
+import useAxiosPublic from "../../Auth/Hook/useAxiosPublic";
 
 const Login = () => {
   // useContext
   const { login, setUsers, google } = useAuth();
-  const axiosPublic = useAxios();
+  const axiosPublic = useAxiosPublic();
 
   // useLocation
   const location = useLocation();

@@ -1,7 +1,7 @@
 import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { useState, useEffect, useRef } from "react";
-import useAxios from "../../Auth/Hook/useAxios";
+import useAxiosPublic from "../../Auth/Hook/useAxiosPublic";
 import { toast } from "react-toastify";
 
 const AddProject = () => {
@@ -16,7 +16,7 @@ const AddProject = () => {
     reset,
   } = useForm();
 
-  const axiosPublic = useAxios();
+  const axiosPublic = useAxiosPublic();
 
   // state to store the selected file
   const [bannerImage, setBannerImage] = useState(null);

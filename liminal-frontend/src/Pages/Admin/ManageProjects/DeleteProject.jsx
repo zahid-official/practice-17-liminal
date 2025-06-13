@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { FaRegTrashAlt } from "react-icons/fa";
-import useAxios from "../../../Auth/Hook/useAxios";
+import useAxiosPublic from "../../../Auth/Hook/useAxiosPublic";
 import { toast } from "react-toastify";
 import { useState } from "react";
 
 const DeleteProject = ({ projectId, refetchProjects }) => {
-  const axiosPublic = useAxios();
+  const axiosPublic = useAxiosPublic();
 
   // state for deleting
   const [deleting, setDeleting] = useState(false);

@@ -5,12 +5,12 @@ import { toast } from "react-toastify";
 import Lottie from "lottie-react";
 import registerLottie from "../../Lottie/register.json";
 import useAuth from "../../Auth/Hook/useAuth";
-import useAxios from "../../Auth/Hook/useAxios";
+import useAxiosPublic from "../../Auth/Hook/useAxiosPublic";
 
 const Register = () => {
   // Hooks
   const { register, profile, setUsers, google } = useAuth();
-  const axiosPublic = useAxios();
+  const axiosPublic = useAxiosPublic();
 
   // useLocation
   const location = useLocation();

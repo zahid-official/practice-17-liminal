@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
-import useAxios from "../../../Auth/Hook/useAxios";
+import useAxiosPublic from "../../../Auth/Hook/useAxiosPublic";
 import { toast } from "react-toastify";
 
 const ProjectModal = ({ projectData, refetchProjects }) => {
@@ -25,8 +25,8 @@ const ProjectModal = ({ projectData, refetchProjects }) => {
     },
   });
 
-  // axios from useAxios hook
-  const axiosPublic = useAxios();
+  // axios from useAxiosPublic hook
+  const axiosPublic = useAxiosPublic();
 
   // state to store the selected file
   const [bannerImage, setBannerImage] = useState(null);
