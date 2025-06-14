@@ -10,7 +10,7 @@ const ManageProjects = () => {
   const { data: projects = [], refetch: refetchProjects } = useQuery({
     queryKey: ["projects"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/projects");
+      const res = await axiosSecure.get("/manageProjects");
       return res.data;
     },
   });
