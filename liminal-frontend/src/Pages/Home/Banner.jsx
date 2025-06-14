@@ -11,7 +11,7 @@ import { Autoplay, EffectFade } from "swiper/modules";
 
 const Banner = () => {
   return (
-    <div className="max-w-screen-lg mx-auto px-6">
+    <div className="px-6">
       <h2 className="text-3xl font-semibold custom-title mb-2.5">Latest Projects</h2>
 
       {/* banner */}
