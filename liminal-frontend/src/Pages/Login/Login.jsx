@@ -42,9 +42,12 @@ const Login = () => {
       .then((result) => {
         setUsers(result.user);
         // create user in DB
-        const user = { name: result.user.displayName, email: result.user.email, role : "user" };
-        axiosPublic.post("/users", user).then((res) => {
-          console.log(res.data);
+        const user = {
+          name: result.user.displayName,
+          email: result.user.email,
+          role: "user",
+        };
+        axiosPublic.post("/users", user).then(() => {
           toast.success("Sign Up Successfully");
           navigate(location?.state ? location.state : "/");
         });
