@@ -6,41 +6,73 @@ import {
 } from "react-icons/fa";
 import useAuth from "../../Auth/Hook/useAuth";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import useAxiosSecure from "../../Auth/Hook/useAxiosSecure";
 
 const Dashboard = () => {
   const { users } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
-  // Dummy stats for the dashboard
+  // state for projectsData
+  const [projectsData, setProjectsData] = useState([]);
+  const [usersData, setUsersData] = useState([]);
+
+  const ongoing = projectsData.filter(
+    (project) => project.status === "Ongoing"
+  );
+
+  const completed = projectsData.filter(
+    (project) => project.status === "Completed"
+  );
+
+  // stats for the dashboard
   const stats = [
     {
       id: 1,
       title: "Total Projects",
-      value: "24",
+      value: projectsData.length,
       icon: <FaProjectDiagram className="text-blue-500" size={24} />,
       bgColor: "bg-blue-100 dark:bg-blue-900/30",
     },
     {
       id: 2,
-      title: "Active Clients",
-      value: "18",
+      title: "Ongoing Projects",
+      value: ongoing.length,
       icon: <FaUsers className="text-green-500" size={24} />,
       bgColor: "bg-green-100 dark:bg-green-900/30",
     },
     {
       id: 3,
-      title: "Revenue Growth",
-      value: "+32%",
+      title: "Completed Projects",
+      value: completed.length,
       icon: <FaChartLine className="text-purple-500" size={24} />,
       bgColor: "bg-purple-100 dark:bg-purple-900/30",
     },
     {
       id: 4,
-      title: "Pending Tasks",
-      value: "7",
+      title: "Total Users",
+      value: usersData.length,
       icon: <FaTasks className="text-orange-500" size={24} />,
       bgColor: "bg-orange-100 dark:bg-orange-900/30",
     },
   ];
+
+  // useEffect for projectsData
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const res = await axiosSecure.get("/manageProjects");
+      setProjectsData(res.data);
+    };
+
+    const fetchUsers = async () => {
+      const res = await axiosSecure.get("/manageUsers");
+      setUsersData(res.data);
+    };
+
+    fetchProjects();
+    fetchUsers();
+  }, [axiosSecure]);
+
   return (
     <div className="container mx-auto py-16 mt-4 sm:px-10 px-4">
       {/* intro */}
