@@ -229,6 +229,12 @@ async function run() {
         const result = await projectsCollection.find().toArray();
         res.send(result);
       });
+
+      // get all users for admin manageUsers
+      app.get("/manageUsers", verifyJWT, verifyAdmin, async (req, res) => {
+        const result = await usersCollection.find().toArray();
+        res.send(result);
+      });
     }
 
     // create Operation
