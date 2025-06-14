@@ -48,7 +48,7 @@ const Introduction = () => {
       </div>
 
       {/* part-2 Services */}
-      <div className="overflow-hidden flex lg:flex-row-reverse flex-col xl:gap-32 gap-10 xl:w-10/12 w-11/12 mx-auto px-3 text-lg mt-48 mb-16">
+      <div className="lg:flex-row-reverse lg:mt-40 sm:mt-28 mt-20 mb-16 overflow-hidden flex flex-col xl:gap-20 gap-10 px-6 text-lg">
         <motion.div
           initial={{ translateX: 300, opacity: 0 }}
           whileInView={{ translateX: 0, opacity: 1 }}
