@@ -286,6 +286,24 @@ async function run() {
           res.send(result);
         }
       );
+
+      // update user role
+      app.patch(
+        "/updateUserRole/:id",
+        verifyJWT,
+        verifyAdmin,
+        async (req, res) => {
+          const id = req.params.id;
+          const role = req.body?.role;
+          const query = { _id: new ObjectId(id) };
+          const updatedData = {
+            $set: { role },
+          };
+
+          const result = await usersCollection.updateOne(query, updatedData);
+          res.send(result);
+        }
+      );
     }
 
     // delete Operation
