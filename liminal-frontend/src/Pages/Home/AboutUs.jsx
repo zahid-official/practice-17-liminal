@@ -5,7 +5,7 @@ import { FaArrowRight } from "react-icons/fa";
 
 import { motion } from "motion/react";
 
-const Introduction = () => {
+const AboutUs = () => {
   return (
     <>
       <div className="overflow-hidden flex lg:flex-row flex-col xl:gap-20 gap-10 px-6 text-lg">
@@ -91,4 +91,4 @@ const Introduction = () => {
   );
 };
 
-export default Introduction;
+export default AboutUs;

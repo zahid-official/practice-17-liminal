@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Contact = () => {
+const ContactUs = () => {
   return (
     <div className="py-20 text-center bg-base-200 lg:mt-40 sm:mt-32 mt-28 mx-6 rounded-lg">
       <h2 className="text-4xl">Are you ready to Start?</h2>
@@ -14,4 +14,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default ContactUs;

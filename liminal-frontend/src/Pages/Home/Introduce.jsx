@@ -1,6 +1,6 @@
 import icon from "/assets/icon.png";
 
-const Intro = () => {
+const Introduce = () => {
   return (
     <div className="px-6 sm:my-36 my-24">
       <div className="sm:max-w-32 max-w-24 mx-auto">
@@ -12,4 +12,4 @@ const Intro = () => {
   );
 };
 
-export default Intro;
+export default Introduce;

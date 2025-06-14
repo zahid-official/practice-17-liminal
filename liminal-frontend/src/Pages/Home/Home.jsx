@@ -1,7 +1,7 @@
-import About from "./Introduction";
+import AboutUs from "./AboutUs";
 import Banner from "./Banner";
-import Contact from "./Contact";
-import Intro from "./Intro";
+import ContactUs from "./ContactUs";
+import Introduce from "./Introduce";
 import Studio from "./Studio";
 import Upcoming from "./Upcoming";
 
@@ -15,7 +15,7 @@ const Home = () => {
         <Banner></Banner>
       </div>
 
-      {/* intro */}
+      {/* introduce */}
       <motion.div
         initial={{ translateY: 100, opacity: 0 }}
         whileInView={{
@@ -24,12 +24,12 @@ const Home = () => {
         }}
         transition={{ duration: 0.75, delay: 0.2 }}
       >
-        <Intro></Intro>
+        <Introduce></Introduce>
       </motion.div>
 
-      {/* about */}
+      {/* AboutUs */}
       <div>
-        <About></About>
+        <AboutUs></AboutUs>
       </div>
 
       {/* studio */}
@@ -44,7 +44,7 @@ const Home = () => {
 
       {/* contact */}
       <div>
-        <Contact></Contact>
+        <ContactUs></ContactUs>
       </div>
     </>
   );

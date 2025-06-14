@@ -44,7 +44,9 @@ const Navbar = () => {
 
         {/* center */}
         <div className="navbar-center hidden sm:flex">
-          <img src={logo} alt="" className="sm:h-16 h-14" />
+          <Link to={"/"}>
+            <img src={logo} alt="" className="sm:h-16 h-14" />
+          </Link>
         </div>
 
         {/* end */}

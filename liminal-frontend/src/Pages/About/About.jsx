@@ -19,7 +19,7 @@ import g14 from "/assets/g14.jpg";
 const About = () => {
   return (
     <>
-      <div className="max-w-[1100px] mx-auto px-6">
+      <div className="px-5">
         {/* top */}
         <div className="grid md:grid-cols-2 gap-20 relative">
           {/* left */}
