@@ -8,21 +8,21 @@ import { motion } from "motion/react";
 const Introduction = () => {
   return (
     <>
-      <div className="overflow-hidden flex lg:flex-row flex-col xl:gap-32 gap-10 xl:w-10/12 w-11/12 mx-auto px-3 text-lg">
+      <div className="overflow-hidden flex lg:flex-row flex-col xl:gap-20 gap-10 px-6 text-lg">
         <motion.div
           initial={{ translateX: -300, opacity: 0 }}
           whileInView={{ translateX: 0, opacity: 1 }}
-          transition={{duration: 1.4, delay: 0.2}}
+          transition={{ duration: 1.4, delay: 0.2 }}
         >
           <img src={image1} alt="" />
         </motion.div>
 
         <motion.div
-        initial={{ translateX: 300, opacity: 0 }}
-        whileInView={{ translateX: 0, opacity: 1 }}
-        transition={{duration: 1.4, delay: 0.2}}
-        
-        className="lg:w-[70%] flex items-center justify-center">
+          initial={{ translateX: 300, opacity: 0 }}
+          whileInView={{ translateX: 0, opacity: 1 }}
+          transition={{ duration: 1.4, delay: 0.2 }}
+          className="lg:w-[70%] flex items-center justify-center"
+        >
           <div>
             <h2 className="custom-title text-4xl mb-3">About Us</h2>
             <p>
@@ -31,7 +31,7 @@ const Introduction = () => {
               designers, strategists, and storytellers is dedicated to
               transforming visions into meaningful realities.
             </p>
-            <Link  to={"/about"}>
+            <Link to={"/about"}>
               <p className="relative group inline-block py-4">
                 Read More
                 <span className="w-full group-hover:w-0 duration-500 h-[2px] bg-[#154434] inline-block absolute -bottom-0.5 left-0"></span>
@@ -50,18 +50,19 @@ const Introduction = () => {
       {/* part-2 Services */}
       <div className="overflow-hidden flex lg:flex-row-reverse flex-col xl:gap-32 gap-10 xl:w-10/12 w-11/12 mx-auto px-3 text-lg mt-48 mb-16">
         <motion.div
-        initial={{ translateX: 300, opacity: 0 }}
-        whileInView={{ translateX: 0, opacity: 1 }}
-        transition={{duration: 1.4, delay: 0.2}}
+          initial={{ translateX: 300, opacity: 0 }}
+          whileInView={{ translateX: 0, opacity: 1 }}
+          transition={{ duration: 1.4, delay: 0.2 }}
         >
           <img src={image2} alt="" />
         </motion.div>
 
-        <motion.div 
-        initial={{ translateX: -300, opacity: 0 }}
-        whileInView={{ translateX: 0, opacity: 1 }}
-        transition={{duration: 1.4, delay: 0.2}}
-        className="lg:w-[70%] flex items-center justify-center">
+        <motion.div
+          initial={{ translateX: -300, opacity: 0 }}
+          whileInView={{ translateX: 0, opacity: 1 }}
+          transition={{ duration: 1.4, delay: 0.2 }}
+          className="lg:w-[70%] flex items-center justify-center"
+        >
           <div>
             <h2 className="custom-title text-4xl mb-3">Services</h2>
             <p>
@@ -71,7 +72,7 @@ const Introduction = () => {
               aesthetically pleasing spaces that meet their needs and
               preferences.
             </p>
-            <Link  to={"/about"}>
+            <Link to={"/about"}>
               <p className="relative group inline-block py-4">
                 Explore Services
                 <span className="w-full group-hover:w-0 duration-500 h-[2px] bg-[#154434] inline-block absolute -bottom-0.5 left-0"></span>
