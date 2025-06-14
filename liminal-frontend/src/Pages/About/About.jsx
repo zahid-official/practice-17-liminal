@@ -288,25 +288,6 @@ const About = () => {
           </div>
         </div>
       </div>
-
-      {/* contact */}
-      <div className="py-20 text-center bg-base-200 lg:mt-36 sm:mt-28 mt-24 px-4">
-        <h2 className="text-4xl">Let’s Create Together</h2>
-        <p className=" pt-8">
-          We invite you to explore the possibilities of your space with STONES
-          AND WALLS. <br /> Our diverse portfolio encompasses a wide range of
-          projects, from hospitality and leisure venues to residential and
-          office spaces.
-        </p>
-
-        <p className="pt-4 pb-10">
-          Contact us today to schedule your consultation and let’s bring your
-          vision to life!
-        </p>
-        <button className="btn border-gray-300 rounded-full px-10">
-          Contact
-        </button>
-      </div>
     </>
   );
 };

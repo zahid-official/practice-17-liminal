@@ -1,20 +1,50 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../Shared/Navbar";
 import Footer from "../Shared/Footer";
+import ContactUs from "../Pages/Home/ContactUs";
 
 const MainLayout = () => {
+  const location = useLocation();
+
+  let heading = "Are you ready to Start?";
+  let paragraph = "Join us on this creative journey.";
+
+  if (location.pathname === "/about") {
+    heading = "Let’s Create Together";
+    paragraph =
+      "We invite you to explore the possibilities of your space with STONES AND WALLS. Our diverse portfolio encompasses a wide range of projects, from hospitality and leisure venues to residential and office spaces.";
+  }
   return (
-    <div className="duration-500 dark:bg-[#010313] dark:text-white max-w-7xl mx-auto sm:px-3">
-      <header>
-        <Navbar></Navbar>
-      </header>
+    <div className="duration-500">
+      <div
+        className={
+          location.pathname !== "/contact" && "max-w-7xl mx-auto sm:px-3"
+        }
+      >
+        <header
+          className={
+            location.pathname === "/contact" && "max-w-7xl mx-auto sm:px-3"
+          }
+        >
+          <Navbar></Navbar>
+        </header>
 
-      <main className="min-h-[45vh]">
-        <Outlet></Outlet>
-      </main>
+        <main className="min-h-[45vh]">
+          <Outlet></Outlet>
+        </main>
+      </div>
 
-      <footer className="bg-[#f9f9f9] dark:bg-[#0a1020]">
-        <Footer></Footer>
+      <footer>
+        {/* contact */}
+        {location.pathname !== "/contact" && (
+          <div className={location.pathname !== "/projects" && "lg:mt-40 sm:mt-32 mt-28"}>
+            <ContactUs heading={heading} paragraph={paragraph}></ContactUs>
+          </div>
+        )}
+
+        <div className="max-w-7xl mx-auto">
+          <Footer></Footer>
+        </div>
       </footer>
     </div>
   );

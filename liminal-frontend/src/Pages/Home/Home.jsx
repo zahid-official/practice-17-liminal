@@ -1,6 +1,5 @@
 import AboutUs from "./AboutUs";
 import Banner from "./Banner";
-import ContactUs from "./ContactUs";
 import Introduce from "./Introduce";
 import Studio from "./Studio";
 import Upcoming from "./Upcoming";
@@ -40,11 +39,6 @@ const Home = () => {
       {/* upcomming */}
       <div>
         <Upcoming></Upcoming>
-      </div>
-
-      {/* contact */}
-      <div>
-        <ContactUs></ContactUs>
       </div>
     </>
   );
