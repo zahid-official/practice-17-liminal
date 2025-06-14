@@ -41,7 +41,7 @@ const Dashboard = () => {
     },
   ];
   return (
-    <div className="container mx-auto py-20 mt-4 sm:px-10 px-4">
+    <div className="container mx-auto py-16 mt-4 sm:px-10 px-4">
       {/* intro */}
       <div>
         <h2 className="text-3xl font-semibold">Dashboard</h2>

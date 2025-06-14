@@ -1,12 +1,28 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../Auth/Hook/useAuth";
 import profile from "/assets/profile.png";
+import { toast } from "react-toastify";
 import { BsFillGridFill } from "react-icons/bs";
 import { FaDiagramProject } from "react-icons/fa6";
-import { FaChartBar, FaHome, FaTimes, FaUserCog } from "react-icons/fa";
+import {
+  FaChartBar,
+  FaHome,
+  FaSignOutAlt,
+  FaTimes,
+  FaUserCog,
+} from "react-icons/fa";
 
 const Sidebar = () => {
-  const { users } = useAuth();
+  const { users, logout } = useAuth();
+
+  // handleSignOut
+  const handleSignOut = () => {
+    logout()
+      .then(() => {
+        toast.success("Sign Out Successfully");
+      })
+      .catch((error) => toast.error(error.message));
+  };
   return (
     <>
       <div className="drawer-side">
@@ -15,25 +31,29 @@ const Sidebar = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <div className="menu bg-[#f9f9f9] text-base pt-4 shadow-md min-h-screen w-72 px-4">
+        <div className="menu bg-[#f9f9f9] text-base pt-4 shadow-md min-h-screen w-80 px-4">
           {/* close drawer */}
-           <label htmlFor="my-drawer" className="lg:hidden absolute top-4 right-4 drawer-button ">
-            <FaTimes className="text-2xl hover:text-red-700 cursor-pointer"/>
+          <label
+            htmlFor="my-drawer"
+            className="lg:hidden absolute top-4 right-4 drawer-button "
+          >
+            <FaTimes className="text-2xl hover:text-red-700 cursor-pointer" />
           </label>
 
           {/* profile info */}
           <div className="pt-12">
             <div className="h-16 w-16 mx-auto p-0.5 border-[#154434] border-2 rounded-full">
               <img
-                src={users?.photoURL || profile}
+                src={profile}
                 className="w-full h-full object-cover rounded-full"
-                alt=""
+                alt="Photo"
               />
             </div>
 
-            <h2 className="text-2xl font-semibold text-center pt-2 pb-6">
+            <h2 className="text-2xl font-semibold text-center pt-2">
               {users?.displayName}
             </h2>
+            <p className="pb-6 text-center break-words">{users?.email}</p>
           </div>
 
           {/* navigation */}
@@ -64,8 +84,15 @@ const Sidebar = () => {
           <div className="border-t mt-10 pt-2">
             <li>
               <Link to="/">
-                <FaHome /> Manage Users
+                <FaHome /> Back to Home
               </Link>
+            </li>
+
+            {/* sign out */}
+            <li>
+              <button onClick={handleSignOut}>
+                <FaSignOutAlt /> Sign Out
+              </button>
             </li>
           </div>
         </div>
