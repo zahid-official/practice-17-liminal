@@ -16,6 +16,7 @@ const Dashboard = () => {
   // state for projectsData
   const [projectsData, setProjectsData] = useState([]);
   const [usersData, setUsersData] = useState([]);
+  const [latestProjects, setLatestProjects] = useState([]);
 
   const ongoing = projectsData.filter(
     (project) => project.status === "Ongoing"
@@ -69,8 +70,14 @@ const Dashboard = () => {
       setUsersData(res.data);
     };
 
+    const fetchLatestProjects = async () => {
+      const res = await axiosSecure.get("/latestProjects");
+      setLatestProjects(res.data);
+    };
+
     fetchProjects();
     fetchUsers();
+    fetchLatestProjects();
   }, [axiosSecure]);
 
   return (
@@ -103,28 +110,19 @@ const Dashboard = () => {
 
       {/* Recent Activity Section */}
       <div className="bg-white dark:bg-[#0a1020] rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-8">
-        <h2 className="text-xl font-bold mb-4">Recent Activity</h2>
+        <h2 className="text-xl font-bold mb-4">Recent Added Projects</h2>
         <div className="space-y-4">
-          {[1, 2, 3].map((item) => (
+          {latestProjects?.map((project) => (
             <div
-              key={item}
+              key={project?._id}
               className="flex items-start gap-4 pb-4 border-b border-gray-200 dark:border-gray-700"
             >
               <div className="w-2 h-2 mt-2 rounded-full bg-[#154434]"></div>
               <div>
-                <p className="font-medium">
-                  {item === 1
-                    ? "New project added"
-                    : item === 2
-                    ? "Client meeting scheduled"
-                    : "Design review completed"}
-                </p>
+                <p className="font-medium">{project?.title}</p>
+
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  {item === 1
-                    ? "2 hours ago"
-                    : item === 2
-                    ? "Yesterday"
-                    : "3 days ago"}
+                  Status: {project?.status}
                 </p>
               </div>
             </div>
