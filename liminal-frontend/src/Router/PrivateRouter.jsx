@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 
+import { Navigate } from "react-router-dom";
 import useAuth from "../Auth/Hook/useAuth";
-import { Navigate, useLocation } from "react-router-dom";
+import useRole from "../Auth/Hook/useRole";
 
 const PrivateRouter = ({ children }) => {
-  // contextAPI
+  // useHooks
   const { users, loading } = useAuth();
-  // useLocation
-  const location = useLocation();
+  const { role, isPending } = useRole();
 
-  if (loading) {
+  if (loading || isPending) {
     return (
       <div className="flex justify-center py-8">
         <span className="loading loading-ring loading-lg"></span>
@@ -17,10 +17,10 @@ const PrivateRouter = ({ children }) => {
     );
   }
 
-  if (users?.email) {
+  if (users?.email && role?.admin) {
     return children;
   }
-  return <Navigate to={"/login"} state={location?.pathname}></Navigate>;
+  return <Navigate to={"/login"} state={"/"}></Navigate>;
 };
 
 export default PrivateRouter;
