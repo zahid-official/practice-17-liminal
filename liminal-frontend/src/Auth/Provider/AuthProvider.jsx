@@ -12,9 +12,11 @@ import {
   updateProfile,
   signOut,
 } from "firebase/auth";
-import axios from "axios";
+import useAxiosPublic from "../Hook/useAxiosPublic";
 
 const AuthProvider = ({ children }) => {
+  const axiosPublic = useAxiosPublic();
+
   // state for users
   const [users, setUsers] = useState(null);
   // state for loading
@@ -58,7 +60,7 @@ const AuthProvider = ({ children }) => {
       // set jwt token in local storage
       const email = usersData?.email;
       if (email) {
-        axios.post("/jwt", { email }).then((res) => {
+        axiosPublic.post("/jwt", { email }).then((res) => {
           if (res.data.token) {
             localStorage.setItem("token", res.data.token);
           }
@@ -73,7 +75,7 @@ const AuthProvider = ({ children }) => {
     return () => {
       observer();
     };
-  }, []);
+  }, [axiosPublic]);
 
   // context value
   const contextValue = {
