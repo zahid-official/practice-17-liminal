@@ -39,22 +39,22 @@ const Dashboard = () => {
       id: 2,
       title: "Ongoing Projects",
       value: ongoing.length,
-      icon: <FaUsers className="text-green-500" size={24} />,
-      bgColor: "bg-green-100 dark:bg-green-900/30",
+      icon: <FaChartLine className="text-purple-500" size={24} />,
+      bgColor: "bg-purple-100 dark:bg-purple-900/30",
     },
     {
       id: 3,
       title: "Completed Projects",
       value: completed.length,
-      icon: <FaChartLine className="text-purple-500" size={24} />,
-      bgColor: "bg-purple-100 dark:bg-purple-900/30",
+      icon: <FaTasks className="text-orange-500" size={24} />,
+      bgColor: "bg-orange-100 dark:bg-orange-900/30",
     },
     {
       id: 4,
       title: "Total Users",
       value: usersData.length,
-      icon: <FaTasks className="text-orange-500" size={24} />,
-      bgColor: "bg-orange-100 dark:bg-orange-900/30",
+      icon: <FaUsers className="text-green-500" size={24} />,
+      bgColor: "bg-green-100 dark:bg-green-900/30",
     },
   ];
 

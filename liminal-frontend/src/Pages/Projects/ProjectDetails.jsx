@@ -13,7 +13,7 @@ const ProjectDetails = () => {
   return (
     <>
       {/* banner */}
-      <div className="lg:w-10/12 sm:w-11/12 mx-auto px-3 pt-3">
+      <div className="pt-3">
         <div>
           <img src={bannerImage} alt={`Image of ${title}`} />
         </div>

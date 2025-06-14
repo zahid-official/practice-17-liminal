@@ -9,7 +9,7 @@ import Projects from "../Pages/Projects/Projects";
 import Contact from "../Pages/Contact/Contact";
 import PrivateRouter from "./PrivateRouter";
 import DashboardLayout from "../Layout/DashboardLayout";
-import Dashboard from "../Pages/Admin/dashboard";
+import Dashboard from "../Pages/Admin/Dashboard";
 import AddProject from "../Pages/Admin/AddProject";
 import ProjectDetails from "../Pages/Projects/ProjectDetails";
 import ManageProjects from "../Pages/Admin/ManageProjects/ManageProjects";
@@ -33,13 +33,13 @@ const Routes = createBrowserRouter([
       {
         path: "/projects",
         element: <Projects></Projects>,
-        loader: () => fetch("http://localhost:5000/projects"),
+        loader: () => fetch("https://liminal-server.vercel.app/projects"),
       },
       {
         path: "/projectDetails/:id",
         element: <ProjectDetails></ProjectDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/projectDetails/${params.id}`),
+          fetch(`https://liminal-server.vercel.app/projectDetails/${params.id}`),
       },
       {
         path: "/contact",
