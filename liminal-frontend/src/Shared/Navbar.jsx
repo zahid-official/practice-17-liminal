@@ -1,23 +1,9 @@
 // import { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { toast } from "react-toastify";
-import useAuth from "../Auth/Hook/useAuth";
 import icon from "/assets/icon.png";
 import logo from "/assets/logo.png";
 
 const Navbar = () => {
-  // useContext
-  const { users, logout } = useAuth();
-
-  // handleSignOut
-  const handleSignOut = () => {
-    logout()
-      .then(() => {
-        toast.success("Sign Out Successfully");
-      })
-      .catch((error) => toast.error(error.message));
-  };
-
   const links = (
     <>
       <li className="text-lg font-bold">
@@ -67,35 +53,6 @@ const Navbar = () => {
 
         {/* end */}
         <div className="navbar-end gap-2">
-          {users?.email && (
-            <div className="relative rounded-full profilePhoto">
-              <div className="dropdown dropdown-hover  rounded-full">
-                <div tabIndex={0} role="button" className="rounded-full m-1">
-                  <img
-                    src={`${users?.photoURL}`}
-                    alt="profile photo"
-                    className="h-10 w-10 rounded-[50%] object-cover"
-                  />
-                </div>
-
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu bg-base-100 dark:bg-[#0a1020] rounded-box z-30 w-44 px-2 py-5 border dark:border-none text-center text-base font-bold space-y-3 -right-14"
-                >
-                  <li className="px-3 border-b pb-4">{users?.displayName}</li>
-                  <li className="px-3">
-                    <button
-                      onClick={handleSignOut}
-                      className="btn bg-[#154434] dark:bg-base-200 dark:text-black dark:hover:bg-base-300 hover:bg-[#154434] text-white text-lg font-bold min-w-28"
-                    >
-                      Sign Out
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          )}
-
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost ">
               <p className="text-xl sm:block hidden">Menu</p>
