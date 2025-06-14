@@ -246,6 +246,15 @@ async function run() {
           .toArray();
         res.send(result);
       });
+
+      // get all latestProjects
+      app.get("/latestProjects", async (req, res) => {
+        const result = await projectsCollection
+          .sort({ _id: -1 })
+          .limit(5)
+          .toArray();
+        res.send(result);
+      });
     }
 
     // create Operation
