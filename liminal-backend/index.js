@@ -216,12 +216,6 @@ async function run() {
         res.send(result);
       });
 
-      // get all projects for admin manageProjects
-      app.get("/manageProjects", verifyJWT, verifyAdmin, async (req, res) => {
-        const result = await projectsCollection.find().toArray();
-        res.send(result);
-      });
-
       // get single project details
       app.get("/projectDetails/:id", async (req, res) => {
         const paramas = req.params.id;
@@ -229,11 +223,17 @@ async function run() {
         const result = await projectsCollection.findOne(query);
         res.send(result);
       });
+
+      // get all projects for admin manageProjects
+      app.get("/manageProjects", verifyJWT, verifyAdmin, async (req, res) => {
+        const result = await projectsCollection.find().toArray();
+        res.send(result);
+      });
     }
 
     // create Operation
     {
-      // add user
+      // add user in DB
       app.post("/users", async (req, res) => {
         const user = req.body;
         const query = { email: user?.email };
@@ -247,7 +247,7 @@ async function run() {
       });
 
       // add project
-      app.post("/addProject", async (req, res) => {
+      app.post("/addProject", verifyJWT, verifyAdmin, async (req, res) => {
         const projectData = req.body;
         const result = await projectsCollection.insertOne(projectData);
         res.send(result);
@@ -256,35 +256,45 @@ async function run() {
 
     // update Operation
     {
-      app.patch("/updateProject/:id", async (req, res) => {
-        const id = req.params.id;
-        const data = req.body;
-        const query = { _id: new ObjectId(id) };
+      app.patch(
+        "/updateProject/:id",
+        verifyJWT,
+        verifyAdmin,
+        async (req, res) => {
+          const id = req.params.id;
+          const data = req.body;
+          const query = { _id: new ObjectId(id) };
 
-        const updatedData = {
-          $set: {
-            title: data?.title,
-            category: data?.category,
-            status: data?.status,
-            description: data?.description,
-            bannerImage: data?.bannerImage,
-            additionalImages: data?.additionalImages,
-          },
-        };
+          const updatedData = {
+            $set: {
+              title: data?.title,
+              category: data?.category,
+              status: data?.status,
+              description: data?.description,
+              bannerImage: data?.bannerImage,
+              additionalImages: data?.additionalImages,
+            },
+          };
 
-        const result = await projectsCollection.updateOne(query, updatedData);
-        res.send(result);
-      });
+          const result = await projectsCollection.updateOne(query, updatedData);
+          res.send(result);
+        }
+      );
     }
 
     // delete Operation
     {
-      app.delete("/deleteProject/:id", async (req, res) => {
-        const id = req.params.id;
-        const query = { _id: new ObjectId(id) };
-        const result = await projectsCollection.deleteOne(query);
-        res.send(result);
-      });
+      app.delete(
+        "/deleteProject/:id",
+        verifyJWT,
+        verifyAdmin,
+        async (req, res) => {
+          const id = req.params.id;
+          const query = { _id: new ObjectId(id) };
+          const result = await projectsCollection.deleteOne(query);
+          res.send(result);
+        }
+      );
     }
   } finally {
   }
