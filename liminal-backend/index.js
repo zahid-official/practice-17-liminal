@@ -84,7 +84,7 @@ async function run() {
       next();
     };
 
-    // jwt
+    // jwt token generate
     {
       app.post("/jwt", (req, res) => {
         const user = req.body;
@@ -92,6 +92,27 @@ async function run() {
           expiresIn: "1h",
         });
         res.send({ token });
+      });
+
+      // verify user role
+      app.get("/userRole/:email", verifyJWT, async (req, res) => {
+        const email = req.params.email;
+        const decodedMail = req.decoded.email;
+
+        // verify JWT email & param email
+        if (decodedMail !== email) {
+          return res.status(403).send({ message: "Forbidden Access" });
+        }
+
+        const query = { email };
+        const userData = await usersCollection.findOne(query);
+
+        let admin = false;
+        if (userData?.role === "admin") {
+          admin = true;
+        }
+
+        res.send({ admin });
       });
     }
 
