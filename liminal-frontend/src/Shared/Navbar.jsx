@@ -35,7 +35,7 @@ const Navbar = () => {
         {/* start */}
         <div className="navbar-start sm:w-1/2 w-fit">
           <Link to={"/"}>
-            <div className="text-4xl xl:ml-10 font-bold flex gap-2 justify-center items-center">
+            <div className="flex ml-3 items-center">
               <img src={icon} alt="" className="h-12 hidden sm:flex" />
               <img src={logo} alt="" className="sm:h-16 h-14 sm:hidden flex " />
             </div>
@@ -48,7 +48,7 @@ const Navbar = () => {
         </div>
 
         {/* end */}
-        <div className="navbar-end gap-2">
+        <div className="navbar-end">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost ">
               <p className="text-xl sm:block hidden">Menu</p>
