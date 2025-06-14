@@ -53,6 +53,17 @@ async function run() {
     const usersCollection = database.collection("usersCollection");
     const projectsCollection = database.collection("projectsCollection");
 
+    // jwt
+    {
+      app.post("/jwt", (req, res) => {
+        const user = req.body;
+        const token = jwt.sign(user, process.env.ACCESS_TOKEN, {
+          expiresIn: "1h",
+        });
+        res.send({ token });
+      });
+    }
+
     // cloudinary
     {
       const generatePublicId = (buffer) => {
