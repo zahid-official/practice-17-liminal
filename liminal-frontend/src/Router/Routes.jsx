@@ -18,6 +18,7 @@ import Dashboard from "../Pages/Admin/dashboard";
 import AddProject from "../Pages/Admin/AddProject";
 import ProjectDetails from "../Pages/Projects/ProjectDetails";
 import ManageProjects from "../Pages/Admin/ManageProjects/ManageProjects";
+import AdminRouter from "./AdminRouter";
 
 const Routes = createBrowserRouter([
   {
@@ -82,22 +83,36 @@ const Routes = createBrowserRouter([
     path: "adminPanel",
     element: (
       <PrivateRouter>
-        <DashboardLayout></DashboardLayout>
+        <AdminRouter>
+          <DashboardLayout></DashboardLayout>
+        </AdminRouter>
       </PrivateRouter>
     ),
     errorElement: <Error></Error>,
     children: [
       {
         path: "",
-        element: <Dashboard></Dashboard>,
+        element: (
+          <AdminRouter>
+            <Dashboard></Dashboard>
+          </AdminRouter>
+        ),
       },
       {
         path: "addProject",
-        element: <AddProject></AddProject>,
+        element: (
+          <AdminRouter>
+            <AddProject></AddProject>
+          </AdminRouter>
+        ),
       },
       {
         path: "manageProjects",
-        element: <ManageProjects></ManageProjects>,
+        element: (
+          <AdminRouter>
+            <ManageProjects></ManageProjects>
+          </AdminRouter>
+        ),
       },
     ],
   },

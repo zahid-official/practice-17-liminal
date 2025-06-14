@@ -52,7 +52,6 @@ const Login = () => {
             toast.success("Sign Up Successfully");
             navigate(location?.state ? location.state : "/");
           } else {
-            toast.success("Sign In Successfully");
             navigate(location?.state ? location.state : "/");
           }
         });
