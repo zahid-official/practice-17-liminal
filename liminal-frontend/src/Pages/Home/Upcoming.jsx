@@ -8,7 +8,7 @@ import { Autoplay, FreeMode, Navigation } from "swiper/modules";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Upcomming = () => {
+const Upcoming = () => {
   const axiosPublic = useAxiosPublic();
 
   // state for innerWidth & upcoming projects
@@ -109,4 +109,4 @@ const Upcomming = () => {
   );
 };
 
-export default Upcomming;
+export default Upcoming;

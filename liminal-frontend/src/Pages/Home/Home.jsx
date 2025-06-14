@@ -3,7 +3,7 @@ import Banner from "./Banner";
 import Contact from "./Contact";
 import Intro from "./Intro";
 import Studio from "./Studio";
-import Upcomming from "./Upcomming";
+import Upcoming from "./Upcoming";
 
 import { motion } from "motion/react";
 
@@ -39,7 +39,7 @@ const Home = () => {
 
       {/* upcomming */}
       <div>
-        <Upcomming></Upcomming>
+        <Upcoming></Upcoming>
       </div>
 
       {/* contact */}
