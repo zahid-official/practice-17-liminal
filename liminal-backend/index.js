@@ -250,6 +250,7 @@ async function run() {
       // get all latestProjects
       app.get("/latestProjects", async (req, res) => {
         const result = await projectsCollection
+          .find()
           .sort({ _id: -1 })
           .limit(5)
           .toArray();
