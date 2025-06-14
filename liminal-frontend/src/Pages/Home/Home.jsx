@@ -5,7 +5,7 @@ import Intro from "./Intro";
 import Studio from "./Studio";
 import Upcomming from "./Upcomming";
 
-import { motion } from "motion/react"
+import { motion } from "motion/react";
 
 const Home = () => {
   return (
@@ -17,13 +17,13 @@ const Home = () => {
 
       {/* intro */}
       <motion.div
-      initial={{translateY: 100, opacity: 0}}
-      whileInView={{
-        translateY: 0,
-        opacity: 1,
-      }}
-      transition={{duration: .75, delay: 0.2}}
-      className="my-44"
+        initial={{ translateY: 100, opacity: 0 }}
+        whileInView={{
+          translateY: 0,
+          opacity: 1,
+        }}
+        transition={{ duration: 0.75, delay: 0.2 }}
+        className="my-44"
       >
         <Intro></Intro>
       </motion.div>
