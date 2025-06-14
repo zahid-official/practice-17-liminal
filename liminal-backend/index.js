@@ -235,6 +235,17 @@ async function run() {
         const result = await usersCollection.find().toArray();
         res.send(result);
       });
+
+      // get all upcomingProjects
+      app.get("/upcomingProjects", async (req, res) => {
+        const query = { status: "Ongoing" };
+        const result = await projectsCollection
+          .find(query)
+          .sort({ _id: -1 })
+          .limit(5)
+          .toArray();
+        res.send(result);
+      });
     }
 
     // create Operation
