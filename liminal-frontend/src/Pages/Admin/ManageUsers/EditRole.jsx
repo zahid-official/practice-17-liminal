@@ -9,8 +9,10 @@ const EditRole = ({ user, refetch }) => {
   const { users: authUsers } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  // state for confirm update
+  // state for confirmUpdate & updating
   const [confirmUpdate, setConfirmUpdate] = useState({});
+  // state for
+  const [updating, setUpdating] = useState(false);
 
   // ref for select input
   const selectRef = useRef();
@@ -25,6 +27,8 @@ const EditRole = ({ user, refetch }) => {
 
   // handleUpdateRole
   const handleUpdateRole = async (id) => {
+    setUpdating(true);
+
     const role = selectRef.current.value;
     try {
       const res = await axiosSecure.patch(`/updateUserRole/${id}`, { role });
@@ -37,6 +41,7 @@ const EditRole = ({ user, refetch }) => {
     } catch (error) {
       console.error("Failed to update role:", error);
     } finally {
+      setUpdating(false);
       document.getElementById(`confirm_modal-${user?._id}`).close();
     }
   };
@@ -58,37 +63,47 @@ const EditRole = ({ user, refetch }) => {
           <h3 className="font-bold text-3xl">Are you absolutely sure?</h3>
 
           {/* modal content */}
-          {confirmUpdate[user._id] ? (
-            <>
-              <p className="text-base pt-4 pb-2">Update Role Below:</p>
-              <select
-                defaultValue={user?.role}
-                className="select input-bordered text-sm w-44"
-                disabled={authUsers?.email === user?.email}
-                ref={selectRef}
-              >
-                <option value={user?.role} disabled>
-                  {user?.role}
-                </option>
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-              </select>
-            </>
-          ) : (
-            <p className="py-4">
-              This action is irreversible. It will update the user role and
-              provide access to servers with permissions to modify.
-            </p>
-          )}
+          <>
+            {confirmUpdate[user._id] ? (
+              <>
+                <p className="text-base pt-4 pb-2">Update Role Below:</p>
+                <select
+                  defaultValue={user?.role}
+                  className="select input-bordered text-sm w-44"
+                  disabled={authUsers?.email === user?.email}
+                  ref={selectRef}
+                >
+                  <option value={user?.role} disabled>
+                    {user?.role}
+                  </option>
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </>
+            ) : (
+              <p className="py-4">
+                This action is irreversible. It will update the user role and
+                provide access to servers with permissions to modify.
+              </p>
+            )}
+          </>
 
           <div className="flex gap-2 justify-end mt-2">
             {/* confirm buttons */}
             {confirmUpdate[user._id] ? (
               <button
-                onClick={() => handleUpdateRole(user._id)}
+                disabled={updating}
+                onClick={() => handleUpdateRole(user?._id)}
                 className="btn bg-[#174434] hover:bg-[#13382b] text-white"
               >
-                Update
+                {updating ? (
+                  <>
+                    Updating
+                    <span className="loading loading-spinner loading-md"></span>
+                  </>
+                ) : (
+                  "Update Now!"
+                )}
               </button>
             ) : (
               <button

@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
-import { FaRegTrashAlt } from "react-icons/fa";
+
+import { useState } from "react";
 import useAxiosSecure from "../../../Auth/Hook/useAxiosSecure";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { FaRegTrashAlt } from "react-icons/fa";
 
-const DeleteProject = ({ projectId, refetchProjects }) => {
+const DeleteUser = ({ user, refetch }) => {
   const axiosSecure = useAxiosSecure();
 
   // state for deleting
@@ -15,25 +16,24 @@ const DeleteProject = ({ projectId, refetchProjects }) => {
     setDeleting(true);
 
     try {
-      const res = await axiosSecure.delete(`/deleteProject/${id}`);
+      const res = await axiosSecure.delete(`/deleteUser/${id}`);
       if (res.data.deletedCount) {
         toast.success("Project Deleted Successfully");
-        refetchProjects();
+        refetch();
       }
     } catch (error) {
       console.error("Failed to Delete project:", error);
       toast.error("Failed to Delete project. Please try again.");
     } finally {
       setDeleting(false);
-      document.getElementById(`delete_modal-${projectId}`).close();
+      document.getElementById(`delete_modal-${id}`).close();
     }
   };
-
   return (
     <div>
       <button
         onClick={() =>
-          document.getElementById(`delete_modal-${projectId}`).showModal()
+          document.getElementById(`delete_modal-${user?._id}`).showModal()
         }
         className="btn text-red-600/90 btn-sm text-xl h-10"
       >
@@ -41,19 +41,19 @@ const DeleteProject = ({ projectId, refetchProjects }) => {
       </button>
 
       {/* delete modal */}
-      <dialog id={`delete_modal-${projectId}`} className="modal">
+      <dialog id={`delete_modal-${user?._id}`} className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-3xl">Are you absolutely sure?</h3>
           <p className="py-4">
-            This action cannot be undone. This will permanently delete your
-            project and remove your data from our servers.
+            This action cannot be undone. This will permanently delete the user
+            and remove the data from our servers.
           </p>
 
           <div className="flex gap-2 justify-end mt-2">
             {/* delete buttons */}
             <button
               disabled={deleting}
-              onClick={() => handleDelete(projectId)}
+              onClick={() => handleDelete(user?._id)}
               className="btn bg-red-700 hover:bg-red-800 text-white"
             >
               {deleting ? (
@@ -79,4 +79,4 @@ const DeleteProject = ({ projectId, refetchProjects }) => {
   );
 };
 
-export default DeleteProject;
+export default DeleteUser;

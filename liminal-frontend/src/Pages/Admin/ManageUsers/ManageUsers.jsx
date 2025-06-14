@@ -1,6 +1,7 @@
 import useAxiosSecure from "../../../Auth/Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import EditRole from "./EditRole";
+import DeleteUser from "./DeleteUser";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -26,6 +27,7 @@ const ManageUsers = () => {
               <th>Email</th>
               <th>Role</th>
               <th>Update Role</th>
+              <th>Delete User</th>
             </tr>
           </thead>
 
@@ -40,6 +42,11 @@ const ManageUsers = () => {
                 {/* update role */}
                 <td>
                   <EditRole user={user} refetch={refetch}></EditRole>
+                </td>
+
+                {/* delete user */}
+                <td>
+                  <DeleteUser user={user} refetch={refetch}></DeleteUser>
                 </td>
               </tr>
             ))}
