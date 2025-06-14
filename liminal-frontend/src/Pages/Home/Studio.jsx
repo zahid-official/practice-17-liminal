@@ -7,7 +7,7 @@ import { motion } from "motion/react";
 
 const Studio = () => {
   return (
-    <div className="py-36 sm:px-0 px-6 xl:w-10/12 w-11/12 mx-auto ">
+    <div className="lg:py-24 sm:py-10 py-4 px-6">
       <div className="grid lg:grid-cols-12 gap-10 overflow-hidden">
         {/* left */}
         <motion.div
