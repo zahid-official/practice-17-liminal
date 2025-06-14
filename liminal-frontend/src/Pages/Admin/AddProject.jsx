@@ -1,10 +1,12 @@
 import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { useState, useEffect, useRef } from "react";
-import useAxiosPublic from "../../Auth/Hook/useAxiosPublic";
+import useAxiosSecure from "../../Auth/Hook/useAxiosSecure";
 import { toast } from "react-toastify";
 
 const AddProject = () => {
+  const axiosSecure = useAxiosSecure();
+
   // form handling hooks
   const {
     register,
@@ -15,8 +17,6 @@ const AddProject = () => {
     clearErrors,
     reset,
   } = useForm();
-
-  const axiosPublic = useAxiosPublic();
 
   // state to store the selected file
   const [bannerImage, setBannerImage] = useState(null);
@@ -110,7 +110,7 @@ const AddProject = () => {
       // upload banner image in cloudinary
       const bannerForm = new FormData();
       bannerForm.append("bannerImage", bannerImage);
-      const bannerRes = await axiosPublic.post(
+      const bannerRes = await axiosSecure.post(
         "/uploadBannerImage",
         bannerForm,
         {
@@ -124,7 +124,7 @@ const AddProject = () => {
       additionalImages.forEach((img) =>
         additionalForm.append("additionalImages", img)
       );
-      const additionalRes = await axiosPublic.post(
+      const additionalRes = await axiosSecure.post(
         "/uploadAdditionalImages",
         additionalForm,
         {
@@ -141,7 +141,7 @@ const AddProject = () => {
           additionalImages: additionalURLs,
         };
 
-        const res = await axiosPublic.post("/addProject", projectData);
+        const res = await axiosSecure.post("/addProject", projectData);
 
         if (res.data.insertedId) {
           toast.success("Project Added Successfully");

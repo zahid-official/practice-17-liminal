@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaCloudUploadAlt, FaPlus, FaTrash } from "react-icons/fa";
-import useAxiosPublic from "../../../Auth/Hook/useAxiosPublic";
+import useAxiosSecure from "../../../Auth/Hook/useAxiosSecure";
 import { toast } from "react-toastify";
 
 const ProjectModal = ({ projectData, refetchProjects }) => {
+  const axiosSecure = useAxiosSecure();
+
   // react hook form
   const {
     register,
@@ -24,9 +26,6 @@ const ProjectModal = ({ projectData, refetchProjects }) => {
       description: projectData?.description || "",
     },
   });
-
-  // axios from useAxiosPublic hook
-  const axiosPublic = useAxiosPublic();
 
   // state to store the selected file
   const [bannerImage, setBannerImage] = useState(null);
@@ -151,7 +150,7 @@ const ProjectModal = ({ projectData, refetchProjects }) => {
       try {
         const bannerForm = new FormData();
         bannerForm.append("bannerImage", bannerImage);
-        const bannerRes = await axiosPublic.post(
+        const bannerRes = await axiosSecure.post(
           "/uploadBannerImage",
           bannerForm,
           {
@@ -173,7 +172,7 @@ const ProjectModal = ({ projectData, refetchProjects }) => {
         newlyAddedFiles.forEach((img) =>
           additionalForm.append("additionalImages", img)
         );
-        const additionalRes = await axiosPublic.post(
+        const additionalRes = await axiosSecure.post(
           "/uploadAdditionalImages",
           additionalForm,
           {
@@ -212,7 +211,7 @@ const ProjectModal = ({ projectData, refetchProjects }) => {
         additionalImages: newAdditionalURLs,
       };
 
-      const res = await axiosPublic.patch(
+      const res = await axiosSecure.patch(
         `/updateProject/${projectData._id}`,
         updatedData
       );

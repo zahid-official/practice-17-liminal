@@ -1,16 +1,16 @@
 import EditProject from "./EditProject";
 import DeleteProject from "./DeleteProject";
-import useAxiosPublic from "../../../Auth/Hook/useAxiosPublic";
+import useAxiosSecure from "../../../Auth/Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 
 const ManageProjects = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   // fetch all projects
   const { data: projects = [], refetch: refetchProjects } = useQuery({
     queryKey: ["projects"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/projects");
+      const res = await axiosSecure.get("/projects");
       return res.data;
     },
   });

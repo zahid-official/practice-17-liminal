@@ -2,15 +2,17 @@
 import { useState } from "react";
 import { FaPen } from "react-icons/fa";
 import ProjectModal from "./ProjectModal";
+import useAxiosSecure from "../../../Auth/Hook/useAxiosSecure";
 
 const EditProject = ({ projectId, refetchProjects }) => {
+  const axiosSecure = useAxiosSecure();
+
   // state for projectData
   const [projectData, setProjectData] = useState({});
   // handleEdit
   const handleEdit = async (id) => {
-    const res = await fetch(`http://localhost:5000/projectDetails/${id}`);
-    const data = await res.json();
-    setProjectData(data);
+    const res = await axiosSecure.get(`/projectDetails/${id}`);
+    setProjectData(res.data);
     document.getElementById(`modal_${id}`).showModal();
   };
 
@@ -36,7 +38,10 @@ const EditProject = ({ projectId, refetchProjects }) => {
           </form>
 
           {/* modal content */}
-          <ProjectModal projectData={projectData} refetchProjects={refetchProjects}></ProjectModal>
+          <ProjectModal
+            projectData={projectData}
+            refetchProjects={refetchProjects}
+          ></ProjectModal>
         </div>
       </dialog>
     </>
