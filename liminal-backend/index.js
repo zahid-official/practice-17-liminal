@@ -178,8 +178,14 @@ async function run() {
         res.send("Server Connected Successfully");
       });
 
-      // get all projects
+      // get all projects for users
       app.get("/projects", async (req, res) => {
+        const result = await projectsCollection.find().toArray();
+        res.send(result);
+      });
+
+      // get all projects for admin manageProjects
+      app.get("/manageProjects",verifyJWT, async (req, res) => {
         const result = await projectsCollection.find().toArray();
         res.send(result);
       });
