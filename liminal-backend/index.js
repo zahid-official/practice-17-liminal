@@ -34,6 +34,26 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+// custom middleware
+const verifyJWT = (req, res, next) => {
+  const token = req.headers?.authorization;
+
+  if (!token) {
+    return res.status(401).send({ message: "Unauthorize Access" });
+  }
+
+  // verify frontend token & backend token both
+  jwt.verify(token, process.env.ACCESS_TOKEN, (error, decoded) => {
+    if (error) {
+      return res.status(401).send({ message: "Unauthorize Access" });
+    }
+
+    // creating a new property in req object
+    req.decoded = decoded;
+    next();
+  });
+};
+
 // MongoDB
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster1.rjxsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1`;
 
