@@ -73,7 +73,7 @@ const About = () => {
           </div>
 
           {/* right */}
-          <div className="md:sticky md:order-1 top-0 md:pt-16 pt-4 md:self-start">
+          <div className="md:sticky md:order-1 top-0  pt-6 md:self-start">
             <img src={right} alt="img" />
           </div>
         </div>
@@ -290,7 +290,7 @@ const About = () => {
       </div>
 
       {/* contact */}
-      <div className="py-20 text-center bg-base-200 mt-14 px-4">
+      <div className="py-20 text-center bg-base-200 lg:mt-36 sm:mt-28 mt-24 px-4">
         <h2 className="text-4xl">Let’s Create Together</h2>
         <p className=" pt-8">
           We invite you to explore the possibilities of your space with STONES
