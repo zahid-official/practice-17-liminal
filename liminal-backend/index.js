@@ -47,7 +47,6 @@ const verifyJWT = (req, res, next) => {
     if (error) {
       return res.status(401).send({ message: "Unauthorize Access" });
     }
-
     // creating a new property in req object
     req.decoded = decoded;
     next();
@@ -72,6 +71,18 @@ async function run() {
     const database = client.db("liminalDB");
     const usersCollection = database.collection("usersCollection");
     const projectsCollection = database.collection("projectsCollection");
+
+    // custom middleware for verify admin after verifyToken
+    const verifyAdmin = async (req, res, next) => {
+      const email = req.decoded.email;
+      const query = { email };
+      const userData = await usersCollection.findOne(query);
+      const admin = userData?.role === "admin";
+      if (!admin) {
+        return res.status(403).send({ message: "Forbidden Access" });
+      }
+      next();
+    };
 
     // jwt
     {
@@ -185,7 +196,7 @@ async function run() {
       });
 
       // get all projects for admin manageProjects
-      app.get("/manageProjects",verifyJWT, async (req, res) => {
+      app.get("/manageProjects", verifyJWT, verifyAdmin, async (req, res) => {
         const result = await projectsCollection.find().toArray();
         res.send(result);
       });
