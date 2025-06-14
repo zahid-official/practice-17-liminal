@@ -23,7 +23,6 @@ const Home = () => {
           opacity: 1,
         }}
         transition={{ duration: 0.75, delay: 0.2 }}
-        className="my-44"
       >
         <Intro></Intro>
       </motion.div>
