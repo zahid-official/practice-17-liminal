@@ -19,6 +19,7 @@ import AddProject from "../Pages/Admin/AddProject";
 import ProjectDetails from "../Pages/Projects/ProjectDetails";
 import ManageProjects from "../Pages/Admin/ManageProjects/ManageProjects";
 import AdminRouter from "./AdminRouter";
+import ManageUsers from "../Pages/Admin/ManageUsers/ManageUsers";
 
 const Routes = createBrowserRouter([
   {
@@ -111,6 +112,14 @@ const Routes = createBrowserRouter([
         element: (
           <AdminRouter>
             <ManageProjects></ManageProjects>
+          </AdminRouter>
+        ),
+      },
+      {
+        path: "manageUsers",
+        element: (
+          <AdminRouter>
+            <ManageUsers></ManageUsers>
           </AdminRouter>
         ),
       },
