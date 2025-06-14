@@ -58,7 +58,7 @@ const Upcoming = () => {
   return (
     <div className="">
       {/* carousel */}
-      <div className="px-6 lg:mt-7 sm:mt-12 mt-16 relative">
+      <div className="px-5 lg:mt-7 sm:mt-12 mt-16 relative">
         <h2 className="sm:text-4xl text-3xl font-semibold custom-title mb-2.5">
           Upcomming
         </h2>
@@ -78,7 +78,7 @@ const Upcoming = () => {
           {upcomingProjects?.map((project) => (
             <SwiperSlide key={project?._id}>
               <Link to={`/projectDetails/${project?._id}`}>
-                <div className="flex justify-center h-[58vh] group relative">
+                <div className="flex justify-center h-[60vh] group relative">
                   <img
                     src={project?.bannerImage}
                     className="h-full w-full object-cover"
