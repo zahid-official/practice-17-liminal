@@ -47,9 +47,14 @@ const Login = () => {
           email: result.user.email,
           role: "user",
         };
-        axiosPublic.post("/users", user).then(() => {
-          toast.success("Sign Up Successfully");
-          navigate(location?.state ? location.state : "/");
+        axiosPublic.post("/users", user).then((res) => {
+          if (res.data.insertedId) {
+            toast.success("Sign Up Successfully");
+            navigate(location?.state ? location.state : "/");
+          } else {
+            toast.success("Sign In Successfully");
+            navigate(location?.state ? location.state : "/");
+          }
         });
       })
       .catch((error) => toast.error(error.message));
