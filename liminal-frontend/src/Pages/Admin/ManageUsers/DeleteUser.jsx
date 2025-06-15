@@ -1,11 +1,13 @@
 /* eslint-disable react/prop-types */
 
 import { useState } from "react";
-import useAxiosSecure from "../../../Auth/Hook/useAxiosSecure";
 import { toast } from "react-toastify";
 import { FaRegTrashAlt } from "react-icons/fa";
+import useAuth from "../../../Auth/Hook/useAuth";
+import useAxiosSecure from "../../../Auth/Hook/useAxiosSecure";
 
 const DeleteUser = ({ user, refetch }) => {
+  const { users: authUsers } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   // state for deleting
@@ -35,6 +37,7 @@ const DeleteUser = ({ user, refetch }) => {
         onClick={() =>
           document.getElementById(`delete_modal-${user?._id}`).showModal()
         }
+        disabled={authUsers?.email === user?.email}
         className="btn text-red-600/90 btn-sm text-xl h-10"
       >
         <FaRegTrashAlt></FaRegTrashAlt>
@@ -52,7 +55,7 @@ const DeleteUser = ({ user, refetch }) => {
           <div className="flex gap-2 justify-end mt-2">
             {/* delete buttons */}
             <button
-              disabled={deleting}
+              disabled={deleting || authUsers?.email === user?.email}
               onClick={() => handleDelete(user?._id)}
               className="btn bg-red-700 hover:bg-red-800 text-white"
             >
