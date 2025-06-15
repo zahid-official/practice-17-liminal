@@ -39,7 +39,7 @@ const Register = () => {
             setUsers({ ...result.user, displayName: name, photoURL: photo });
 
             // create user in DB
-            const user = { name, email, role : "user" };
+            const user = { name, email, role: "user" };
             axiosPublic.post("/users", user).then((res) => {
               if (res.data.insertedId) {
                 toast.success("Sign Up Successfully");
@@ -60,16 +60,17 @@ const Register = () => {
         setUsers(result.user);
 
         // create user in DB
-        const user = { name: result.user.displayName, email: result.user.email, role : "user" };
+        const user = {
+          name: result.user.displayName,
+          email: result.user.email,
+          role: "user",
+        };
         axiosPublic.post("/users", user).then((res) => {
           if (res.data.insertedId) {
             toast.success("Sign Up Successfully");
             navigate(location?.state ? location.state : "/");
           }
         });
-
-        toast.success("Sign Up Successfully");
-        navigate(location?.state ? location.state : "/");
       })
       .catch((error) => toast.error(error.message));
   };

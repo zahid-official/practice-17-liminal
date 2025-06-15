@@ -49,10 +49,10 @@ const Login = () => {
         };
         axiosPublic.post("/users", user).then((res) => {
           if (res.data.insertedId) {
-            toast.success("Sign Up Successfully");
-            navigate(location?.state ? location.state : "/");
+            toast.success("Sign In Successfully");
+            navigate("/");
           } else {
-            navigate(location?.state ? location.state : "/");
+            navigate("/");
           }
         });
       })

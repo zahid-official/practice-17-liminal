@@ -1,6 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../Auth/Hook/useAuth";
-import profile from "/assets/profile.png";
 import { toast } from "react-toastify";
 import { BsFillGridFill } from "react-icons/bs";
 import { FaDiagramProject } from "react-icons/fa6";
@@ -44,7 +43,7 @@ const Sidebar = () => {
           <div className="pt-12">
             <div className="h-16 w-16 mx-auto p-0.5 border-[#154434] border-2 rounded-full">
               <img
-                src={profile}
+                src={users?.photoURL}
                 className="w-full h-full object-cover rounded-full"
                 alt="Photo"
               />
