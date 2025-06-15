@@ -15,6 +15,7 @@ import ProjectDetails from "../Pages/Projects/ProjectDetails";
 import ManageProjects from "../Pages/Admin/ManageProjects/ManageProjects";
 import AdminRouter from "./AdminRouter";
 import ManageUsers from "../Pages/Admin/ManageUsers/ManageUsers";
+import axios from "axios";
 
 const Routes = createBrowserRouter([
   {
@@ -33,13 +34,24 @@ const Routes = createBrowserRouter([
       {
         path: "/projects",
         element: <Projects></Projects>,
-        loader: () => fetch("https://liminal-server.vercel.app/projects"),
+        loader: async () => {
+          const res = await axios.get(
+            "https://liminal-server.vercel.app/projects",
+            { withCredentials: true }
+          );
+          return res.data;
+        },
       },
       {
         path: "/projectDetails/:id",
         element: <ProjectDetails></ProjectDetails>,
-        loader: ({ params }) =>
-          fetch(`https://liminal-server.vercel.app/projectDetails/${params.id}`),
+        loader: async ({ params }) => {
+          const res = await axios.get(
+            `https://liminal-server.vercel.app/projectDetails/${params.id}`,
+            { withCredentials: true }
+          );
+          return res.data;
+        },
       },
       {
         path: "/contact",

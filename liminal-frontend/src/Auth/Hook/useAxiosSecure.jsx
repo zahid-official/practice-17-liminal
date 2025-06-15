@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const axiosSecure = axios.create({
   baseURL: "https://liminal-server.vercel.app",
+  withCredentials: true,
 });
 
 const useAxiosSecure = () => {
