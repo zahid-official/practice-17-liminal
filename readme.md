@@ -231,7 +231,7 @@ NEXT_PUBLIC_APP_URL=https://liminal-official.vercel.app
 ### Backend (.env)
 ```env
 # MongoDB
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/liminal
+MONGODB_URI=your_mongodb_url
 
 # JWT
 JWT_SECRET=your_jwt_secret_key
